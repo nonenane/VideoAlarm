@@ -182,6 +182,8 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="alarm.ico" />
+    <None Include="Resources\comment.png" />
+    <None Include="Resources\refresh.png" />
     <None Include="Resources\add-image.png" />
     <None Include="Resources\view.png" />
     <None Include="Resources\Trash.png" />
@@ -189,7 +191,6 @@
     <None Include="Resources\Save.png" />
     <None Include="Resources\Exit.png" />
     <None Include="Resources\Edit.png" />
-    <None Include="Resources\agt_action_fail_2870.png" />
     <None Include="Resources\Add.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

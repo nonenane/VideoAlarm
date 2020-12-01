@@ -262,7 +262,6 @@ namespace VideoAlarm
             return dtResult;
         }
 
-
         #endregion
 
         #region "Расписание"
@@ -288,6 +287,110 @@ namespace VideoAlarm
             DataTable dtResult = executeProcedure("[CheckVideoReg].[SetSchedule]",
                  new string[3] { "@id", "@isOn", "@id_user" },
                  new DbType[3] { DbType.Int32, DbType.Boolean, DbType.Int32 }, ap);
+
+            return dtResult;
+        }
+
+        #endregion
+
+
+        #region "Главная форма"
+
+        public async Task<DataTable> GetCameraVsChannelList(bool withAllDeps = false)
+        {
+            ap.Clear();
+
+            DataTable dtResult = executeProcedure("[CheckVideoReg].[GetCameraVsChannel]",
+                 new string[0] { },
+                 new DbType[0] { }, ap);
+
+            if (withAllDeps)
+            {
+                if (dtResult != null)
+                {
+                    if (!dtResult.Columns.Contains("isMain"))
+                    {
+                        DataColumn col = new DataColumn("isMain", typeof(int));
+                        col.DefaultValue = 1;
+                        dtResult.Columns.Add(col);
+                        dtResult.AcceptChanges();
+                    }
+
+                    DataRow row = dtResult.NewRow();
+
+                    row["nameRegCamName"] = "Все";
+                    row["id"] = 0;
+                    row["isMain"] = 0;
+                    row["isActive"] = 1;
+                    dtResult.Rows.Add(row);
+                    dtResult.AcceptChanges();
+                    dtResult.DefaultView.RowFilter = "isActive = 1";
+                    dtResult.DefaultView.Sort = "isMain asc, nameRegCamName asc";
+                    dtResult = dtResult.DefaultView.ToTable().Copy();
+                }
+            }
+            else
+            {
+                dtResult.DefaultView.RowFilter = "isActive = 1";
+                dtResult.DefaultView.Sort = "nameRegCamName asc";
+                dtResult = dtResult.DefaultView.ToTable().Copy();
+            }
+
+            return dtResult;
+        }
+
+        public async Task<DataTable> GetTypeEvent(bool withAllDeps = false)
+        {
+            ap.Clear();
+
+            DataTable dtResult = executeProcedure("[CheckVideoReg].[GetTypeEvent]",
+                 new string[0] { },
+                 new DbType[0] { }, ap);
+
+            if (withAllDeps)
+            {
+                if (dtResult != null)
+                {
+                    if (!dtResult.Columns.Contains("isMain"))
+                    {
+                        DataColumn col = new DataColumn("isMain", typeof(int));
+                        col.DefaultValue = 1;
+                        dtResult.Columns.Add(col);
+                        dtResult.AcceptChanges();
+                    }
+
+                    DataRow row = dtResult.NewRow();
+
+                    row["TypeEvent"] = "Все";
+                    //row["id"] = 0;
+                    row["isMain"] = 0;
+                    //row["isActive"] = 1;
+                    dtResult.Rows.Add(row);
+                    dtResult.AcceptChanges();
+                    //dtResult.DefaultView.RowFilter = "isActive = 1";
+                    dtResult.DefaultView.Sort = "isMain asc, TypeEvent asc";
+                    dtResult = dtResult.DefaultView.ToTable().Copy();
+                }
+            }
+            else
+            {
+                //dtResult.DefaultView.RowFilter = "isActive = 1";
+                dtResult.DefaultView.Sort = "TypeEvent asc";
+                dtResult = dtResult.DefaultView.ToTable().Copy();
+            }
+
+            return dtResult;
+        }
+
+        public async Task<DataTable> GetAlarmVideoReg(DateTime dateStart, DateTime dateEnd)
+        {
+            ap.Clear();
+
+            ap.Add(dateStart);
+            ap.Add(dateEnd);
+            DataTable dtResult = executeProcedure("[CheckVideoReg].[GetAlarmVideoReg]",
+                 new string[2] { "@dateStart", "@dateEnd" },
+                 new DbType[2] { DbType.Date, DbType.Date }, ap);
 
             return dtResult;
         }
