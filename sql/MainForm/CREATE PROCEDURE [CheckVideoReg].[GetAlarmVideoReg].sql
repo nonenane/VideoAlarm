@@ -26,7 +26,9 @@ select
 	v.RegName,
 	c.RegChannel,
 	c.CamName,
-	'' as nameResponsible
+	[CheckVideoReg].[GetStrResponsibleName](a.id_Responsible) as nameResponsible,
+	[CheckVideoReg].[GetTimeWorkToString](a.DateStartAlarm,a.DateEndAlarm) as DeltaString,
+	DATEDIFF(SECOND,a.DateStartAlarm,a.DateEndAlarm) as delta
 from 
 	CheckVideoReg.j_AlarmVideoReg a
 		left join CheckVideoReg.s_VideoReg v on v.id = a.id_VideoReg

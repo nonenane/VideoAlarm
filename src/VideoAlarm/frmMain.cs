@@ -93,6 +93,8 @@ namespace VideoAlarm
                 }
             }
 
+            dgvAlarm.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;
+
             //GetReport();
             //GetAlarm();
         }

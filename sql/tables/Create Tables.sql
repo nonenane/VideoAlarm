@@ -70,6 +70,7 @@ CREATE TABLE [CheckVideoReg].[j_AlarmVideoReg](
 	[id_VideoReg]			int				not null,
 	[id_Camera_vs_Channel]	int				not null,
 	[TypeEvent]				varchar(max)	not null,
+	[id_Responsible]		varchar(max)	not null,
 	[DateStartAlarm]		datetime		not null,
 	[DateEndAlarm]			datetime		null,
 	[DateCreate]			datetime		not null,
