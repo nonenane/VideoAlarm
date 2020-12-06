@@ -80,7 +80,7 @@
             this.Name = "frmComment";
             this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "frmComment";
+            this.Text = "Комментарий";
             this.ResumeLayout(false);
             this.PerformLayout();
 

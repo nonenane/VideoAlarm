@@ -197,7 +197,7 @@ namespace VideoAlarm
         {
             if (dtReport == null || dtReport.Rows.Count == 0)
             {
-                //btEdit.Enabled = btDelete.Enabled = false;
+                btReportComment.Enabled = false;
                 return;
             }
 
@@ -207,9 +207,9 @@ namespace VideoAlarm
 
                 if ((int)cmbReportVideoReg.SelectedValue != 0)
                     filter += (filter.Length == 0 ? "" : " and ") + $"id_VideoReg  = {cmbReportVideoReg.SelectedValue}";
-              
+
                 if (tbReportResponsible.Text.Trim().Length != 0)
-                    filter += (filter.Length == 0 ? "" : " and ") + $"CamName like '%{tbReportResponsible.Text.Trim()}%'";
+                    filter += (filter.Length == 0 ? "" : " and ") + $"nameResponsible like '%{tbReportResponsible.Text.Trim()}%'";
 
                 if (tbReportComment.Text.Trim().Length != 0)
                     filter += (filter.Length == 0 ? "" : " and ") + $"Comment like '%{tbReportComment.Text.Trim()}%'";
@@ -222,8 +222,8 @@ namespace VideoAlarm
             }
             finally
             {
-                //btEdit.Enabled = btDelete.Enabled =
-                //dtReport.DefaultView.Count != 0;
+                btReportComment.Enabled =
+                dtReport.DefaultView.Count != 0;
                 //dgvData_SelectionChanged(null, null);
             }
         }
@@ -234,7 +234,7 @@ namespace VideoAlarm
             {
                 Config.DoOnUIThread(() => { this.Enabled = false; }, this);
 
-                Task<DataTable> task = Config.hCntMain.GetCameraVsChannel();
+                Task<DataTable> task = Config.hCntMain.GetReportVideoReg(dtpReportStart.Value, dtpReportEnd.Value);
                 task.Wait();
                 dtReport = task.Result;
 
@@ -300,17 +300,39 @@ namespace VideoAlarm
 
         private void btReportComment_Click(object sender, EventArgs e)
         {
+            Comment.frmComment fComment = new Comment.frmComment();
+            if (DialogResult.OK == fComment.ShowDialog())
+            {
+                int id = (int)dtReport.DefaultView[dgvReport.CurrentRow.Index]["id"];
+                string comment = fComment.getComment();
 
+                Task task = Config.hCntMain.SetCommentAlarmVideoReg(id, comment, 2);
+                task.Wait();
+
+                dtReport.DefaultView[dgvReport.CurrentRow.Index]["Comment"] = comment;
+                dtReport.AcceptChanges();
+            }
         }
 
+        private void dtpReportStart_CloseUp(object sender, EventArgs e)
+        {
+            GetReport();
+        }
+
+        private void dtpReportStart_Leave(object sender, EventArgs e)
+        {
+            GetReport();
+        }
 
         #endregion
 
+        #region "Тревоги"
         private int delta = 0;
         private DataTable dtAlarm;
         private void chbAlarmTime_Click(object sender, EventArgs e)
         {
             dtpAlarmTimeStart.Enabled = dtpAlarmTimeEnd.Enabled = chbAlarmTime.Checked;
+            setFilterAlarm();
         }
 
         private void btAlarmDropDelta_Click(object sender, EventArgs e)
@@ -344,8 +366,8 @@ namespace VideoAlarm
             if (e.RowIndex != -1 && dtAlarm != null && dtAlarm.DefaultView.Count != 0)
             {
                 Color rColor = Color.White;
-                //if (!(bool)dtAlarm.DefaultView[e.RowIndex]["isActive"])
-                //    rColor = panel1.BackColor;
+                if (dtAlarm.DefaultView[e.RowIndex]["DateEndAlarm"] == DBNull.Value)
+                    rColor = pAlarmLegend.BackColor;
                 dgvAlarm.Rows[e.RowIndex].DefaultCellStyle.BackColor = rColor;
                 dgvAlarm.Rows[e.RowIndex].DefaultCellStyle.SelectionBackColor = rColor;
                 dgvAlarm.Rows[e.RowIndex].DefaultCellStyle.SelectionForeColor = Color.Black;
@@ -454,7 +476,7 @@ namespace VideoAlarm
         {
             if (dtAlarm == null || dtAlarm.Rows.Count == 0)
             {
-                //btEdit.Enabled = btDelete.Enabled = false;
+                btAlarmComment.Enabled = false;
                 return;
             }
 
@@ -483,6 +505,14 @@ namespace VideoAlarm
                 if (tbAlarmResponsible.Text.Trim().Length != 0)
                     filter += (filter.Length == 0 ? "" : " and ") + $"nameResponsible like '%{tbAlarmResponsible.Text.Trim()}%'";
 
+                filter += (filter.Length == 0 ? "" : " and ") + $"(delta is null OR delta > '{tbAlarmDelta.Text}')";
+
+
+                if (chbAlarmTime.Checked)
+                {
+                    filter += (filter.Length == 0 ? "" : " and ") + $"'{dtpAlarmStart.Value.Date.Add(dtpAlarmTimeStart.Value.TimeOfDay)}'<=DateCreate AND DateCreate<='{dtpAlarmEnd.Value.Date.Add(dtpAlarmTimeEnd.Value.TimeOfDay)}'";
+                }
+
                 dtAlarm.DefaultView.RowFilter = filter;
             }
             catch
@@ -491,8 +521,9 @@ namespace VideoAlarm
             }
             finally
             {
-                //btEdit.Enabled = btDelete.Enabled =
-                //dtAlarm.DefaultView.Count != 0;
+                //btEdit.Enabled =  
+                btAlarmComment.Enabled =
+                dtAlarm.DefaultView.Count != 0;
                 //dgvData_SelectionChanged(null, null);
             }
         }
@@ -514,7 +545,18 @@ namespace VideoAlarm
 
         private void btAlarmComment_Click(object sender, EventArgs e)
         {
+            Comment.frmComment fComment = new Comment.frmComment();
+            if (DialogResult.OK == fComment.ShowDialog())
+            {
+                int id = (int)dtAlarm.DefaultView[dgvAlarm.CurrentRow.Index]["id"];                
+                string comment = fComment.getComment();
 
+                Task task = Config.hCntMain.SetCommentAlarmVideoReg(id, comment, 1);
+                task.Wait();
+
+                dtAlarm.DefaultView[dgvAlarm.CurrentRow.Index]["Comment"] = comment;
+                dtAlarm.AcceptChanges();
+            }
         }
 
         private void dtpAlarmStart_CloseUp(object sender, EventArgs e)
@@ -538,5 +580,14 @@ namespace VideoAlarm
             if (dtpAlarmStart.Value.Date > dtpAlarmEnd.Value.Date)
                 dtpAlarmStart.Value = dtpAlarmEnd.Value.Date;
         }
+
+        private void dtpAlarmTimeStart_ValueChanged(object sender, EventArgs e)
+        {
+            setFilterAlarm();
+        }
+
+        #endregion
+
+       
     }
 }

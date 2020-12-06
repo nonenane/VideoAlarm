@@ -395,6 +395,33 @@ namespace VideoAlarm
             return dtResult;
         }
 
+        public async Task<DataTable> SetCommentAlarmVideoReg(int id, string Comment,int typeComment)
+        {
+            ap.Clear();
+
+            ap.Add(id);
+            ap.Add(Comment);
+            ap.Add(typeComment);
+
+            DataTable dtResult = executeProcedure("[CheckVideoReg].[SetCommentAlarmVideoReg]",
+                 new string[3] { "@id", "@comment", "@typeComment" },
+                 new DbType[3] { DbType.Int32, DbType.String,DbType.Int32 }, ap);
+
+            return dtResult;
+        }
+
+        public async Task<DataTable> GetReportVideoReg(DateTime dateStart, DateTime dateEnd)
+        {
+            ap.Clear();
+
+            ap.Add(dateStart);
+            ap.Add(dateEnd);
+            DataTable dtResult = executeProcedure("[CheckVideoReg].[GetReportVideoReg]",
+                 new string[2] { "@dateStart", "@dateEnd" },
+                 new DbType[2] { DbType.Date, DbType.Date }, ap);
+
+            return dtResult;
+        }
         #endregion
     }
 }
