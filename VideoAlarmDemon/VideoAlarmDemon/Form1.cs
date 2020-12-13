@@ -30,19 +30,52 @@ namespace VideoAlarmDemon
             listWatcher.Add(w);                        
             */
 
+            DataTable dtAlarm = new DataTable();
+            dtAlarm.Columns.Add("TypeEvent", typeof(string));
+            dtAlarm.Columns.Add("Channel", typeof(int));
+            dtAlarm.Columns.Add("DateEvent", typeof(DateTime));
+            dtAlarm.Columns.Add("isStartTime", typeof(bool));
+            dtAlarm.AcceptChanges();
+
+
             using (StreamReader sr = new StreamReader(@"D:\WatchPath\text.txt", System.Text.Encoding.Default))
             {
                 string line;
+                string TypeEvent = null;
+                int? Channel = null;
+                DateTime? DateEvent = null;
+                bool isStartTime = true;
+                bool FindData = false;
+
                 //while ((line = await sr.ReadLineAsync()) != null)
                 while ((line = sr.ReadLine()) != null)
                 {
-                    
+
                     Int64 tmpInt64;
-                    if (Int64.TryParse(line, out tmpInt64)) { Console.WriteLine(line); }
+                    if (Int64.TryParse(line, out tmpInt64)) { FindData = true; }
+                    if (FindData && line.StartsWith("Тип события")) { TypeEvent = line.Replace("Тип события:", "").Trim(); }
+                    if (FindData && line.StartsWith("Канал")) { Channel = int.Parse(line.Replace("Канал:", "").Trim()); }
+                    if (FindData && line.StartsWith("Начало")) { DateEvent = DateTime.Parse(line.Replace("Начало:", "").Trim()); isStartTime = true; }
+
+                    if (FindData && line.StartsWith("Завершение")) { DateEvent = DateTime.Parse(line.Replace("Завершение:", "").Trim()); isStartTime = false; }
+
+                    if (line.Trim().Length == 0)
+                    {
+                        if (FindData && TypeEvent != null && Channel != null && DateEvent != null)
+                        {
+                            Console.WriteLine($"Тип события:{TypeEvent}  Канал:{Channel}  Время:{DateEvent}  Начало:{(isStartTime ? "Да" : "Нет")}");
+                            dtAlarm.Rows.Add(TypeEvent,Channel, DateEvent, isStartTime);
+                        }
+                        TypeEvent = null;
+                        Channel = null;
+                        DateEvent = null;
+                        FindData = false;
+                    }                   
                 }
             }
-
+            dtAlarm.DefaultView.Sort = "Channel asc,TypeEvent asc,DateEvent asc";
         }
+
         private void ShowStr(string st)
         {
             Console.WriteLine(st);

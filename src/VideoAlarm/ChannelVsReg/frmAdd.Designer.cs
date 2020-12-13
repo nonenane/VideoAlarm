@@ -98,9 +98,9 @@
             this.label4.AutoSize = true;
             this.label4.Location = new System.Drawing.Point(9, 217);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(103, 13);
+            this.label4.Size = new System.Drawing.Size(57, 13);
             this.label4.TabIndex = 7;
-            this.label4.Text = "Путь к лог файлам";
+            this.label4.Text = "Скриншот";
             // 
             // tbPathScan
             // 
