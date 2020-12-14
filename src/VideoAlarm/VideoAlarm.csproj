@@ -39,13 +39,16 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="EPPlus">
-      <HintPath>..\..\..\DLL\EPPlus.dll</HintPath>
+      <HintPath>..\..\..\..\..\frameWork_mew\Framework\bin\Debug\EPPlus.dll</HintPath>
     </Reference>
     <Reference Include="Framework">
-      <HintPath>..\..\..\DLL\Framework.dll</HintPath>
+      <HintPath>..\..\..\..\..\frameWork_mew\Framework\bin\Debug\Framework.dll</HintPath>
     </Reference>
     <Reference Include="IPAddressControlLib">
-      <HintPath>..\..\..\DLL\IPAddressControlLib.dll</HintPath>
+      <HintPath>..\..\..\..\..\DLL\IPAddressControlLib.dll</HintPath>
+    </Reference>
+    <Reference Include="MyMessageBox">
+      <HintPath>..\..\..\..\..\договор 2710\dllInventoryScaners\MyMessageBox.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />

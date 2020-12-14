@@ -68,13 +68,14 @@ GO
 CREATE TABLE [CheckVideoReg].[j_AlarmVideoReg](
 	[id]					int				IDENTITY(1,1) NOT NULL,	
 	[id_VideoReg]			int				not null,
-	[id_Camera_vs_Channel]	int				not null,
+	[id_Camera_vs_Channel]	int				null,
 	[TypeEvent]				varchar(max)	not null,
 	[id_Responsible]		varchar(max)	not null,
-	[DateStartAlarm]		datetime		not null,
+	[DateStartAlarm]		datetime		null,
 	[DateEndAlarm]			datetime		null,
 	[DateCreate]			datetime		not null,
 	[Comment]				varchar(max)	null,	
+	[Channel]				varchar(max)	null,
  CONSTRAINT [PK_j_AlarmVideoReg] PRIMARY KEY CLUSTERED 
 (
 	[id] ASC
@@ -97,7 +98,6 @@ CREATE TABLE [CheckVideoReg].[j_tAlarmVideoReg](
 	[id_Responsible]		varchar(max)	not null,
 	[Delta]					int				not null,
 	[isNoAlarm]				bit				not null default 1,
-	[TypeEvent]				varchar(max)	not null,
 	[Comment]				varchar(max)	null,	
  CONSTRAINT [PK_j_tAlarmVideoReg] PRIMARY KEY CLUSTERED 
 (

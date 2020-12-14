@@ -149,6 +149,7 @@
             this.tbPathLog.Size = new System.Drawing.Size(295, 20);
             this.tbPathLog.TabIndex = 8;
             this.tbPathLog.TextChanged += new System.EventHandler(this.tbName_TextChanged);
+            this.tbPathLog.KeyDown += new System.Windows.Forms.KeyEventHandler(this.tbPathLog_KeyDown);
             // 
             // btFolderSelect
             // 

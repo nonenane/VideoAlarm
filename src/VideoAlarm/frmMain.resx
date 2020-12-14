@@ -124,54 +124,10 @@
     <value>133, 17</value>
   </metadata>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-  <data name="btReportComment.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAA
-        sQAAALEBxi1JjQAAABl0RVh0U29mdHdhcmUAd3d3Lmlua3NjYXBlLm9yZ5vuPBoAAAMHSURBVEhLY8AB
-        pPj4pVcJiihdFJXQuEQKFhJTu8QnKLOTgYFND2oWBpAWFFZ8GJW56V9O3bX/5ODEwgP/JeUMX7CwcFpB
-        zUQAXgHpNVGZm8k2HIZTy07+FxCSPw81FgEEhRWuYNNADhaX0nkIMZWLy5hH1fQCj6r5S24xhU/iKhZf
-        xVXMicJS6rbf1EzCf4em7/2fVnkV1QJpvScMLDwijnxGXj8UZz7/77/53/+EHaTjwNnX/oupWv1xi9n9
-        P6bwMqoFPKpmjxTnf/hvvQ67ZmJxwKwr/5WMov77p1+C+wRsAZ+e82flFf/+e2zCrpEULKXp/AdkQXzJ
-        FbAFLv4d+xj49F2/gizwIjN4kLGUltMvkAVxxRALbD2rD9PUAkgQoVkQuujB//htv8HsiFWv/kev/whm
-        x276+j98+TOIYdv//g9ZdP9//PY/ED4UE7TALrnhv5132H9th8D/3hOO/tezdPyvamD5P2Thvf9qRtb/
-        TR08/7vWr/lvGpD23zkg5r+hXyppFhi5hv7vXrILbJhT6bz/sUVN/z2DYv67te/6b2zn/r+uZ9Z/q8SG
-        /zpWrv+nrN7/X9PSFb8FoIyGbEHokkf/7eKr//tOOv4/bsvP/47ZPf9dKxaANXs0bfhvn9IMDLJP/4Nm
-        Xf1vl1D9PxCYNHFZkFx85D+/kNxpmkSyb/z6/6ISWs8YGFj1qWoBr5jiJxFJgwci4tqbgQWQArgY4tN1
-        +gSygBoZjU9W4wrYUGTAq2p2R2HWi/+WFBYVPhNP/OWVVFwENRYJcHPr82jbfZXpOPffYyNquiYGgxKD
-        e9vOv7xSyneApglBDMUEcnzqFhu5lQwfc8tq3ueRULzOI6FwzTS9v1vdJ30eiA3CfIr6761W//jvBQpO
-        YGZT9854wyeldJ5HXKEfaAY/xCgKAI+y6XPlZb//263/91/TL/s9t6hcJVSKKkBB0C7mh9KSH//lnGI/
-        8ojJ1EPFqQN4VEyXiqXP+c+jYfONU0QqEipMPcCnblMDtOQSkCkDESEGMDAAAFMEVt02xdO9AAAAAElF
-        TkSuQmCC
-</value>
-  </data>
-  <metadata name="cReportDate.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
-  <metadata name="cReportVideoReg.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
-  <metadata name="cReportTime.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
-  <metadata name="cReportDelta.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
-  <metadata name="cReportRealTime.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
-  <metadata name="cReportComment.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
-  <metadata name="cReportResponsible.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
-  <metadata name="cReportSing.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
   <data name="btAlarmComment.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAA
-        sQAAALEBxi1JjQAAABl0RVh0U29mdHdhcmUAd3d3Lmlua3NjYXBlLm9yZ5vuPBoAAAMHSURBVEhLY8AB
+        sAAAALABFGqraQAAABl0RVh0U29mdHdhcmUAd3d3Lmlua3NjYXBlLm9yZ5vuPBoAAAMHSURBVEhLY8AB
         pPj4pVcJiihdFJXQuEQKFhJTu8QnKLOTgYFND2oWBpAWFFZ8GJW56V9O3bX/5ODEwgP/JeUMX7CwcFpB
         zUQAXgHpNVGZm8k2HIZTy07+FxCSPw81FgEEhRWuYNNADhaX0nkIMZWLy5hH1fQCj6r5S24xhU/iKhZf
         xVXMicJS6rbf1EzCf4em7/2fVnkV1QJpvScMLDwijnxGXj8UZz7/77/53/+EHaTjwNnX/oupWv1xi9n9
@@ -213,6 +169,50 @@
     <value>True</value>
   </metadata>
   <metadata name="cAlarmComment.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <data name="btReportComment.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAA
+        sAAAALABFGqraQAAABl0RVh0U29mdHdhcmUAd3d3Lmlua3NjYXBlLm9yZ5vuPBoAAAMHSURBVEhLY8AB
+        pPj4pVcJiihdFJXQuEQKFhJTu8QnKLOTgYFND2oWBpAWFFZ8GJW56V9O3bX/5ODEwgP/JeUMX7CwcFpB
+        zUQAXgHpNVGZm8k2HIZTy07+FxCSPw81FgEEhRWuYNNADhaX0nkIMZWLy5hH1fQCj6r5S24xhU/iKhZf
+        xVXMicJS6rbf1EzCf4em7/2fVnkV1QJpvScMLDwijnxGXj8UZz7/77/53/+EHaTjwNnX/oupWv1xi9n9
+        P6bwMqoFPKpmjxTnf/hvvQ67ZmJxwKwr/5WMov77p1+C+wRsAZ+e82flFf/+e2zCrpEULKXp/AdkQXzJ
+        FbAFLv4d+xj49F2/gizwIjN4kLGUltMvkAVxxRALbD2rD9PUAkgQoVkQuujB//htv8HsiFWv/kev/whm
+        x276+j98+TOIYdv//g9ZdP9//PY/ED4UE7TALrnhv5132H9th8D/3hOO/tezdPyvamD5P2Thvf9qRtb/
+        TR08/7vWr/lvGpD23zkg5r+hXyppFhi5hv7vXrILbJhT6bz/sUVN/z2DYv67te/6b2zn/r+uZ9Z/q8SG
+        /zpWrv+nrN7/X9PSFb8FoIyGbEHokkf/7eKr//tOOv4/bsvP/47ZPf9dKxaANXs0bfhvn9IMDLJP/4Nm
+        Xf1vl1D9PxCYNHFZkFx85D+/kNxpmkSyb/z6/6ISWs8YGFj1qWoBr5jiJxFJgwci4tqbgQWQArgY4tN1
+        +gSygBoZjU9W4wrYUGTAq2p2R2HWi/+WFBYVPhNP/OWVVFwENRYJcHPr82jbfZXpOPffYyNquiYGgxKD
+        e9vOv7xSyneApglBDMUEcnzqFhu5lQwfc8tq3ueRULzOI6FwzTS9v1vdJ30eiA3CfIr6761W//jvBQpO
+        YGZT9854wyeldJ5HXKEfaAY/xCgKAI+y6XPlZb//263/91/TL/s9t6hcJVSKKkBB0C7mh9KSH//lnGI/
+        8ojJ1EPFqQN4VEyXiqXP+c+jYfONU0QqEipMPcCnblMDtOQSkCkDESEGMDAAAFMEVt02xdO9AAAAAElF
+        TkSuQmCC
+</value>
+  </data>
+  <metadata name="cReportDate.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="cReportVideoReg.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="cReportTime.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="cReportDelta.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="cReportRealTime.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="cReportComment.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="cReportResponsible.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="cReportSing.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
   </metadata>
   <metadata name="$this.TrayHeight" type="System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">

@@ -113,6 +113,11 @@ namespace VideoAlarm.VideoReg
                 return;
             }
 
+            if (!System.IO.Directory.Exists(tbPathLog.Text))
+            {
+                MessageBox.Show(Config.centralText($"Текущий путь:\n{tbPathLog.Text}\n не существует!\n"), "Ошибка сохранения", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
 
             Task<DataTable> task = Config.hCntMain.SetVideoReg(id, tbRegName.Text, tbRegIP.Text, tbPlace.Text, tbPathLog.Text, tbComment.Text, true, 0, false);
             task.Wait();
@@ -165,6 +170,12 @@ namespace VideoAlarm.VideoReg
         private void tbName_TextChanged(object sender, EventArgs e)
         {
             isEditData = true;
+        }
+
+        private void tbPathLog_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.V && e.Modifiers == Keys.Control)
+                tbPathLog.Text = Clipboard.GetText();
         }
 
         private void btFolderSelect_Click(object sender, EventArgs e)
