@@ -18,9 +18,47 @@ namespace VideoAlarmDemon
         public Form1()
         {
             InitializeComponent();
-            
+
+            this.notifyIcon1.MouseDoubleClick += new MouseEventHandler(notifyIcon1_MouseDoubleClick);
+            this.Resize += new System.EventHandler(this.Form1_Resize);
+
+           
+
             initWatchers();
             Task.Run(() => TaskParsData());
+        }
+
+        private void Form1_Resize(object sender, EventArgs e)
+        {
+            // проверяем наше окно, и если оно было свернуто, делаем событие        
+            if (WindowState == FormWindowState.Minimized)
+            {
+                // прячем наше окно из панели
+                this.ShowInTaskbar = false;
+                // делаем нашу иконку в трее активной
+                notifyIcon1.Visible = true;
+            }
+        }
+
+        private void notifyIcon1_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            if (WindowState == FormWindowState.Minimized)
+            {
+                // делаем нашу иконку скрытой
+                notifyIcon1.Visible = true;
+                // возвращаем отображение окна в панели
+                this.ShowInTaskbar = true;
+                //разворачиваем окно
+                WindowState = FormWindowState.Normal;
+            }
+            else
+            {
+                WindowState = FormWindowState.Minimized;
+                // прячем наше окно из панели
+                this.ShowInTaskbar = false;
+                // делаем нашу иконку в трее активной
+                notifyIcon1.Visible = true;
+            }
         }
 
         class ListFile
@@ -59,10 +97,18 @@ namespace VideoAlarmDemon
             if (dtData == null) return;
             if (dtData.Rows.Count == 0) return;
 
+            ClearListBox();
+
             foreach (DataRow row in dtData.Rows)
             {
                 int idVideoReg = (int)row["id"];
                 string PathLog = (string)row["PathLog"];
+                string RegName = (string)row["RegName"];
+
+                string[] StringArray = { RegName, PathLog };
+                var listViewItem = new ListViewItem(StringArray);
+                AddItemToListBox(listViewItem);
+
 
                 if (!DicPathToVideoReg.ContainsKey(idVideoReg))
                 {
@@ -159,6 +205,26 @@ namespace VideoAlarmDemon
                                        " - " + sLog);
         }
 
+        private delegate void AddItemToListBoxHandler(ListViewItem listViewItem);
+        private void AddItemToListBox(ListViewItem listViewItem)
+        {
+            if (listView1.InvokeRequired)
+                listView1.Invoke(new AddItemToListBoxHandler(AddItemToListBox),
+                                    new object[] { listViewItem });
+            else
+                listView1.Items.Add(listViewItem);
+        }
+
+        private delegate void ClearListBoxHandler();
+
+        private void ClearListBox()
+        {
+            if (listView1.InvokeRequired)
+                listView1.Invoke(new ClearListBoxHandler(ClearListBox));
+            else
+                listView1.Items.Clear();
+        }
+
         private DateTime StartTime;
         private async void TaskParsData()
         {
@@ -172,7 +238,7 @@ namespace VideoAlarmDemon
                     listFileToAdd.Remove(lFile);
                 }
 
-                if ((DateTime.Now - StartTime).TotalMinutes >= 5)
+                if ((DateTime.Now - StartTime).TotalMinutes >= 30)
                 {
                     StartTime = DateTime.Now;
                     initWatchers();
@@ -180,6 +246,31 @@ namespace VideoAlarmDemon
 
                 Thread.Sleep(TimeSpan.FromSeconds(10));
             }        
+        }
+
+        private void выходToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Close();
+        }
+
+        private void Form1_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            e.Cancel = DialogResult.No == MessageBox.Show("Закрыть программу?", "Выход из программы", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2);
+        }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void свернутьРазвернутьToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            notifyIcon1_MouseDoubleClick(null, null);
+        }
+
+        private void btUpdatePath_Click(object sender, EventArgs e)
+        {
+            initWatchers();
         }
 
         private void InsertDataToDataTable(ListFile lFile)

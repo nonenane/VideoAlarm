@@ -28,12 +28,26 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmMain));
+            this.components = new System.ComponentModel.Container();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle11 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle12 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle13 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle14 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle15 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle16 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle17 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle18 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle9 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle10 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmMain));
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.tsLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
@@ -54,8 +68,6 @@
             this.dtpAlarmTimeEnd = new System.Windows.Forms.DateTimePicker();
             this.dtpAlarmTimeStart = new System.Windows.Forms.DateTimePicker();
             this.label12 = new System.Windows.Forms.Label();
-            this.btAlarmComment = new System.Windows.Forms.Button();
-            this.btAlarmUpdatre = new System.Windows.Forms.Button();
             this.cmbAlarmTypeEvent = new System.Windows.Forms.ComboBox();
             this.label10 = new System.Windows.Forms.Label();
             this.cmbAlarmCameraVsChannel = new System.Windows.Forms.ComboBox();
@@ -75,12 +87,17 @@
             this.label7 = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
             this.tpReport = new System.Windows.Forms.TabPage();
-            this.btReportComment = new System.Windows.Forms.Button();
-            this.btReportUpdate = new System.Windows.Forms.Button();
             this.cmbReportVideoReg = new System.Windows.Forms.ComboBox();
             this.label3 = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
             this.dgvReport = new System.Windows.Forms.DataGridView();
+            this.tbReportComment = new System.Windows.Forms.TextBox();
+            this.tbReportResponsible = new System.Windows.Forms.TextBox();
+            this.dtpReportEnd = new System.Windows.Forms.DateTimePicker();
+            this.label2 = new System.Windows.Forms.Label();
+            this.dtpReportStart = new System.Windows.Forms.DateTimePicker();
+            this.label4 = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
             this.cReportDate = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.cReportVideoReg = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.cReportTime = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -89,13 +106,8 @@
             this.cReportComment = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.cReportResponsible = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.cReportSing = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-            this.tbReportComment = new System.Windows.Forms.TextBox();
-            this.tbReportResponsible = new System.Windows.Forms.TextBox();
-            this.dtpReportEnd = new System.Windows.Forms.DateTimePicker();
-            this.label2 = new System.Windows.Forms.Label();
-            this.dtpReportStart = new System.Windows.Forms.DateTimePicker();
-            this.label4 = new System.Windows.Forms.Label();
-            this.label1 = new System.Windows.Forms.Label();
+            this.cmsReport = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.обработкаToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.cAlarmVideoReg = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.cAlarmChannel = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.cAlarmNameCam = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -105,6 +117,10 @@
             this.cAlarmLimit = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.cAlarmResponcible = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.cAlarmComment = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.btAlarmComment = new System.Windows.Forms.Button();
+            this.btAlarmUpdatre = new System.Windows.Forms.Button();
+            this.btReportComment = new System.Windows.Forms.Button();
+            this.btReportUpdate = new System.Windows.Forms.Button();
             this.statusStrip1.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             this.tabControl1.SuspendLayout();
@@ -113,6 +129,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.dgvAlarm)).BeginInit();
             this.tpReport.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvReport)).BeginInit();
+            this.cmsReport.SuspendLayout();
             this.SuspendLayout();
             // 
             // statusStrip1
@@ -261,6 +278,7 @@
             // 
             // btAlarmDropDelta
             // 
+            this.btAlarmDropDelta.Image = global::VideoAlarm.Properties.Resources.cancel;
             this.btAlarmDropDelta.Location = new System.Drawing.Point(537, 71);
             this.btAlarmDropDelta.Name = "btAlarmDropDelta";
             this.btAlarmDropDelta.Size = new System.Drawing.Size(20, 20);
@@ -326,29 +344,6 @@
             this.label12.Size = new System.Drawing.Size(19, 13);
             this.label12.TabIndex = 21;
             this.label12.Text = "по";
-            // 
-            // btAlarmComment
-            // 
-            this.btAlarmComment.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btAlarmComment.Enabled = false;
-            this.btAlarmComment.Image = ((System.Drawing.Image)(resources.GetObject("btAlarmComment.Image")));
-            this.btAlarmComment.Location = new System.Drawing.Point(993, 444);
-            this.btAlarmComment.Name = "btAlarmComment";
-            this.btAlarmComment.Size = new System.Drawing.Size(32, 32);
-            this.btAlarmComment.TabIndex = 33;
-            this.btAlarmComment.UseVisualStyleBackColor = true;
-            this.btAlarmComment.Click += new System.EventHandler(this.btAlarmComment_Click);
-            // 
-            // btAlarmUpdatre
-            // 
-            this.btAlarmUpdatre.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btAlarmUpdatre.Image = global::VideoAlarm.Properties.Resources.refresh;
-            this.btAlarmUpdatre.Location = new System.Drawing.Point(993, 9);
-            this.btAlarmUpdatre.Name = "btAlarmUpdatre";
-            this.btAlarmUpdatre.Size = new System.Drawing.Size(32, 32);
-            this.btAlarmUpdatre.TabIndex = 32;
-            this.btAlarmUpdatre.UseVisualStyleBackColor = true;
-            this.btAlarmUpdatre.Click += new System.EventHandler(this.btAlarmUpdatre_Click);
             // 
             // cmbAlarmTypeEvent
             // 
@@ -573,29 +568,6 @@
             this.tpReport.Text = "Отчёт";
             this.tpReport.UseVisualStyleBackColor = true;
             // 
-            // btReportComment
-            // 
-            this.btReportComment.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btReportComment.Enabled = false;
-            this.btReportComment.Image = ((System.Drawing.Image)(resources.GetObject("btReportComment.Image")));
-            this.btReportComment.Location = new System.Drawing.Point(993, 445);
-            this.btReportComment.Name = "btReportComment";
-            this.btReportComment.Size = new System.Drawing.Size(32, 32);
-            this.btReportComment.TabIndex = 20;
-            this.btReportComment.UseVisualStyleBackColor = true;
-            this.btReportComment.Click += new System.EventHandler(this.btReportComment_Click);
-            // 
-            // btReportUpdate
-            // 
-            this.btReportUpdate.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btReportUpdate.Image = global::VideoAlarm.Properties.Resources.refresh;
-            this.btReportUpdate.Location = new System.Drawing.Point(993, 10);
-            this.btReportUpdate.Name = "btReportUpdate";
-            this.btReportUpdate.Size = new System.Drawing.Size(32, 32);
-            this.btReportUpdate.TabIndex = 19;
-            this.btReportUpdate.UseVisualStyleBackColor = true;
-            this.btReportUpdate.Click += new System.EventHandler(this.btReportUpdate_Click);
-            // 
             // cmbReportVideoReg
             // 
             this.cmbReportVideoReg.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
@@ -630,19 +602,18 @@
             // 
             this.dgvReport.AllowUserToAddRows = false;
             this.dgvReport.AllowUserToDeleteRows = false;
-            this.dgvReport.AllowUserToResizeRows = false;
             this.dgvReport.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.dgvReport.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle5.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle5.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            dataGridViewCellStyle5.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle5.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle5.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgvReport.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle5;
+            dataGridViewCellStyle11.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle11.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle11.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            dataGridViewCellStyle11.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle11.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle11.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle11.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvReport.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle11;
             this.dgvReport.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvReport.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.cReportDate,
@@ -661,67 +632,12 @@
             this.dgvReport.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgvReport.Size = new System.Drawing.Size(1017, 369);
             this.dgvReport.TabIndex = 14;
+            this.dgvReport.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.dgvReport_CellFormatting);
+            this.dgvReport.CellMouseClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dgvReport_CellMouseClick);
+            this.dgvReport.CellPainting += new System.Windows.Forms.DataGridViewCellPaintingEventHandler(this.dgvReport_CellPainting);
             this.dgvReport.ColumnWidthChanged += new System.Windows.Forms.DataGridViewColumnEventHandler(this.dgvReport_ColumnWidthChanged);
             this.dgvReport.RowPostPaint += new System.Windows.Forms.DataGridViewRowPostPaintEventHandler(this.dgvReport_RowPostPaint);
             this.dgvReport.RowPrePaint += new System.Windows.Forms.DataGridViewRowPrePaintEventHandler(this.dgvReport_RowPrePaint);
-            // 
-            // cReportDate
-            // 
-            this.cReportDate.DataPropertyName = "DateCreate";
-            this.cReportDate.HeaderText = "Дата";
-            this.cReportDate.Name = "cReportDate";
-            this.cReportDate.ReadOnly = true;
-            // 
-            // cReportVideoReg
-            // 
-            this.cReportVideoReg.DataPropertyName = "RegName";
-            this.cReportVideoReg.HeaderText = "Видеорегистратор";
-            this.cReportVideoReg.Name = "cReportVideoReg";
-            this.cReportVideoReg.ReadOnly = true;
-            // 
-            // cReportTime
-            // 
-            this.cReportTime.DataPropertyName = "DateCreate";
-            this.cReportTime.HeaderText = "Время";
-            this.cReportTime.Name = "cReportTime";
-            this.cReportTime.ReadOnly = true;
-            // 
-            // cReportDelta
-            // 
-            this.cReportDelta.DataPropertyName = "Delta";
-            this.cReportDelta.HeaderText = "+/-";
-            this.cReportDelta.Name = "cReportDelta";
-            this.cReportDelta.ReadOnly = true;
-            // 
-            // cReportRealTime
-            // 
-            this.cReportRealTime.DataPropertyName = "DateCreate";
-            this.cReportRealTime.HeaderText = "Фактическое время";
-            this.cReportRealTime.Name = "cReportRealTime";
-            this.cReportRealTime.ReadOnly = true;
-            // 
-            // cReportComment
-            // 
-            this.cReportComment.DataPropertyName = "Comment";
-            this.cReportComment.HeaderText = "Комментарий";
-            this.cReportComment.Name = "cReportComment";
-            this.cReportComment.ReadOnly = true;
-            // 
-            // cReportResponsible
-            // 
-            this.cReportResponsible.DataPropertyName = "nameResponsible";
-            this.cReportResponsible.HeaderText = "Ответственный";
-            this.cReportResponsible.Name = "cReportResponsible";
-            this.cReportResponsible.ReadOnly = true;
-            // 
-            // cReportSing
-            // 
-            this.cReportSing.DataPropertyName = "isNoAlarm";
-            this.cReportSing.HeaderText = "Признак";
-            this.cReportSing.Name = "cReportSing";
-            this.cReportSing.ReadOnly = true;
-            this.cReportSing.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.cReportSing.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
             // 
             // tbReportComment
             // 
@@ -789,66 +705,207 @@
             this.label1.TabIndex = 0;
             this.label1.Text = "Период с";
             // 
+            // cReportDate
+            // 
+            this.cReportDate.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.cReportDate.DataPropertyName = "Date";
+            dataGridViewCellStyle12.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.cReportDate.DefaultCellStyle = dataGridViewCellStyle12;
+            this.cReportDate.HeaderText = "Дата";
+            this.cReportDate.MinimumWidth = 90;
+            this.cReportDate.Name = "cReportDate";
+            this.cReportDate.ReadOnly = true;
+            this.cReportDate.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.cReportDate.Width = 90;
+            // 
+            // cReportVideoReg
+            // 
+            this.cReportVideoReg.DataPropertyName = "RegName";
+            dataGridViewCellStyle13.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.cReportVideoReg.DefaultCellStyle = dataGridViewCellStyle13;
+            this.cReportVideoReg.HeaderText = "Видеорегистратор";
+            this.cReportVideoReg.Name = "cReportVideoReg";
+            this.cReportVideoReg.ReadOnly = true;
+            this.cReportVideoReg.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            // 
+            // cReportTime
+            // 
+            this.cReportTime.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.cReportTime.DataPropertyName = "TimeRun";
+            dataGridViewCellStyle14.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.cReportTime.DefaultCellStyle = dataGridViewCellStyle14;
+            this.cReportTime.HeaderText = "Время";
+            this.cReportTime.MinimumWidth = 70;
+            this.cReportTime.Name = "cReportTime";
+            this.cReportTime.ReadOnly = true;
+            this.cReportTime.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.cReportTime.Width = 70;
+            // 
+            // cReportDelta
+            // 
+            this.cReportDelta.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.cReportDelta.DataPropertyName = "Delta";
+            dataGridViewCellStyle15.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.cReportDelta.DefaultCellStyle = dataGridViewCellStyle15;
+            this.cReportDelta.HeaderText = "+/-";
+            this.cReportDelta.MinimumWidth = 45;
+            this.cReportDelta.Name = "cReportDelta";
+            this.cReportDelta.ReadOnly = true;
+            this.cReportDelta.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.cReportDelta.Width = 45;
+            // 
+            // cReportRealTime
+            // 
+            this.cReportRealTime.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.cReportRealTime.DataPropertyName = "DateCreate";
+            dataGridViewCellStyle16.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.cReportRealTime.DefaultCellStyle = dataGridViewCellStyle16;
+            this.cReportRealTime.HeaderText = "Фактическое время";
+            this.cReportRealTime.MinimumWidth = 110;
+            this.cReportRealTime.Name = "cReportRealTime";
+            this.cReportRealTime.ReadOnly = true;
+            this.cReportRealTime.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.cReportRealTime.Width = 110;
+            // 
+            // cReportComment
+            // 
+            this.cReportComment.DataPropertyName = "Comment";
+            dataGridViewCellStyle17.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.cReportComment.DefaultCellStyle = dataGridViewCellStyle17;
+            this.cReportComment.HeaderText = "Комментарий";
+            this.cReportComment.Name = "cReportComment";
+            this.cReportComment.ReadOnly = true;
+            this.cReportComment.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            // 
+            // cReportResponsible
+            // 
+            this.cReportResponsible.DataPropertyName = "nameResponsible";
+            dataGridViewCellStyle18.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle18.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.cReportResponsible.DefaultCellStyle = dataGridViewCellStyle18;
+            this.cReportResponsible.HeaderText = "Ответственный";
+            this.cReportResponsible.Name = "cReportResponsible";
+            this.cReportResponsible.ReadOnly = true;
+            this.cReportResponsible.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            // 
+            // cReportSing
+            // 
+            this.cReportSing.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.cReportSing.DataPropertyName = "isNoAlarm";
+            this.cReportSing.HeaderText = "Признак";
+            this.cReportSing.MinimumWidth = 60;
+            this.cReportSing.Name = "cReportSing";
+            this.cReportSing.ReadOnly = true;
+            this.cReportSing.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.cReportSing.Width = 60;
+            // 
+            // cmsReport
+            // 
+            this.cmsReport.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.обработкаToolStripMenuItem});
+            this.cmsReport.Name = "cmsReport";
+            this.cmsReport.Size = new System.Drawing.Size(203, 26);
+            this.cmsReport.Opening += new System.ComponentModel.CancelEventHandler(this.cmsReport_Opening);
+            // 
+            // обработкаToolStripMenuItem
+            // 
+            this.обработкаToolStripMenuItem.Name = "обработкаToolStripMenuItem";
+            this.обработкаToolStripMenuItem.Size = new System.Drawing.Size(202, 22);
+            this.обработкаToolStripMenuItem.Text = "Обработка \"Без Тревоги\"";
+            this.обработкаToolStripMenuItem.Click += new System.EventHandler(this.обработкаToolStripMenuItem_Click);
+            // 
             // cAlarmVideoReg
             // 
+            this.cAlarmVideoReg.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
             this.cAlarmVideoReg.DataPropertyName = "RegName";
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.cAlarmVideoReg.DefaultCellStyle = dataGridViewCellStyle2;
+            this.cAlarmVideoReg.Frozen = true;
             this.cAlarmVideoReg.HeaderText = "Видеорегистратор";
             this.cAlarmVideoReg.Name = "cAlarmVideoReg";
             this.cAlarmVideoReg.ReadOnly = true;
+            this.cAlarmVideoReg.Width = 113;
             // 
             // cAlarmChannel
             // 
+            this.cAlarmChannel.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
             this.cAlarmChannel.DataPropertyName = "RegChannel";
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.cAlarmChannel.DefaultCellStyle = dataGridViewCellStyle3;
+            this.cAlarmChannel.Frozen = true;
             this.cAlarmChannel.HeaderText = "Канал";
+            this.cAlarmChannel.MinimumWidth = 90;
             this.cAlarmChannel.Name = "cAlarmChannel";
             this.cAlarmChannel.ReadOnly = true;
+            this.cAlarmChannel.Width = 90;
             // 
             // cAlarmNameCam
             // 
             this.cAlarmNameCam.DataPropertyName = "CamName";
+            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.cAlarmNameCam.DefaultCellStyle = dataGridViewCellStyle4;
             this.cAlarmNameCam.HeaderText = "Наименование камеры на канале";
+            this.cAlarmNameCam.MinimumWidth = 150;
             this.cAlarmNameCam.Name = "cAlarmNameCam";
             this.cAlarmNameCam.ReadOnly = true;
             // 
             // cAlarmTypeEvent
             // 
+            this.cAlarmTypeEvent.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
             this.cAlarmTypeEvent.DataPropertyName = "TypeEvent";
+            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.cAlarmTypeEvent.DefaultCellStyle = dataGridViewCellStyle5;
             this.cAlarmTypeEvent.HeaderText = "Тип события";
             this.cAlarmTypeEvent.Name = "cAlarmTypeEvent";
             this.cAlarmTypeEvent.ReadOnly = true;
+            this.cAlarmTypeEvent.Width = 113;
             // 
             // cAlarmDateStart
             // 
+            this.cAlarmDateStart.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
             this.cAlarmDateStart.DataPropertyName = "DateStartAlarm";
-            dataGridViewCellStyle2.Format = "G";
-            dataGridViewCellStyle2.NullValue = null;
-            this.cAlarmDateStart.DefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle6.Format = "G";
+            dataGridViewCellStyle6.NullValue = null;
+            this.cAlarmDateStart.DefaultCellStyle = dataGridViewCellStyle6;
             this.cAlarmDateStart.HeaderText = "Время начала";
+            this.cAlarmDateStart.MinimumWidth = 110;
             this.cAlarmDateStart.Name = "cAlarmDateStart";
             this.cAlarmDateStart.ReadOnly = true;
+            this.cAlarmDateStart.Width = 110;
             // 
             // cAlarmDateEnd
             // 
+            this.cAlarmDateEnd.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
             this.cAlarmDateEnd.DataPropertyName = "DateEndAlarm";
-            dataGridViewCellStyle3.Format = "G";
-            dataGridViewCellStyle3.NullValue = null;
-            this.cAlarmDateEnd.DefaultCellStyle = dataGridViewCellStyle3;
+            dataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle7.Format = "G";
+            dataGridViewCellStyle7.NullValue = null;
+            this.cAlarmDateEnd.DefaultCellStyle = dataGridViewCellStyle7;
             this.cAlarmDateEnd.HeaderText = "Время окончания";
+            this.cAlarmDateEnd.MinimumWidth = 110;
             this.cAlarmDateEnd.Name = "cAlarmDateEnd";
             this.cAlarmDateEnd.ReadOnly = true;
+            this.cAlarmDateEnd.Width = 110;
             // 
             // cAlarmLimit
             // 
+            this.cAlarmLimit.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
             this.cAlarmLimit.DataPropertyName = "DeltaString";
+            dataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.cAlarmLimit.DefaultCellStyle = dataGridViewCellStyle8;
             this.cAlarmLimit.HeaderText = "Продолжительность";
+            this.cAlarmLimit.MinimumWidth = 150;
             this.cAlarmLimit.Name = "cAlarmLimit";
             this.cAlarmLimit.ReadOnly = true;
+            this.cAlarmLimit.Width = 150;
             // 
             // cAlarmResponcible
             // 
             this.cAlarmResponcible.DataPropertyName = "nameResponsible";
-            dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.cAlarmResponcible.DefaultCellStyle = dataGridViewCellStyle4;
+            dataGridViewCellStyle9.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle9.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.cAlarmResponcible.DefaultCellStyle = dataGridViewCellStyle9;
             this.cAlarmResponcible.HeaderText = "Ответственный";
             this.cAlarmResponcible.Name = "cAlarmResponcible";
             this.cAlarmResponcible.ReadOnly = true;
@@ -856,9 +913,57 @@
             // cAlarmComment
             // 
             this.cAlarmComment.DataPropertyName = "Comment";
+            dataGridViewCellStyle10.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.cAlarmComment.DefaultCellStyle = dataGridViewCellStyle10;
             this.cAlarmComment.HeaderText = "Комментарий";
             this.cAlarmComment.Name = "cAlarmComment";
             this.cAlarmComment.ReadOnly = true;
+            // 
+            // btAlarmComment
+            // 
+            this.btAlarmComment.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btAlarmComment.Enabled = false;
+            this.btAlarmComment.Image = ((System.Drawing.Image)(resources.GetObject("btAlarmComment.Image")));
+            this.btAlarmComment.Location = new System.Drawing.Point(993, 444);
+            this.btAlarmComment.Name = "btAlarmComment";
+            this.btAlarmComment.Size = new System.Drawing.Size(32, 32);
+            this.btAlarmComment.TabIndex = 33;
+            this.btAlarmComment.UseVisualStyleBackColor = true;
+            this.btAlarmComment.Click += new System.EventHandler(this.btAlarmComment_Click);
+            // 
+            // btAlarmUpdatre
+            // 
+            this.btAlarmUpdatre.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btAlarmUpdatre.Image = global::VideoAlarm.Properties.Resources.refresh;
+            this.btAlarmUpdatre.Location = new System.Drawing.Point(993, 9);
+            this.btAlarmUpdatre.Name = "btAlarmUpdatre";
+            this.btAlarmUpdatre.Size = new System.Drawing.Size(32, 32);
+            this.btAlarmUpdatre.TabIndex = 32;
+            this.btAlarmUpdatre.UseVisualStyleBackColor = true;
+            this.btAlarmUpdatre.Click += new System.EventHandler(this.btAlarmUpdatre_Click);
+            // 
+            // btReportComment
+            // 
+            this.btReportComment.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btReportComment.Enabled = false;
+            this.btReportComment.Image = ((System.Drawing.Image)(resources.GetObject("btReportComment.Image")));
+            this.btReportComment.Location = new System.Drawing.Point(993, 445);
+            this.btReportComment.Name = "btReportComment";
+            this.btReportComment.Size = new System.Drawing.Size(32, 32);
+            this.btReportComment.TabIndex = 20;
+            this.btReportComment.UseVisualStyleBackColor = true;
+            this.btReportComment.Click += new System.EventHandler(this.btReportComment_Click);
+            // 
+            // btReportUpdate
+            // 
+            this.btReportUpdate.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btReportUpdate.Image = global::VideoAlarm.Properties.Resources.refresh;
+            this.btReportUpdate.Location = new System.Drawing.Point(993, 10);
+            this.btReportUpdate.Name = "btReportUpdate";
+            this.btReportUpdate.Size = new System.Drawing.Size(32, 32);
+            this.btReportUpdate.TabIndex = 19;
+            this.btReportUpdate.UseVisualStyleBackColor = true;
+            this.btReportUpdate.Click += new System.EventHandler(this.btReportUpdate_Click);
             // 
             // frmMain
             // 
@@ -889,6 +994,7 @@
             this.tpReport.ResumeLayout(false);
             this.tpReport.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvReport)).EndInit();
+            this.cmsReport.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -958,6 +1064,8 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn cReportComment;
         private System.Windows.Forms.DataGridViewTextBoxColumn cReportResponsible;
         private System.Windows.Forms.DataGridViewCheckBoxColumn cReportSing;
+        private System.Windows.Forms.ContextMenuStrip cmsReport;
+        private System.Windows.Forms.ToolStripMenuItem обработкаToolStripMenuItem;
         private System.Windows.Forms.DataGridViewTextBoxColumn cAlarmVideoReg;
         private System.Windows.Forms.DataGridViewTextBoxColumn cAlarmChannel;
         private System.Windows.Forms.DataGridViewTextBoxColumn cAlarmNameCam;

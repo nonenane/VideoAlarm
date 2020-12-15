@@ -94,6 +94,8 @@ namespace VideoAlarm
             }
 
             dgvAlarm.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;
+            dgvReport.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;
+
 
             //GetReport();
             //GetAlarm();
@@ -161,8 +163,8 @@ namespace VideoAlarm
             if (e.RowIndex != -1 && dtReport != null && dtReport.DefaultView.Count != 0)
             {
                 Color rColor = Color.White;
-                //if (!(bool)dtReport.DefaultView[e.RowIndex]["isActive"])
-                //   rColor = panel1.BackColor;
+                if (dtReport.DefaultView[e.RowIndex]["id"]==DBNull.Value)
+                   rColor = panel1.BackColor;
                 dgvReport.Rows[e.RowIndex].DefaultCellStyle.BackColor = rColor;
                 dgvReport.Rows[e.RowIndex].DefaultCellStyle.SelectionBackColor = rColor;
                 dgvReport.Rows[e.RowIndex].DefaultCellStyle.SelectionForeColor = Color.Black;
@@ -238,6 +240,76 @@ namespace VideoAlarm
                 task.Wait();
                 dtReport = task.Result;
 
+
+                task = Config.hCntMain.GetSchedule();
+                task.Wait();
+                DataTable dtShedule = task.Result;
+                if (dtShedule != null && dtShedule.Rows.Count > 0)
+                {
+                    dtShedule.DefaultView.RowFilter = "isOn = 1";
+                    dtShedule = dtShedule.DefaultView.ToTable().Copy();
+                }
+
+                task = Config.hCntMain.GetVideoRegList(false);
+                task.Wait();
+                DataTable dtReg = task.Result.Copy();
+
+                DataTable dtDataToAlarm = new DataTable();
+
+                dtDataToAlarm.Columns.Add("id", typeof(int));
+                dtDataToAlarm.Columns.Add("id_VideoReg", typeof(int));
+                dtDataToAlarm.Columns.Add("Date", typeof(DateTime));
+                dtDataToAlarm.Columns.Add("RegName", typeof(string));
+                dtDataToAlarm.Columns.Add("TimeRun", typeof(TimeSpan));
+                dtDataToAlarm.Columns.Add("Delta", typeof(int));
+                dtDataToAlarm.Columns.Add("DateCreate", typeof(DateTime));
+                dtDataToAlarm.Columns.Add("Comment", typeof(string));
+                dtDataToAlarm.Columns.Add("nameResponsible", typeof(string));
+                dtDataToAlarm.Columns.Add("isNoAlarm", typeof(bool));
+                dtDataToAlarm.AcceptChanges();
+                //dtDataToAlarm.Columns.Add("", typeof());
+                //dtDataToAlarm.Columns.Add("", typeof());
+                //dtDataToAlarm.Columns.Add("", typeof());
+
+                if (dtShedule != null && dtShedule.Rows.Count > 0 && dtReg != null && dtReg.Rows.Count > 0)
+                {
+                    for (DateTime date = dtpReportStart.Value.Date; date <= dtpReportEnd.Value.Date; date = date.Date.AddDays(1))
+                    {
+                        Console.WriteLine(date.ToShortDateString());
+
+                        foreach (DataRow rowReg in dtReg.Rows)
+                        {
+                            int idReg = (int)rowReg["id"];
+                            string RegName = (string)rowReg["RegName"];
+
+                            DataTable dtTmp = dtDataToAlarm.Clone();
+                            var query = from g in dtShedule.AsEnumerable()
+                                        join k in dtReport.AsEnumerable() on new { Q = g.Field<int>("id"), Z = date.Date, X = idReg } equals new { Q = k.Field<int>("idShedule"), Z = k.Field<DateTime>("DateCreate").Date, X = k.Field<int>("id_VideoReg") } into tempJoin
+                                        //join k in dtReport.AsEnumerable() on new { Q = g.Field<int>("id") } equals new { Q = k.Field<int>("idShedule")} into tempJoin
+                                        from leftJoin in tempJoin.DefaultIfEmpty()
+                                        select dtTmp.LoadDataRow(new object[]
+                                                                       {
+                                                                    leftJoin==null?null:leftJoin.Field<int?>("id"),
+                                                                    //leftJoin==null?null:leftJoin.Field<int?>("id_VideoReg"),
+                                                                    idReg,
+                                                                    date.Date,
+                                                                    //leftJoin==null?"":leftJoin.Field<string>("RegName"),
+                                                                    RegName,
+                                                                    g.Field<TimeSpan>("TimeRun"),
+                                                                    leftJoin==null?null:leftJoin.Field<int?>("Delta"),
+                                                                    leftJoin==null?null:leftJoin.Field<DateTime?>("DateCreate"),
+                                                                    leftJoin==null?"":leftJoin.Field<string>("Comment"),
+                                                                    leftJoin==null?"":leftJoin.Field<string>("nameResponsible"),
+                                                                    leftJoin==null?false:leftJoin.Field<bool>("isNoAlarm"),
+                                                                        }, false);
+                            dtDataToAlarm.Merge(query.CopyToDataTable());
+                        }
+                    }
+                    dtReport = dtDataToAlarm.Copy();
+                }
+                else
+                    dtReport = dtDataToAlarm.Clone();
+
                 Config.DoOnUIThread(() =>
                 {
                     DataGridViewColumn oldCol = dgvReport.SortedColumn;
@@ -300,6 +372,8 @@ namespace VideoAlarm
 
         private void btReportComment_Click(object sender, EventArgs e)
         {
+            if (dtReport.DefaultView[dgvReport.CurrentRow.Index]["id"] == DBNull.Value) return;
+
             Comment.frmComment fComment = new Comment.frmComment();
             if (DialogResult.OK == fComment.ShowDialog())
             {
@@ -322,6 +396,137 @@ namespace VideoAlarm
         private void dtpReportStart_Leave(object sender, EventArgs e)
         {
             GetReport();
+        }
+
+        private void dgvReport_CellPainting(object sender, DataGridViewCellPaintingEventArgs e)
+        {
+            DataGridView grv = (DataGridView)sender;
+
+            e.AdvancedBorderStyle.Bottom = DataGridViewAdvancedCellBorderStyle.None;
+            if (e.RowIndex < 1 || e.ColumnIndex < 0)
+                return;
+
+            if (!new List<int>() { cReportDate.Index, cReportVideoReg.Index }.Contains(e.ColumnIndex))
+            {
+                e.AdvancedBorderStyle.Top = grv.AdvancedCellBorderStyle.Top;
+                //e.AdvancedBorderStyle.Bottom = dgvData.AdvancedCellBorderStyle.Bottom;
+                if (e.RowIndex == grv.Rows.Count - 1)
+                {
+                    e.AdvancedBorderStyle.Bottom = grv.AdvancedCellBorderStyle.Bottom;
+                }
+                return;
+            }
+
+            if (IsTheSameCellValue(e.ColumnIndex, e.RowIndex, grv))
+            {
+                e.AdvancedBorderStyle.Top = DataGridViewAdvancedCellBorderStyle.None;
+            }
+            else
+            {
+                e.AdvancedBorderStyle.Top = grv.AdvancedCellBorderStyle.Top;
+            }
+
+            if (e.RowIndex == grv.Rows.Count - 1)
+            {
+                e.AdvancedBorderStyle.Bottom = grv.AdvancedCellBorderStyle.Bottom;
+            }
+        }
+
+        bool IsTheSameCellValue(int column, int row, DataGridView dgv)
+        {
+            if (dtReport == null) return false;
+            if (dtReport.DefaultView.Count == 0) return false;
+
+            try
+            {
+                DataGridViewCell cell1 = dgv[column, row];
+                DataGridViewCell cell2 = dgv[column, row - 1];
+                if (cell1.Value == null || cell2.Value == null)
+                {
+                    return false;
+                }
+
+                int id = (int)dtReport.DefaultView[row]["id_VideoReg"];
+                int id_pre = (int)dtReport.DefaultView[row - 1]["id_VideoReg"];
+
+                DateTime preDate = (DateTime)dtReport.DefaultView[row - 1]["Date"];
+                DateTime Date = (DateTime)dtReport.DefaultView[row]["Date"];
+
+                return cell1.Value.ToString() == cell2.Value.ToString() && id == id_pre && preDate.Date == Date.Date;
+            }
+            catch
+            { return false; }
+        }
+
+        private void dgvReport_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
+        {
+            DataGridView grv = (DataGridView)sender;
+
+            if (!new List<int>() { cReportDate.Index, cReportVideoReg.Index }.Contains(e.ColumnIndex))
+            { return; }
+
+            if (e.RowIndex == 0)
+            {
+                //e.Value = "";
+                //e.FormattingApplied = true;
+                return;
+            }
+
+            if (IsTheSameCellValue(e.ColumnIndex, e.RowIndex, grv))
+            {
+                e.Value = "";
+                e.FormattingApplied = true;
+            }
+        }
+
+        private void dgvReport_CellMouseClick(object sender, DataGridViewCellMouseEventArgs e)
+        {
+            DataGridView dgv = (DataGridView)sender;
+            if (e.Button == MouseButtons.Right && e.RowIndex != -1)
+            {
+                dgv.CurrentCell = dgv[e.ColumnIndex, e.RowIndex];
+                cmsReport.Show(MousePosition);
+            }
+        }
+
+        private void cmsReport_Opening(object sender, CancelEventArgs e)
+        {
+            if (dtReport.DefaultView[dgvReport.CurrentRow.Index]["id"] == DBNull.Value)
+            {
+                return;
+            }
+            else
+            {
+                e.Cancel = true;
+                return;
+            }
+
+        }
+
+        private void обработкаToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (DialogResult.Yes == MessageBox.Show("Установить признак:\"Без Тревог\"?", "Обработка", MessageBoxButtons.YesNo, MessageBoxIcon.Question))
+            {
+                int id_VideoReg = (int)dtReport.DefaultView[dgvReport.CurrentRow.Index]["id_VideoReg"];
+
+                DateTime DateCreate = (DateTime)dtReport.DefaultView[dgvReport.CurrentRow.Index]["Date"];
+                TimeSpan TimeRun = (TimeSpan)dtReport.DefaultView[dgvReport.CurrentRow.Index]["TimeRun"];
+
+                DateCreate = DateCreate.Add(TimeRun);
+
+                string fileName = $"TMP_{id_VideoReg}_{DateCreate.ToString()}";
+
+                Task<DataTable> taskResp = Config.hCntMain.GetResponsibleInWork();
+                taskResp.Wait();
+
+                Task task;
+                string id_Responsible = "";
+                if (taskResp.Result != null && taskResp.Result.Rows.Count > 0) id_Responsible = (string)taskResp.Result.Rows[0]["listIdResponsible"];
+
+                task = Config.hCntMain.SetTAlarmVideoReg(id_VideoReg, fileName, 0, id_Responsible, DateCreate);
+                task.Wait();
+                GetReport();
+            }
         }
 
         #endregion
@@ -586,8 +791,7 @@ namespace VideoAlarm
             setFilterAlarm();
         }
 
-        #endregion
 
-       
-    }
+        #endregion
+}
 }

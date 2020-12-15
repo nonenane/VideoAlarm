@@ -422,6 +422,35 @@ namespace VideoAlarm
 
             return dtResult;
         }
+
+        public async Task<DataTable> GetResponsibleInWork()
+        {
+            ap.Clear();
+
+            return executeProcedure("[CheckVideoReg].[GetResponsibleInWork]",
+                  new string[0] { },
+                  new DbType[0] { }, ap);
+        }
+
+        public async Task SetTAlarmVideoReg(int id_VideoReg, string NameFile, int Delta, string id_Responsible,DateTime DateCreate)
+        {
+            ap.Clear();
+
+            ap.Add(id_VideoReg);
+            ap.Add(NameFile);
+            ap.Add(Delta);
+            ap.Add(id_Responsible);
+
+            ap.Add(true);
+            ap.Add(DateCreate);
+
+
+            executeProcedure("[CheckVideoReg].[SetTAlarmVideoReg]",
+                  new string[6] { "@id_VideoReg", "@NameFile", "@Delta", "@id_Responsible","@isNoAlarm", "@DateCreate" },
+                  new DbType[6] { DbType.Int32, DbType.String, DbType.Int32, DbType.String,DbType.Boolean,DbType.DateTime }, ap);
+        }
+
+
         #endregion
     }
 }

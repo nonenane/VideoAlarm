@@ -127,7 +127,7 @@
   <data name="btAlarmComment.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAA
-        sAAAALABFGqraQAAABl0RVh0U29mdHdhcmUAd3d3Lmlua3NjYXBlLm9yZ5vuPBoAAAMHSURBVEhLY8AB
+        rgAAAK4B+ff3XQAAABl0RVh0U29mdHdhcmUAd3d3Lmlua3NjYXBlLm9yZ5vuPBoAAAMHSURBVEhLY8AB
         pPj4pVcJiihdFJXQuEQKFhJTu8QnKLOTgYFND2oWBpAWFFZ8GJW56V9O3bX/5ODEwgP/JeUMX7CwcFpB
         zUQAXgHpNVGZm8k2HIZTy07+FxCSPw81FgEEhRWuYNNADhaX0nkIMZWLy5hH1fQCj6r5S24xhU/iKhZf
         xVXMicJS6rbf1EzCf4em7/2fVnkV1QJpvScMLDwijnxGXj8UZz7/77/53/+EHaTjwNnX/oupWv1xi9n9
@@ -174,7 +174,7 @@
   <data name="btReportComment.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAA
-        sAAAALABFGqraQAAABl0RVh0U29mdHdhcmUAd3d3Lmlua3NjYXBlLm9yZ5vuPBoAAAMHSURBVEhLY8AB
+        rgAAAK4B+ff3XQAAABl0RVh0U29mdHdhcmUAd3d3Lmlua3NjYXBlLm9yZ5vuPBoAAAMHSURBVEhLY8AB
         pPj4pVcJiihdFJXQuEQKFhJTu8QnKLOTgYFND2oWBpAWFFZ8GJW56V9O3bX/5ODEwgP/JeUMX7CwcFpB
         zUQAXgHpNVGZm8k2HIZTy07+FxCSPw81FgEEhRWuYNNADhaX0nkIMZWLy5hH1fQCj6r5S24xhU/iKhZf
         xVXMicJS6rbf1EzCf4em7/2fVnkV1QJpvScMLDwijnxGXj8UZz7/77/53/+EHaTjwNnX/oupWv1xi9n9
@@ -214,6 +214,9 @@
   </metadata>
   <metadata name="cReportSing.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
+  </metadata>
+  <metadata name="cmsReport.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>242, 17</value>
   </metadata>
   <metadata name="$this.TrayHeight" type="System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>67</value>
