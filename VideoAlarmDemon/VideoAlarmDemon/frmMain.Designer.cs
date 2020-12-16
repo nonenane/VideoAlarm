@@ -1,7 +1,7 @@
 ﻿
 namespace VideoAlarmDemon
 {
-    partial class Form1
+    partial class frmMain
     {
         /// <summary>
         /// Required designer variable.
@@ -30,7 +30,7 @@ namespace VideoAlarmDemon
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmMain));
             this.btUpdatePath = new System.Windows.Forms.Button();
             this.lstResultLog = new System.Windows.Forms.ListBox();
             this.lstResultBody = new System.Windows.Forms.ListBox();

@@ -13,18 +13,19 @@ using System.Windows.Forms;
 
 namespace VideoAlarmDemon
 {
-    public partial class Form1 : Form
+    public partial class frmMain : Form
     {
-        public Form1()
+        public frmMain()
         {
             InitializeComponent();
 
             this.notifyIcon1.MouseDoubleClick += new MouseEventHandler(notifyIcon1_MouseDoubleClick);
             this.Resize += new System.EventHandler(this.Form1_Resize);
 
-           
-
+          
             initWatchers();
+            FindFilesOnPath();
+
             Task.Run(() => TaskParsData());
         }
 
@@ -139,6 +140,29 @@ namespace VideoAlarmDemon
 
         }
 
+        private void FindFilesOnPath()
+        {
+            foreach (string path in DicPathToVideoReg.Values)
+            {
+                if (Directory.Exists(path))
+                {
+                    string[] files = Directory.GetFiles(path, "*.txt");
+                    foreach (string file in files)
+                    {
+                        int idVideoReg = DicPathToVideoReg.FirstOrDefault(x => x.Value == path).Key;                      
+                        
+                        ListFile lFile = new ListFile();
+                        lFile.idReg = idVideoReg;
+                        lFile.Path = path;
+                        lFile.file = file;
+
+                        InsertDataToDataTable(lFile);
+
+                    }
+                }
+            }
+        }
+
         private void addWatcher(string Path)
         {
             FileSystemWatcher oFileWatcher = new FileSystemWatcher();
@@ -201,8 +225,12 @@ namespace VideoAlarmDemon
                 lstResultBody.Invoke(new AppendListHandler(AppendTextToLog),
                                     new object[] { sLog });
             else
+            {
+                if (lstResultBody.Items.Count > 1000)
+                    lstResultBody.Items.Clear();
                 lstResultBody.Items.Add(Convert.ToString(DateTime.Now) +
                                        " - " + sLog);
+            }
         }
 
         private delegate void AddItemToListBoxHandler(ListViewItem listViewItem);
@@ -225,10 +253,11 @@ namespace VideoAlarmDemon
                 listView1.Items.Clear();
         }
 
-        private DateTime StartTime;
+        private DateTime StartTime,TimeSearchFile;
         private async void TaskParsData()
         {
             StartTime = DateTime.Now;
+            TimeSearchFile = DateTime.Now;
             while (true)
             {
                 while (listFileToAdd.Count > 0)
@@ -237,6 +266,13 @@ namespace VideoAlarmDemon
                     InsertDataToDataTable(lFile);
                     listFileToAdd.Remove(lFile);
                 }
+
+                if ((DateTime.Now - TimeSearchFile).TotalMinutes >= 5)
+                {
+                    TimeSearchFile = DateTime.Now;
+                    FindFilesOnPath();
+                }
+
 
                 if ((DateTime.Now - StartTime).TotalMinutes >= 30)
                 {

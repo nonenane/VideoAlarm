@@ -6,6 +6,8 @@ using Nwuram.Framework.Settings.Connection;
 using System.Threading.Tasks;
 using System.Data;
 using System.Collections.Generic;
+using System.IO;
+using Newtonsoft.Json;
 
 namespace VideoAlarmDemon
 {
@@ -15,26 +17,24 @@ namespace VideoAlarmDemon
         /// The main entry point for the application.
         /// </summary>
         [STAThread]
-        static void Main(string[] args)
+        static void Main()
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            if (args.Length != 0)
-                if (Project.FillSettings(args))
-                {
-                    Logging.Init(ConnectionSettings.GetServer(), ConnectionSettings.GetDatabase(), ConnectionSettings.GetUsername(), ConnectionSettings.GetPassword(), ConnectionSettings.ProgramName);
-                    Config.hCntMain = new Procedures(ConnectionSettings.GetServer(), ConnectionSettings.GetDatabase(), ConnectionSettings.GetUsername(), ConnectionSettings.GetPassword(), ConnectionSettings.ProgramName);
+            try
+            {
+                Config.ProgSettngs = new Settings();
 
-                    Logging.StartFirstLevel(1);
-                    Logging.Comment("Вход в программу");
-                    Logging.StopFirstLevel();
-                    Application.Run(new Form1());
-                    Logging.StartFirstLevel(2);
-                    Logging.Comment("Выход из программы");
-                    Logging.StopFirstLevel();
+                string jsonString = File.ReadAllText(Config.PathFile + @"\settings.json");
 
-                    Project.clearBufferFiles();
-                }
+                Config.ProgSettngs = JsonConvert.DeserializeObject<Settings>(jsonString);
+
+                Config.hCntMain = new Procedures(Config.ProgSettngs.ServerK21, Config.ProgSettngs.DataBaseK21, Config.ProgSettngs.Login, Config.ProgSettngs.Password, "");
+
+                Application.Run(new frmMain());
+
+            }
+            catch { }
         }
     }
 }

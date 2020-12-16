@@ -1,12 +1,9 @@
-﻿using System.Text;
-using System.Collections;
+﻿using System.Collections;
 using Nwuram.Framework.Data;
-using Nwuram.Framework.Settings.Connection;
 using System.Data;
 using System;
-using Nwuram.Framework.Settings.User;
 using System.Threading.Tasks;
-using System.Threading;
+
 
 namespace VideoAlarmDemon
 {
@@ -88,7 +85,7 @@ namespace VideoAlarmDemon
         public async Task<DataTable> getSettings(string id_value)
         {
             ap.Clear();
-            ap.Add(ConnectionSettings.GetIdProgram());
+            ap.Add(Config.ProgSettngs.IdProg);
             ap.Add(id_value);
 
             DataTable dtResult = executeProcedure("[CheckVideoReg].[getSettings]",
