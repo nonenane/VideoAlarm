@@ -71,7 +71,7 @@ BEGIN TRY
 							return;
 						END
 
-					IF EXISTS(select TOP(1) id from [CheckVideoReg].[j_tAlarmVideoReg]  where  id_Responsible = @id)
+					IF EXISTS(select TOP(1) id from [CheckVideoReg].[j_tAlarmVideoReg]  where @id in (select value from dbo.StringToTable(id_Responsible,',')))
 						BEGIN
 							select -2 as id
 							return;

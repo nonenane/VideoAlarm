@@ -165,13 +165,20 @@ namespace VideoAlarmDemon
 
         private void addWatcher(string Path)
         {
-            FileSystemWatcher oFileWatcher = new FileSystemWatcher();
-            oFileWatcher.Path = Path;
-            oFileWatcher.Filter = "*.txt";
-            oFileWatcher.Created +=
-                      new FileSystemEventHandler(FileSystemWatcherCreated);
-            oFileWatcher.EnableRaisingEvents = true;
-            DicPathToWatcher.Add(Path, oFileWatcher);
+            try
+            {
+                FileSystemWatcher oFileWatcher = new FileSystemWatcher();
+                oFileWatcher.Path = Path;
+                oFileWatcher.Filter = "*.txt";
+                oFileWatcher.Created +=
+                          new FileSystemEventHandler(FileSystemWatcherCreated);
+                oFileWatcher.EnableRaisingEvents = true;
+                DicPathToWatcher.Add(Path, oFileWatcher);
+            }
+            catch
+            { 
+            
+            }
         }
 
         private void changePathWatcher(string oldPath, string newPath)
@@ -193,10 +200,9 @@ namespace VideoAlarmDemon
         void FileSystemWatcherCreated(object sender, FileSystemEventArgs e)
         {
             int idVideoReg = DicPathToVideoReg.FirstOrDefault(x => x.Value == ((FileSystemWatcher)sender).Path).Key;
-            //A file has been deleted from the monitor directory.
+           
             string sLog = $"File Path:{new FileInfo(e.FullPath).Directory} File Created: " + e.Name + $"  IdVideoReg:{idVideoReg}  FileSize:{new FileInfo(e.FullPath).Length}";
-            
-
+           
             listFileToAdd.Add(new ListFile()
             {
                 idReg = idVideoReg,
@@ -215,7 +221,7 @@ namespace VideoAlarmDemon
                 lstResultLog.Invoke(new AppendListHandler(AppendText),
                                     new object[] { sLog });
             else
-                lstResultLog.Items.Add(Convert.ToString(DateTime.Now) +
+                lstResultBody.Items.Add(Convert.ToString(DateTime.Now) +
                                        " - " + sLog);
         }
 
@@ -373,7 +379,6 @@ namespace VideoAlarmDemon
                     }
                 }
 
-                //dtAlarm.DefaultView.RowFilter = "idChannel is not null";
                 dtAlarm.DefaultView.Sort = "Channel asc,DateEvent asc";
                 dtAlarm = dtAlarm.DefaultView.ToTable().Copy();
 

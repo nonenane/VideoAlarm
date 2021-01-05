@@ -24,22 +24,17 @@ namespace VideoAlarm
             dgvReport.AutoGenerateColumns = false;
 
             ToolTip ttButton = new ToolTip();
-            //ttButton.SetToolTip(btAdd, "Добавить");
-            //ttButton.SetToolTip(btDel, "Удалить");
-            //ttButton.SetToolTip(btEdit, "Изменить");
-            //ttButton.SetToolTip(btPrint, "Печать");
-            //ttButton.SetToolTip(btUpdate, "Обновить");
-            //ttButton.SetToolTip(btnViewOrders, "Работа с заказами");
-            //ttButton.SetToolTip(btChangePrice, "Обновить цены");
-            //ttButton.SetToolTip(btnAddTovars, "Добавить товары");
-            //ttButton.SetToolTip(btnEditAttribute, "Редактировать атрибуты");
+            ttButton.SetToolTip(btAlarmComment, "Комментарий");
+            ttButton.SetToolTip(btReportComment, "Комментарий");
+
+            ttButton.SetToolTip(btAlarmUpdatre, "Обновить");
+            ttButton.SetToolTip(btReportUpdate, "Обновить");
+
+            ttButton.SetToolTip(btAlarmDropDelta, "Сбросить дельту");
+
             tsLabel.Text = Nwuram.Framework.Settings.Connection.ConnectionSettings.GetServer() + " " +
                 Nwuram.Framework.Settings.Connection.ConnectionSettings.GetDatabase();
             this.Text = Nwuram.Framework.Settings.Connection.ConnectionSettings.ProgramName + " - " + Nwuram.Framework.Settings.User.UserSettings.User.FullUsername;
-
-
-            //if (UserSettings.User.StatusCode == "РКВ") настройкиПроцентовToolStripMenuItem.Visible = false;
-            //if (UserSettings.User.StatusCode.ToLower() == "пр")
 
         }
 
@@ -95,10 +90,6 @@ namespace VideoAlarm
 
             dgvAlarm.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;
             dgvReport.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;
-
-
-            //GetReport();
-            //GetAlarm();
         }
 
         private void frnMain_FormClosing(object sender, FormClosingEventArgs e)
@@ -163,8 +154,8 @@ namespace VideoAlarm
             if (e.RowIndex != -1 && dtReport != null && dtReport.DefaultView.Count != 0)
             {
                 Color rColor = Color.White;
-                if (dtReport.DefaultView[e.RowIndex]["id"]==DBNull.Value)
-                   rColor = panel1.BackColor;
+                if (dtReport.DefaultView[e.RowIndex]["id"] == DBNull.Value)
+                    rColor = panel1.BackColor;
                 dgvReport.Rows[e.RowIndex].DefaultCellStyle.BackColor = rColor;
                 dgvReport.Rows[e.RowIndex].DefaultCellStyle.SelectionBackColor = rColor;
                 dgvReport.Rows[e.RowIndex].DefaultCellStyle.SelectionForeColor = Color.Black;
@@ -637,7 +628,7 @@ namespace VideoAlarm
         private void GetAlarm()
         {
             Task.Run(() =>
-            {                
+            {
                 Config.DoOnUIThread(() => { this.Enabled = false; }, this);
 
                 Task<DataTable> task = Config.hCntMain.GetAlarmVideoReg(dtpAlarmStart.Value, dtpAlarmEnd.Value);
@@ -753,7 +744,7 @@ namespace VideoAlarm
             Comment.frmComment fComment = new Comment.frmComment();
             if (DialogResult.OK == fComment.ShowDialog())
             {
-                int id = (int)dtAlarm.DefaultView[dgvAlarm.CurrentRow.Index]["id"];                
+                int id = (int)dtAlarm.DefaultView[dgvAlarm.CurrentRow.Index]["id"];
                 string comment = fComment.getComment();
 
                 Task task = Config.hCntMain.SetCommentAlarmVideoReg(id, comment, 1);
@@ -793,5 +784,5 @@ namespace VideoAlarm
 
 
         #endregion
-}
+    }
 }

@@ -29,14 +29,14 @@ namespace VideoAlarm
                     Logging.Comment("Вход в программу");
                     Logging.StopFirstLevel();
 
-                    if (new List<string>(new string[] { "ркв", "кд", "пр" }).Contains(Nwuram.Framework.Settings.User.UserSettings.User.StatusCode.ToLower()))
-                    {
+                    //if (new List<string>(new string[] { "ркв", "кд", "пр" }).Contains(Nwuram.Framework.Settings.User.UserSettings.User.StatusCode.ToLower()))
+                    //{
 
                         //Application.Run(new OnlineStoreViewOrders.statisticOrder.frmStatistic());
                         Application.Run(new frmMain());
                         //Application.Run(new dictonaryCategory.frmListCategory());
                         //Application.Run(new dictonatyTovar.frmAddTovar());
-                    }
+                    //}
                     Logging.StartFirstLevel(2);
                     Logging.Comment("Выход из программы");
                     Logging.StopFirstLevel();

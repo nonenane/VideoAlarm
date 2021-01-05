@@ -34,7 +34,9 @@ namespace VideoAlarmDemon
                 Application.Run(new frmMain());
 
             }
-            catch { }
+            catch (Exception ex) { 
+            
+            }
         }
     }
 }
