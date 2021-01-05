@@ -76,6 +76,7 @@ CREATE TABLE [CheckVideoReg].[j_AlarmVideoReg](
 	[DateCreate]			datetime		not null,
 	[Comment]				varchar(max)	null,	
 	[Channel]				varchar(max)	null,
+	[id_Shedule]			int				null,
  CONSTRAINT [PK_j_AlarmVideoReg] PRIMARY KEY CLUSTERED 
 (
 	[id] ASC
@@ -99,6 +100,7 @@ CREATE TABLE [CheckVideoReg].[j_tAlarmVideoReg](
 	[Delta]					int				not null,
 	[isNoAlarm]				bit				not null default 1,
 	[Comment]				varchar(max)	null,	
+	[id_Shedule]			int				null,
  CONSTRAINT [PK_j_tAlarmVideoReg] PRIMARY KEY CLUSTERED 
 (
 	[id] ASC

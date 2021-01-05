@@ -15,6 +15,7 @@ namespace VideoAlarmDemon
 {
     public partial class frmMain : Form
     {
+        private bool isStartApp = true;
         public frmMain()
         {
             InitializeComponent();
@@ -22,9 +23,10 @@ namespace VideoAlarmDemon
             this.notifyIcon1.MouseDoubleClick += new MouseEventHandler(notifyIcon1_MouseDoubleClick);
             this.Resize += new System.EventHandler(this.Form1_Resize);
 
-          
             initWatchers();
             FindFilesOnPath();
+            isStartApp = false;
+
 
             Task.Run(() => TaskParsData());
         }
@@ -74,7 +76,7 @@ namespace VideoAlarmDemon
         Dictionary<int, string> DicPathToVideoReg = new Dictionary<int, string>();
         Dictionary<string, FileSystemWatcher> DicPathToWatcher = new Dictionary<string, FileSystemWatcher>();
 
-        DataTable dtData,dtRegChannel;
+        DataTable dtData, dtRegChannel;
         private void GetVideoReg()
         {
             Task<DataTable> task = Config.hCntMain.GetVideoReg();
@@ -149,8 +151,8 @@ namespace VideoAlarmDemon
                     string[] files = Directory.GetFiles(path, "*.txt");
                     foreach (string file in files)
                     {
-                        int idVideoReg = DicPathToVideoReg.FirstOrDefault(x => x.Value == path).Key;                      
-                        
+                        int idVideoReg = DicPathToVideoReg.FirstOrDefault(x => x.Value == path).Key;
+
                         ListFile lFile = new ListFile();
                         lFile.idReg = idVideoReg;
                         lFile.Path = path;
@@ -176,8 +178,8 @@ namespace VideoAlarmDemon
                 DicPathToWatcher.Add(Path, oFileWatcher);
             }
             catch
-            { 
-            
+            {
+
             }
         }
 
@@ -200,9 +202,9 @@ namespace VideoAlarmDemon
         void FileSystemWatcherCreated(object sender, FileSystemEventArgs e)
         {
             int idVideoReg = DicPathToVideoReg.FirstOrDefault(x => x.Value == ((FileSystemWatcher)sender).Path).Key;
-           
+
             string sLog = $"File Path:{new FileInfo(e.FullPath).Directory} File Created: " + e.Name + $"  IdVideoReg:{idVideoReg}  FileSize:{new FileInfo(e.FullPath).Length}";
-           
+
             listFileToAdd.Add(new ListFile()
             {
                 idReg = idVideoReg,
@@ -259,7 +261,7 @@ namespace VideoAlarmDemon
                 listView1.Items.Clear();
         }
 
-        private DateTime StartTime,TimeSearchFile;
+        private DateTime StartTime, TimeSearchFile;
         private async void TaskParsData()
         {
             StartTime = DateTime.Now;
@@ -287,7 +289,7 @@ namespace VideoAlarmDemon
                 }
 
                 Thread.Sleep(TimeSpan.FromSeconds(10));
-            }        
+            }
         }
 
         private void выходToolStripMenuItem_Click(object sender, EventArgs e)
@@ -319,6 +321,7 @@ namespace VideoAlarmDemon
         {
             string path = lFile.Path;
             string file = lFile.file;
+            FileInfo fInfo = new FileInfo(file);
 
             DataTable dtAlarm = new DataTable();
             dtAlarm.Columns.Add("id_VideoReg", typeof(int));
@@ -335,77 +338,6 @@ namespace VideoAlarmDemon
             {
                 if (!File.Exists(file)) return;
 
-                using (StreamReader sr = new StreamReader(file, Encoding.Default))
-                {
-                    string line;
-                    string TypeEvent = null;
-                    int? Channel = null;
-                    DateTime? DateEvent = null;
-                    bool isStartTime = true;
-                    bool FindData = false;
-
-                    while ((line = sr.ReadLine()) != null)
-                    {
-
-                        Int64 tmpInt64;
-                        if (Int64.TryParse(line, out tmpInt64)) { FindData = true; }
-                        if (FindData && line.StartsWith("Тип события")) { TypeEvent = line.Replace("Тип события:", "").Trim(); }
-                        if (FindData && line.StartsWith("Канал")) { Channel = int.Parse(line.Replace("Канал:", "").Trim()); }
-                        if (FindData && line.StartsWith("Начало")) { DateEvent = DateTime.Parse(line.Replace("Начало:", "").Trim()); isStartTime = true; }
-
-                        if (FindData && line.StartsWith("Завершение")) { DateEvent = DateTime.Parse(line.Replace("Завершение:", "").Trim()); isStartTime = false; }
-
-                        if (line.Trim().Length == 0)
-                        {
-                            if (FindData && TypeEvent != null && Channel != null && DateEvent != null)
-                            {
-                                int? idChannel = null;
-                                try
-                                {
-                                    EnumerableRowCollection<DataRow> rowCollect = dtRegChannel.AsEnumerable().Where(r => r.Field<string>("RegChannel").Equals(Channel.ToString()));
-                                    if (rowCollect.Count() > 0)
-                                        idChannel = (int)rowCollect.FirstOrDefault()["id"];
-                                }
-                                catch { }
-
-                                AppendTextToLog($"Тип события:{TypeEvent}  Канал:{Channel}  Время:{DateEvent}  Начало:{(isStartTime ? "Да" : "Нет")}");
-                                dtAlarm.Rows.Add(lFile.idReg, TypeEvent, idChannel,Channel, DateEvent, isStartTime);
-                            }
-                            TypeEvent = null;
-                            Channel = null;
-                            DateEvent = null;
-                            FindData = false;
-                        }
-                    }
-                }
-
-                dtAlarm.DefaultView.Sort = "Channel asc,DateEvent asc";
-                dtAlarm = dtAlarm.DefaultView.ToTable().Copy();
-
-                Task<DataTable> taskResp = Config.hCntMain.GetResponsibleInWork();
-                taskResp.Wait();
-
-                Task task;
-               string id_Responsible = "";
-                if (taskResp.Result != null && taskResp.Result.Rows.Count > 0) id_Responsible = (string)taskResp.Result.Rows[0]["listIdResponsible"];
-
-                foreach (DataRowView row in dtAlarm.DefaultView)
-                {
-                    int id_VideoReg = (int)row["id_VideoReg"];
-                    int? id_Camera_vs_Channel = null; if (row["idChannel"] != DBNull.Value) id_Camera_vs_Channel = (int?)row["idChannel"];
-                    string TypeEvent = (string)row["TypeEvent"];
-                    DateTime? DateStartAlarm = null;
-                    DateTime? DateEndAlarm = null;
-                    int Channel = (int)row["Channel"];
-
-
-                    if ((bool)row["isStartTime"]) DateStartAlarm = (DateTime?)row["DateEvent"]; else DateEndAlarm = (DateTime?)row["DateEvent"];
-
-                    task = Config.hCntMain.SetAlarmVideoReg(id_VideoReg, id_Camera_vs_Channel, TypeEvent, id_Responsible, DateStartAlarm, DateEndAlarm, Channel);
-                    task.Wait();
-
-                }
-
                 int delta = 0;
                 Task<DataTable> taskTable = Config.hCntMain.getSettings("dlsc");
                 taskTable.Wait();
@@ -418,10 +350,103 @@ namespace VideoAlarmDemon
                     }
                 }
 
-                FileInfo fInfo = new FileInfo(file);
+                Task<int?> taskInt = Config.hCntMain.GetSchedule(delta, isStartApp);
+                taskInt.Wait();
 
-                task = Config.hCntMain.SetTAlarmVideoReg(lFile.idReg, fInfo.Name, delta, id_Responsible);
-                task.Wait();
+                if (taskInt.Result != null)
+                {
+
+                    using (StreamReader sr = new StreamReader(file, Encoding.Default))
+                    {
+                        string line;
+                        string TypeEvent = null;
+                        int? Channel = null;
+                        DateTime? DateEvent = null;
+                        bool isStartTime = true;
+                        bool FindData = false;
+
+                        while ((line = sr.ReadLine()) != null)
+                        {
+
+                            Int64 tmpInt64;
+                            if (Int64.TryParse(line, out tmpInt64)) { FindData = true; }
+                            if (FindData && line.StartsWith("Тип события")) { TypeEvent = line.Replace("Тип события:", "").Trim(); }
+                            if (FindData && line.StartsWith("Канал")) { Channel = int.Parse(line.Replace("Канал:", "").Trim()); }
+                            if (FindData && line.StartsWith("Начало")) { DateEvent = DateTime.Parse(line.Replace("Начало:", "").Trim()); isStartTime = true; }
+
+                            if (FindData && line.StartsWith("Завершение")) { DateEvent = DateTime.Parse(line.Replace("Завершение:", "").Trim()); isStartTime = false; }
+
+                            if (line.Trim().Length == 0)
+                            {
+                                if (FindData && TypeEvent != null && Channel != null && DateEvent != null)
+                                {
+                                    int? idChannel = null;
+                                    try
+                                    {
+                                        EnumerableRowCollection<DataRow> rowCollect = dtRegChannel.AsEnumerable().Where(r => r.Field<string>("RegChannel").Equals(Channel.ToString()) && r.Field<int>("id_VideoReg") == lFile.idReg);
+                                        if (rowCollect.Count() > 0)
+                                            idChannel = (int)rowCollect.FirstOrDefault()["id"];
+                                    }
+                                    catch { }
+
+                                    AppendTextToLog($"Тип события:{TypeEvent}  Канал:{Channel}  Время:{DateEvent}  Начало:{(isStartTime ? "Да" : "Нет")}");
+                                    dtAlarm.Rows.Add(lFile.idReg, TypeEvent, idChannel, Channel, DateEvent, isStartTime);
+                                }
+                                TypeEvent = null;
+                                Channel = null;
+                                DateEvent = null;
+                                FindData = false;
+                            }
+                        }
+                    }
+
+                    dtAlarm.DefaultView.Sort = "Channel asc,DateEvent asc";
+                    dtAlarm = dtAlarm.DefaultView.ToTable().Copy();
+
+                    Task<DataTable> taskResp = Config.hCntMain.GetResponsibleInWork();
+                    taskResp.Wait();
+
+                    Task task;
+                    string id_Responsible = "";
+                    if (taskResp.Result != null && taskResp.Result.Rows.Count > 0) id_Responsible = (string)taskResp.Result.Rows[0]["listIdResponsible"];
+
+                    int id_Schedule = (int)taskInt.Result;
+
+                    foreach (DataRowView row in dtAlarm.DefaultView)
+                    {
+                        int id_VideoReg = (int)row["id_VideoReg"];
+                        int? id_Camera_vs_Channel = null; if (row["idChannel"] != DBNull.Value) id_Camera_vs_Channel = (int?)row["idChannel"];
+                        string TypeEvent = (string)row["TypeEvent"];
+                        DateTime? DateStartAlarm = null;
+                        DateTime? DateEndAlarm = null;
+                        int Channel = (int)row["Channel"];
+
+
+                        if ((bool)row["isStartTime"]) DateStartAlarm = (DateTime?)row["DateEvent"]; else DateEndAlarm = (DateTime?)row["DateEvent"];
+
+                        task = Config.hCntMain.SetAlarmVideoReg(id_VideoReg, id_Camera_vs_Channel, TypeEvent, id_Responsible, DateStartAlarm, DateEndAlarm, Channel, id_Schedule);
+                        task.Wait();
+
+                    }
+
+                    //int delta = 0;
+                    //Task<DataTable> taskTable = Config.hCntMain.getSettings("dlsc");
+                    //taskTable.Wait();
+                    //if (taskTable.Result != null && taskTable.Result.Rows.Count > 0 && taskTable.Result.Rows[0]["value"] != null)
+                    //{
+                    //    decimal valueDec;
+                    //    if (decimal.TryParse(taskTable.Result.Rows[0]["value"].ToString(), out valueDec))
+                    //    {
+                    //        delta = decimal.ToInt32(valueDec);
+                    //    }
+                    //}
+
+                    
+
+                    task = Config.hCntMain.SetTAlarmVideoReg(lFile.idReg, fInfo.Name, delta, id_Responsible,id_Schedule);
+                    task.Wait();
+                }
+
 
                 if (!Directory.Exists(path + @"\End")) Directory.CreateDirectory(path + @"\End");
                 if (File.Exists(path + @"\End\" + fInfo.Name)) File.Delete(path + @"\End\" + fInfo.Name);
@@ -433,7 +458,7 @@ namespace VideoAlarmDemon
                 Console.WriteLine(ex.Message);
             }
         }
-        
+
 
     }
 }

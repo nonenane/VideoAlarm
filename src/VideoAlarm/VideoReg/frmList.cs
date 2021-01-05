@@ -16,6 +16,7 @@ namespace VideoAlarm.VideoReg
 {
     public partial class frmList : Form
     {
+        public bool isUpdate { private set; get; }
         private DataTable dtData;
         public frmList()
         {
@@ -50,7 +51,10 @@ namespace VideoAlarm.VideoReg
         private void btAdd_Click(object sender, EventArgs e)
         {
             if (DialogResult.OK == new frmAdd() { Text = "Добавить видеорегистратор" }.ShowDialog())
+            {
                 get_data();
+                isUpdate = true;
+            }
         }
 
         private void btEdit_Click(object sender, EventArgs e)
@@ -59,7 +63,10 @@ namespace VideoAlarm.VideoReg
             {
                 DataRowView row = dtData.DefaultView[dgvData.CurrentRow.Index];
                 if (DialogResult.OK == new frmAdd() { Text = "Редактировать видеорегистратор", row = row }.ShowDialog())
+                {
                     get_data();
+                    isUpdate = true;
+                }
             }
         }
 
@@ -90,6 +97,7 @@ namespace VideoAlarm.VideoReg
                 if (result == -1)
                 {
                     MessageBox.Show(Config.centralText("Запись уже удалена другим пользователем\n"), "Удаление записи", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    isUpdate = true;
                     get_data();
                     return;
                 }
@@ -106,6 +114,7 @@ namespace VideoAlarm.VideoReg
                             MessageBox.Show(Config.centralText("При сохранение данных возникли ошибки записи.\nОбратитесь в ОЭЭС\n"), "Сохранение данных", MessageBoxButtons.OK, MessageBoxIcon.Error);
                             return;
                         }
+                        isUpdate = true;
                         get_data();
                         return;
                     }
@@ -123,7 +132,7 @@ namespace VideoAlarm.VideoReg
                             MessageBox.Show(Config.centralText("При сохранение данных возникли ошибки записи.\nОбратитесь в ОЭЭС\n"), "Сохранение данных", MessageBoxButtons.OK, MessageBoxIcon.Error);
                             return;
                         }
-
+                        isUpdate = true;
                         get_data();
                         return;
                     }
@@ -140,7 +149,7 @@ namespace VideoAlarm.VideoReg
                             MessageBox.Show(Config.centralText("При сохранение данных возникли ошибки записи.\nОбратитесь в ОЭЭС\n"), "Сохранение данных", MessageBoxButtons.OK, MessageBoxIcon.Error);
                             return;
                         }
-
+                        isUpdate = true;
                         get_data();
                         return;
                     }

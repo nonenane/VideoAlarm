@@ -14,7 +14,8 @@ ALTER PROCEDURE [CheckVideoReg].[SetAlarmVideoReg]
 	@id_Responsible varchar(max) = '',
 	@DateStartAlarm datetime = null,
 	@DateEndAlarm datetime = null,
-	@Channel varchar(max) = ''
+	@Channel varchar(max) = '',
+	@id_Schedule int = null
 AS
 BEGIN
 	SET NOCOUNT ON;
@@ -54,8 +55,8 @@ IF @DateStartAlarm is not null
 
 				IF NOT EXISTS (select TOP(1) id from CheckVideoReg.j_AlarmVideoReg 	where id_VideoReg = @id_VideoReg  and ((@id_Camera_vs_Channel is not null and id_Camera_vs_Channel =  @id_Camera_vs_Channel ) OR (Channel = @Channel)) and DateStartAlarm = @DateStartAlarm)
 				BEGIN
-					INSERT INTO CheckVideoReg.j_AlarmVideoReg (id_VideoReg,id_Camera_vs_Channel,TypeEvent,id_Responsible,DateStartAlarm,DateEndAlarm,DateCreate,Comment,Channel)
-					VALUES (@id_VideoReg,@id_Camera_vs_Channel,@TypeEvent,@id_Responsible,@DateStartAlarm,@DateEndAlarm,GETDATE(),'',@Channel)
+					INSERT INTO CheckVideoReg.j_AlarmVideoReg (id_VideoReg,id_Camera_vs_Channel,TypeEvent,id_Responsible,DateStartAlarm,DateEndAlarm,DateCreate,Comment,Channel,id_Shedule)
+					VALUES (@id_VideoReg,@id_Camera_vs_Channel,@TypeEvent,@id_Responsible,@DateStartAlarm,@DateEndAlarm,GETDATE(),'',@Channel,@id_Schedule)
 				END
 
 				return
@@ -89,8 +90,8 @@ ELSE IF @DateEndAlarm is not null
 			BEGIN
 				IF NOT EXISTS (select TOP(1) id from CheckVideoReg.j_AlarmVideoReg 	where id_VideoReg = @id_VideoReg  and ((@id_Camera_vs_Channel is not null and id_Camera_vs_Channel =  @id_Camera_vs_Channel ) OR (Channel = @Channel)) and DateEndAlarm = @DateEndAlarm)
 				BEGIN
-					INSERT INTO CheckVideoReg.j_AlarmVideoReg (id_VideoReg,id_Camera_vs_Channel,TypeEvent,id_Responsible,DateStartAlarm,DateEndAlarm,DateCreate,Comment,Channel)
-					VALUES (@id_VideoReg,@id_Camera_vs_Channel,@TypeEvent,@id_Responsible,@DateStartAlarm,@DateEndAlarm,GETDATE(),'',@Channel)
+					INSERT INTO CheckVideoReg.j_AlarmVideoReg (id_VideoReg,id_Camera_vs_Channel,TypeEvent,id_Responsible,DateStartAlarm,DateEndAlarm,DateCreate,Comment,Channel,id_Shedule)
+					VALUES (@id_VideoReg,@id_Camera_vs_Channel,@TypeEvent,@id_Responsible,@DateStartAlarm,@DateEndAlarm,GETDATE(),'',@Channel,@id_Schedule)
 				END
 
 				return

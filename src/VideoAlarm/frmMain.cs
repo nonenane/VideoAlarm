@@ -43,6 +43,22 @@ namespace VideoAlarm
             dtpAlarmStart.Value = DateTime.Now.AddDays(-1);
             dtpReportStart.Value = DateTime.Now.AddDays(-1);
 
+            GetVideoReg();
+            GetCameraVsChannelList();
+            GetTypeEvent();
+            GetSettings();
+
+            dgvAlarm.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;
+            dgvReport.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;
+        }
+
+        private void frnMain_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            e.Cancel = MessageBox.Show(Config.centralText("Вы действительно хотите выйти\nиз программы?\n"), "Выход из программы", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2) == DialogResult.No;
+        }
+
+        private void GetVideoReg()
+        {
             Task<DataTable> task = Config.hCntMain.GetVideoRegList(true);
             task.Wait();
             DataTable dtAlarmVideoReg = task.Result.Copy();
@@ -57,26 +73,33 @@ namespace VideoAlarm
             cmbAlarmVideoReg.DisplayMember = "RegName";
             cmbAlarmVideoReg.ValueMember = "id";
             cmbAlarmVideoReg.DataSource = dtAlarmVideoReg;
+        }
 
-            task = Config.hCntMain.GetCameraVsChannelList(true);
+        private void GetCameraVsChannelList()
+        {
+            Task<DataTable> task = Config.hCntMain.GetCameraVsChannelList(true);
             task.Wait();
             DataTable dtCameraVsChannelList = task.Result.Copy();
 
             cmbAlarmCameraVsChannel.DisplayMember = "nameRegCamName";
             cmbAlarmCameraVsChannel.ValueMember = "id";
             cmbAlarmCameraVsChannel.DataSource = dtCameraVsChannelList;
+        }
 
-
-            task = Config.hCntMain.GetTypeEvent(true);
+        private void GetTypeEvent()
+        {
+            Task<DataTable> task = Config.hCntMain.GetTypeEvent(true);
             task.Wait();
             DataTable dtTypeEvent = task.Result.Copy();
 
             cmbAlarmTypeEvent.DisplayMember = "TypeEvent";
             cmbAlarmTypeEvent.ValueMember = "TypeEvent";
             cmbAlarmTypeEvent.DataSource = dtTypeEvent;
+        }
 
-
-            task = Config.hCntMain.getSettings("dlsc");
+        private void GetSettings()
+        {
+            Task<DataTable> task = Config.hCntMain.getSettings("dlsc");
             task.Wait();
             if (task.Result != null && task.Result.Rows.Count > 0 && task.Result.Rows[0]["value"] != null)
             {
@@ -87,14 +110,6 @@ namespace VideoAlarm
                     tbAlarmDelta.Text = valueDec.ToString("0");
                 }
             }
-
-            dgvAlarm.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;
-            dgvReport.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;
-        }
-
-        private void frnMain_FormClosing(object sender, FormClosingEventArgs e)
-        {
-            e.Cancel = MessageBox.Show(Config.centralText("Вы действительно хотите выйти\nиз программы?\n"), "Выход из программы", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2) == DialogResult.No;
         }
 
         #region "Меню"
@@ -105,17 +120,32 @@ namespace VideoAlarm
 
         private void справочникВидеорегистраторовToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            new VideoReg.frmList().ShowDialog();
+            VideoReg.frmList fList = new VideoReg.frmList();
+            fList.ShowDialog();
+            if (fList.isUpdate)
+            {
+                GetVideoReg();
+                setFilterAlarm();
+                setFilterReport();
+            }
         }
 
         private void справочникОтветственныхСотрудниковToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            new Responsible.frmList().ShowDialog();
+            Responsible.frmList fList = new Responsible.frmList();
+            fList.ShowDialog();         
         }
 
         private void справочникКаналовВидеорегистраторовToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            new ChannelVsReg.frmList().ShowDialog();
+            ChannelVsReg.frmList fList = new ChannelVsReg.frmList();
+            fList.ShowDialog();
+            if (fList.isUpdate)
+            {
+                GetCameraVsChannelList();
+                setFilterAlarm();
+                setFilterReport();
+            }
         }
 
         private void настройкиToolStripMenuItem_Click(object sender, EventArgs e)

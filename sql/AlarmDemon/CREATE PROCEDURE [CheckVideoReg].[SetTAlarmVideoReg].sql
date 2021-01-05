@@ -12,6 +12,7 @@ ALTER PROCEDURE [CheckVideoReg].[SetTAlarmVideoReg]
 	@NameFile varchar(max) = '',
 	@Delta int,
 	@id_Responsible varchar(max) = '',
+	@id_Schedule int = null,
 	@isNoAlarm bit  = 0,
 	@DateCreate datetime = null
 AS
@@ -22,8 +23,8 @@ BEGIN
 
 	IF NOT EXISTS(select top(1) id from CheckVideoReg.j_tAlarmVideoReg where id_VideoReg = @id_VideoReg and NameFile = @NameFile)
 		BEGIN
-			INSERT INTO CheckVideoReg.j_tAlarmVideoReg (id_VideoReg,DateCreate,NameFile,id_Responsible,Delta,isNoAlarm,Comment)
-			VALUES (@id_VideoReg,@DateCreate,@NameFile,@id_Responsible,@Delta,@isNoAlarm ,'')
+			INSERT INTO CheckVideoReg.j_tAlarmVideoReg (id_VideoReg,DateCreate,NameFile,id_Responsible,Delta,isNoAlarm,Comment,id_Shedule)
+			VALUES (@id_VideoReg,@DateCreate,@NameFile,@id_Responsible,@Delta,@isNoAlarm ,'',@id_Schedule)
 		END
 
 END

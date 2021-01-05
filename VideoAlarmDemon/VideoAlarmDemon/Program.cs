@@ -34,8 +34,9 @@ namespace VideoAlarmDemon
                 Application.Run(new frmMain());
 
             }
-            catch (Exception ex) { 
-            
+            catch (Exception ex) {
+                MessageBox.Show(ex.Message,"Запуск программы",MessageBoxButtons.OK,MessageBoxIcon.Warning);
+                //Console.WriteLine(ex.Message);
             }
         }
     }

@@ -30,7 +30,7 @@ select
 from 
 	CheckVideoReg.j_tAlarmVideoReg a
 		left join CheckVideoReg.s_VideoReg v on v.id = a.id_VideoReg
-		left join CheckVideoReg.s_Schedule  s on s.id = (select TOP(1) ss.id from CheckVideoReg.s_Schedule ss where ss.isOn =1 and  cast(a.DateCreate as time)>= ss.TimeRun order by ss.TimeRun desc)
+		left join CheckVideoReg.s_Schedule  s on s.id = a.id_Shedule --(select TOP(1) ss.id from CheckVideoReg.s_Schedule ss where ss.isOn =1 and  cast(a.DateCreate as time)>= ss.TimeRun order by ss.TimeRun desc)
 WHERE
 	@dateStart<=cast(a.DateCreate as date) and cast(a.DateCreate as date)<=@dateEnd
 
