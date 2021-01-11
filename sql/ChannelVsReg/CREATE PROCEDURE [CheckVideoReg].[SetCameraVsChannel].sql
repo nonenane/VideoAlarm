@@ -67,13 +67,15 @@ BEGIN TRY
 				END
 			ELSE
 				BEGIN					
-					UPDATE [CheckVideoReg].[s_Camera_vs_Channel]
+					UPDATE 
+							[CheckVideoReg].[s_Camera_vs_Channel]
 					set		[CamIP] = @CamIP
 						   ,[CamName] = @CamName
 						   ,[RegChannel] = @RegChannel
 						   ,[id_VideoReg] = @id_VideoReg
 						   ,[PathScan] = @PathScan
 						   ,[Scan] = @Scan
+						   ,[Comment] = @Comment
 						   ,[isActive] = @isActive
 						   ,[id_Editor] = @id_user
 						   ,[DateEdit]=GETDATE()

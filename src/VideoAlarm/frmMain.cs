@@ -287,6 +287,7 @@ namespace VideoAlarm
                 dtDataToAlarm.Columns.Add("Comment", typeof(string));
                 dtDataToAlarm.Columns.Add("nameResponsible", typeof(string));
                 dtDataToAlarm.Columns.Add("isNoAlarm", typeof(bool));
+                dtDataToAlarm.Columns.Add("id_Shedule", typeof(int));
                 dtDataToAlarm.AcceptChanges();
                 //dtDataToAlarm.Columns.Add("", typeof());
                 //dtDataToAlarm.Columns.Add("", typeof());
@@ -322,6 +323,7 @@ namespace VideoAlarm
                                                                     leftJoin==null?"":leftJoin.Field<string>("Comment"),
                                                                     leftJoin==null?"":leftJoin.Field<string>("nameResponsible"),
                                                                     leftJoin==null?false:leftJoin.Field<bool>("isNoAlarm"),
+                                                                    g.Field<int>("id"),
                                                                         }, false);
                             dtDataToAlarm.Merge(query.CopyToDataTable());
                         }
@@ -532,7 +534,7 @@ namespace VideoAlarm
 
                 DateTime DateCreate = (DateTime)dtReport.DefaultView[dgvReport.CurrentRow.Index]["Date"];
                 TimeSpan TimeRun = (TimeSpan)dtReport.DefaultView[dgvReport.CurrentRow.Index]["TimeRun"];
-
+                int id_Schedule = (int)dtReport.DefaultView[dgvReport.CurrentRow.Index]["id_Shedule"];
                 DateCreate = DateCreate.Add(TimeRun);
 
                 string fileName = $"TMP_{id_VideoReg}_{DateCreate.ToString()}";
@@ -544,7 +546,7 @@ namespace VideoAlarm
                 string id_Responsible = "";
                 if (taskResp.Result != null && taskResp.Result.Rows.Count > 0) id_Responsible = (string)taskResp.Result.Rows[0]["listIdResponsible"];
 
-                task = Config.hCntMain.SetTAlarmVideoReg(id_VideoReg, fileName, 0, id_Responsible, DateCreate);
+                task = Config.hCntMain.SetTAlarmVideoReg(id_VideoReg, fileName, 0, id_Responsible, DateCreate, id_Schedule);
                 task.Wait();
                 GetReport();
             }

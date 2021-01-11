@@ -432,7 +432,7 @@ namespace VideoAlarm
                   new DbType[0] { }, ap);
         }
 
-        public async Task SetTAlarmVideoReg(int id_VideoReg, string NameFile, int Delta, string id_Responsible,DateTime DateCreate)
+        public async Task SetTAlarmVideoReg(int id_VideoReg, string NameFile, int Delta, string id_Responsible,DateTime DateCreate,int id_Schedule)
         {
             ap.Clear();
 
@@ -440,14 +440,15 @@ namespace VideoAlarm
             ap.Add(NameFile);
             ap.Add(Delta);
             ap.Add(id_Responsible);
+            ap.Add(id_Schedule);
 
             ap.Add(true);
             ap.Add(DateCreate);
 
 
             executeProcedure("[CheckVideoReg].[SetTAlarmVideoReg]",
-                  new string[6] { "@id_VideoReg", "@NameFile", "@Delta", "@id_Responsible","@isNoAlarm", "@DateCreate" },
-                  new DbType[6] { DbType.Int32, DbType.String, DbType.Int32, DbType.String,DbType.Boolean,DbType.DateTime }, ap);
+                  new string[7] { "@id_VideoReg", "@NameFile", "@Delta", "@id_Responsible", "@id_Schedule","@isNoAlarm", "@DateCreate" },
+                  new DbType[7] { DbType.Int32, DbType.String, DbType.Int32, DbType.String, DbType.Int32, DbType.Boolean,DbType.DateTime }, ap);
         }
 
 

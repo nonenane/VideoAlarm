@@ -339,7 +339,7 @@ namespace VideoAlarmDemon
                 if (!File.Exists(file)) return;
 
                 int delta = 0;
-                Task<DataTable> taskTable = Config.hCntMain.getSettings("dlsc");
+                Task<DataTable> taskTable = Config.hCntMain.getSettings("dlmn");
                 taskTable.Wait();
                 if (taskTable.Result != null && taskTable.Result.Rows.Count > 0 && taskTable.Result.Rows[0]["value"] != null)
                 {
