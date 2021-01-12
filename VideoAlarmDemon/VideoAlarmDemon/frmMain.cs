@@ -441,10 +441,14 @@ namespace VideoAlarmDemon
                     //    }
                     //}
 
-                    
 
-                    task = Config.hCntMain.SetTAlarmVideoReg(lFile.idReg, fInfo.Name, delta, id_Responsible,id_Schedule);
+
+                    task = Config.hCntMain.SetTAlarmVideoReg(lFile.idReg, fInfo.Name, delta, id_Responsible, id_Schedule);
                     task.Wait();
+                }
+                else
+                {
+                    AppendTextToLog($"Файл:\"{file}\". Не уложились в расписание");
                 }
 
 
