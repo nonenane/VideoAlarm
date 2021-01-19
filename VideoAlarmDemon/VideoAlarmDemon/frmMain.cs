@@ -223,7 +223,7 @@ namespace VideoAlarmDemon
                 lstResultLog.Invoke(new AppendListHandler(AppendText),
                                     new object[] { sLog });
             else
-                lstResultBody.Items.Add(Convert.ToString(DateTime.Now) +
+                lstResultLog.Items.Add(Convert.ToString(DateTime.Now) +
                                        " - " + sLog);
         }
 
@@ -448,7 +448,7 @@ namespace VideoAlarmDemon
                 }
                 else
                 {
-                    AppendTextToLog($"Файл:\"{file}\". Не уложились в расписание");
+                    AppendText($"Файл:\"{file}\". Не уложились в расписание");
                 }
 
 
@@ -459,7 +459,8 @@ namespace VideoAlarmDemon
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.Message);
+                AppendTextToLog($"Ошибка: \"{ex.Message}\"");
+              Console.WriteLine(ex.Message);
             }
         }
 
