@@ -5,7 +5,7 @@ GO
 -- =============================================
 -- Author:		Sporykhin G.Y.
 -- Create date: 2020-11-30
--- Description:	Получение списка видео регистраторов
+-- Description:	Получение списка сотрудников
 -- =============================================
 ALTER PROCEDURE [CheckVideoReg].[GetListKadr]	
 	@id_prog int 

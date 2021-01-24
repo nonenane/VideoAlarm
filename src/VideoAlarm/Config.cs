@@ -12,18 +12,7 @@ namespace VideoAlarm
     class Config
     {
         public static Procedures hCntMain { get; set; } //осн. коннект
-        public static Procedures hCntSecond { get; set; } //осн. коннект
-        public static bool ImageTovar { get; set; } //из настроек - надо ли подгружать в csv фото
-        public static bool needImage { get; set; }
-        //  public static decimal Margin { get; set; } //наценка
-
-        public static DataTable dtPercents { get; set; } //все проценты((((((
-
-
-        public static int sizeCSV { get; set; } = 2; //размер csv-файла:)
-
-        public static bool isSale { get; set; } = false; //выключаем пимпочку - распродажа ептить ))
-
+        public static Procedures hCntSecond { get; set; } //осн. коннект      
         public static string centralText(string str)
         {
             int[] arra = new int[255];
@@ -77,7 +66,6 @@ namespace VideoAlarm
 
             return newString;
         }
-
         public static void DoOnUIThread(MethodInvoker d, Form _this)
         {
             if (_this.InvokeRequired) { _this.Invoke(d); } else { d(); }

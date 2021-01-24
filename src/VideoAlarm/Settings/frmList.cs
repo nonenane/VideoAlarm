@@ -28,6 +28,11 @@ namespace VideoAlarm.Settings
             isEditData = false;
         }
 
+        private void frmList_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            e.Cancel = isEditData && DialogResult.No == MessageBox.Show("На форме есть не сохранённые данные.\nЗакрыть форму без сохранения данных?\n", "Закрытие формы", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2);
+        }
+
         private void getSetting(string id_value, TextBox tb)
         {
             Task<DataTable> task = Config.hCntMain.getSettings(id_value);
@@ -47,12 +52,7 @@ namespace VideoAlarm.Settings
             Task<DataTable> task = Config.hCntMain.setSettings(id_value, tb.Text);
             task.Wait();          
         }
-
-        private void frmList_FormClosing(object sender, FormClosingEventArgs e)
-        {
-            e.Cancel = isEditData && DialogResult.No == MessageBox.Show("На форме есть не сохранённые данные.\nЗакрыть форму без сохранения данных?\n", "Закрытие формы", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2);
-        }
-
+       
         private void tbMinut_KeyPress(object sender, KeyPressEventArgs e)
         {
             e.Handled = !char.IsDigit(e.KeyChar) && e.KeyChar != '\b';
