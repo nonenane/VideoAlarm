@@ -122,5 +122,14 @@ namespace VideoAlarmDemon
                 return null;
         }
 
+        public async Task<DataTable> SetViewNotFileAlarm()
+        {
+            ap.Clear();
+
+            return executeProcedure("[CheckVideoReg].[SetViewNotFileAlarm]",
+                  new string[0] { },
+                  new DbType[0] { }, ap);
+        }
+
     }
 }

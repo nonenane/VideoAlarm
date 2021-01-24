@@ -26,7 +26,8 @@ namespace VideoAlarmDemon
             initWatchers();
             FindFilesOnPath();
             isStartApp = false;
-
+            Task<DataTable> taskResp = Config.hCntMain.SetViewNotFileAlarm();
+            taskResp.Wait();
 
             Task.Run(() => TaskParsData());
         }
@@ -261,11 +262,12 @@ namespace VideoAlarmDemon
                 listView1.Items.Clear();
         }
 
-        private DateTime StartTime, TimeSearchFile;
+        private DateTime StartTime, TimeSearchFile,TimeViewResponsible;
         private async void TaskParsData()
         {
             StartTime = DateTime.Now;
             TimeSearchFile = DateTime.Now;
+            TimeViewResponsible = DateTime.Now;
             while (true)
             {
                 while (listFileToAdd.Count > 0)
@@ -281,6 +283,13 @@ namespace VideoAlarmDemon
                     FindFilesOnPath();
                 }
 
+
+                if ((DateTime.Now - TimeViewResponsible).TotalMinutes >= 10)
+                {
+                    TimeViewResponsible = DateTime.Now;
+                    Task<DataTable> taskResp = Config.hCntMain.SetViewNotFileAlarm();
+                    taskResp.Wait();
+                }
 
                 if ((DateTime.Now - StartTime).TotalMinutes >= 30)
                 {

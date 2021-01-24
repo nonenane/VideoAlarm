@@ -128,3 +128,18 @@ GO
 
 ALTER TABLE [CheckVideoReg].[s_Schedule] ADD CONSTRAINT FK_s_Schedule_id_Editor FOREIGN KEY (id_Editor)  REFERENCES [dbo].[ListUsers] (id)
 GO
+
+
+
+CREATE TABLE [CheckVideoReg].[j_ViewNotFileAlarm](
+	[id]			int				IDENTITY(1,1) NOT NULL,		
+	[id_Shedule]	int				not null,
+	[DateInsert]	datetime		not null,
+	[IdResponsible] varchar(max)	not null,
+	
+ CONSTRAINT [PK_j_ViewNotFileAlarm] PRIMARY KEY CLUSTERED 
+(
+	[id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = ON, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO

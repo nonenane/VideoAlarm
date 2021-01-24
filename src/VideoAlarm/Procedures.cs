@@ -451,6 +451,18 @@ namespace VideoAlarm
                   new DbType[7] { DbType.Int32, DbType.String, DbType.Int32, DbType.String, DbType.Int32, DbType.Boolean,DbType.DateTime }, ap);
         }
 
+        public async Task<DataTable> GetViewNotFileAlarm(DateTime dateStart, DateTime dateEnd)
+        {
+            ap.Clear();
+
+            ap.Add(dateStart);
+            ap.Add(dateEnd);
+            DataTable dtResult = executeProcedure("[CheckVideoReg].[GetViewNotFileAlarm]",
+                 new string[2] { "@dateStart", "@dateEnd" },
+                 new DbType[2] { DbType.Date, DbType.Date }, ap);
+
+            return dtResult;
+        }
 
         #endregion
     }

@@ -261,6 +261,10 @@ namespace VideoAlarm
                 task.Wait();
                 dtReport = task.Result;
 
+                task = Config.hCntMain.GetViewNotFileAlarm(dtpReportStart.Value, dtpReportEnd.Value);
+                task.Wait();
+                DataTable dtViewNotFileAlarm = task.Result.Copy();
+
 
                 task = Config.hCntMain.GetSchedule();
                 task.Wait();
@@ -307,8 +311,12 @@ namespace VideoAlarm
                             DataTable dtTmp = dtDataToAlarm.Clone();
                             var query = from g in dtShedule.AsEnumerable()
                                         join k in dtReport.AsEnumerable() on new { Q = g.Field<int>("id"), Z = date.Date, X = idReg } equals new { Q = k.Field<int>("idShedule"), Z = k.Field<DateTime>("DateCreate").Date, X = k.Field<int>("id_VideoReg") } into tempJoin
+
+                                        join z in dtViewNotFileAlarm.AsEnumerable() on new { Q = g.Field<int>("id"), Z = date.Date} equals new { Q = z.Field<int>("id_Shedule"), Z = z.Field<DateTime>("DateInsert").Date } into tempJoinB
+
                                         //join k in dtReport.AsEnumerable() on new { Q = g.Field<int>("id") } equals new { Q = k.Field<int>("idShedule")} into tempJoin
                                         from leftJoin in tempJoin.DefaultIfEmpty()
+                                        from leftJoinB in tempJoinB.DefaultIfEmpty()
                                         select dtTmp.LoadDataRow(new object[]
                                                                        {
                                                                     leftJoin==null?null:leftJoin.Field<int?>("id"),
@@ -321,7 +329,7 @@ namespace VideoAlarm
                                                                     leftJoin==null?null:leftJoin.Field<int?>("Delta"),
                                                                     leftJoin==null?null:leftJoin.Field<DateTime?>("DateCreate"),
                                                                     leftJoin==null?"":leftJoin.Field<string>("Comment"),
-                                                                    leftJoin==null?"":leftJoin.Field<string>("nameResponsible"),
+                                                                    leftJoin==null?(leftJoinB==null?"":leftJoinB.Field<string>("nameResponsible")):leftJoin.Field<string>("nameResponsible"),
                                                                     leftJoin==null?false:leftJoin.Field<bool>("isNoAlarm"),
                                                                     g.Field<int>("id"),
                                                                         }, false);
@@ -738,7 +746,7 @@ namespace VideoAlarm
 
                 if (chbAlarmTime.Checked)
                 {
-                    filter += (filter.Length == 0 ? "" : " and ") + $"'{dtpAlarmStart.Value.Date.Add(dtpAlarmTimeStart.Value.TimeOfDay)}'<=DateCreate AND DateCreate<='{dtpAlarmEnd.Value.Date.Add(dtpAlarmTimeEnd.Value.TimeOfDay)}'";
+                    filter += (filter.Length == 0 ? "" : " and ") + $"'{dtpAlarmStart.Value.Date.Add(dtpAlarmTimeStart.Value.TimeOfDay)}'<=DateStartAlarm AND DateStartAlarm<='{dtpAlarmEnd.Value.Date.Add(dtpAlarmTimeEnd.Value.TimeOfDay)}'";
                 }
 
                 dtAlarm.DefaultView.RowFilter = filter;
