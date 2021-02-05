@@ -202,19 +202,26 @@ namespace VideoAlarmDemon
 
         void FileSystemWatcherCreated(object sender, FileSystemEventArgs e)
         {
-            int idVideoReg = DicPathToVideoReg.FirstOrDefault(x => x.Value == ((FileSystemWatcher)sender).Path).Key;
-
-            string sLog = $"File Path:{new FileInfo(e.FullPath).Directory} File Created: " + e.Name + $"  IdVideoReg:{idVideoReg}  FileSize:{new FileInfo(e.FullPath).Length}";
-
-            listFileToAdd.Add(new ListFile()
+            try
             {
-                idReg = idVideoReg,
-                Path = new FileInfo(e.FullPath).Directory.FullName,
-                file = e.FullPath
-            });
+                int idVideoReg = DicPathToVideoReg.FirstOrDefault(x => x.Value == ((FileSystemWatcher)sender).Path).Key;
+
+                string sLog = $"File Path:{new FileInfo(e.FullPath).Directory} File Created: " + e.Name + $"  IdVideoReg:{idVideoReg}  FileSize:{new FileInfo(e.FullPath).Length}";
+
+                listFileToAdd.Add(new ListFile()
+                {
+                    idReg = idVideoReg,
+                    Path = new FileInfo(e.FullPath).Directory.FullName,
+                    file = e.FullPath
+                });
 
 
-            AppendText(sLog);
+                AppendText(sLog);
+            }
+            catch
+            {
+                AppendText("Что-то сломалось, плак плак!");
+            }
         }
 
         private delegate void AppendListHandler(string sLog);

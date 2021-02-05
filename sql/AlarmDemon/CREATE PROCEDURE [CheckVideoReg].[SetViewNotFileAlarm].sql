@@ -7,7 +7,7 @@ GO
 -- Create date: 2020-12-14
 -- Description:	Автовставка тех кто должен был залить но не смог
 -- =============================================
-CREATE PROCEDURE [CheckVideoReg].[SetViewNotFileAlarm]		 	
+ALTER PROCEDURE [CheckVideoReg].[SetViewNotFileAlarm]		 	
 
 AS
 BEGIN
@@ -20,6 +20,7 @@ BEGIN
 
 	select TOP(1) @id_Shedule = id from CheckVideoReg.s_Schedule where cast(GETDATE() as time)>TimeRun and isOn = 1 order by TimeRun desc
 
+	IF @id_Shedule is null return;
 
 
 	if NOT EXISTS(select * from CheckVideoReg.j_tAlarmVideoReg where 	cast(DateCreate as date)  = cast(getdate() as date) and	id_Shedule = @id_Shedule)
