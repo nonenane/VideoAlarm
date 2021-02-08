@@ -14,6 +14,7 @@ namespace VideoAlarm
 {
     public partial class frmLoadFile : Form
     {
+        private string[] files;
         public frmLoadFile()
         {
             InitializeComponent();
@@ -52,8 +53,8 @@ namespace VideoAlarm
         {
             //string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
             //foreach (string file in files) Console.WriteLine(file);
-
-            string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
+            listBox1.Items.Clear();
+            files = (string[])e.Data.GetData(DataFormats.FileDrop);
 
             foreach (string file in files)
             {
@@ -91,9 +92,24 @@ namespace VideoAlarm
             Close();
         }
 
-        private void btParse_Click(object sender, EventArgs e)
+        private async void btParse_Click(object sender, EventArgs e)
         {
+            int id_videoreg = (int)cmbVideoReg.SelectedValue;
+            await Task.Run(() =>
+             {
+                 Config.DoOnUIThread(() => { this.Enabled = false; }, this);
+                 VideoAlarmDemon.ParseFileAlarmVideo pa = new VideoAlarmDemon.ParseFileAlarmVideo();
+                 foreach (string file in files)
+                 {
+                     VideoAlarmDemon.ListFile lFile = new VideoAlarmDemon.ListFile();
+                     lFile.file = file;
+                     lFile.idReg = id_videoreg;
+                     lFile.Path = new FileInfo(file).Directory.FullName;
+                     pa.InsertDataToDataTable(lFile, true);
+                 }
+                 Config.DoOnUIThread(() => { this.Enabled = true; }, this);
 
+             });
         }
     }
 }

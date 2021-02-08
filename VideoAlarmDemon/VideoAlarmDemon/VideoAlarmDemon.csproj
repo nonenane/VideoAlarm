@@ -34,6 +34,9 @@
   <PropertyGroup>
     <ApplicationIcon>alarm.ico</ApplicationIcon>
   </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject />
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="Framework">
       <HintPath>..\..\src\VideoAlarm\bin\Debug\Framework.dll</HintPath>
@@ -61,6 +64,8 @@
     <Compile Include="frmMain.Designer.cs">
       <DependentUpon>frmMain.cs</DependentUpon>
     </Compile>
+    <Compile Include="ListFile.cs" />
+    <Compile Include="ParseFileAlarmVideo.cs" />
     <Compile Include="Procedures.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

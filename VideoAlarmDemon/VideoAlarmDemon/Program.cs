@@ -31,7 +31,14 @@ namespace VideoAlarmDemon
 
                 Config.hCntMain = new Procedures(Config.ProgSettngs.ServerK21, Config.ProgSettngs.DataBaseK21, Config.ProgSettngs.Login, Config.ProgSettngs.Password, "");
 
-                Application.Run(new frmMain());
+                //Application.Run(new frmMain());
+                ParseFileAlarmVideo pa = new ParseFileAlarmVideo();
+                VideoAlarmDemon.ListFile lFile = new ListFile();
+                lFile.file = @"D:\Работа\Сохр. журнал2021-2-5.txt";
+                lFile.idReg = 8;
+                lFile.Path = new FileInfo(@"D:\Работа\Сохр. журнал2021-2-5.txt").Directory.FullName;
+
+                pa.InsertDataToDataTable(lFile, true);
 
             }
             catch (Exception ex) {

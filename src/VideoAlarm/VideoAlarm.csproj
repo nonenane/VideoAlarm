@@ -76,6 +76,9 @@
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
+    <Reference Include="VideoAlarmDemon">
+      <HintPath>..\..\VideoAlarmDemon\VideoAlarmDemon\bin\Debug\VideoAlarmDemon.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ChannelVsReg\frmAdd.cs">
