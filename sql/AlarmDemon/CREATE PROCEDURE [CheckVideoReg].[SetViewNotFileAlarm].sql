@@ -41,6 +41,12 @@ BEGIN
 			if NOT EXISTS (select * from [CheckVideoReg].[j_ViewNotFileAlarm] where cast(DateInsert as date) = cast(getdate() as date) and id_Shedule = @id_Shedule)
 				BEGIN
 					INSERT INTO [CheckVideoReg].[j_ViewNotFileAlarm] (DateInsert,id_Shedule,IdResponsible) values (GETDATE(),@id_Shedule,@result)
+					DECLARE @id_ViewNotFileAlarm int 
+					SET @id_ViewNotFileAlarm = cast(SCOPE_IDENTITY() as int)
+
+					INSERT INTO CheckVideoReg.j_ViewNotFileAlarmVsReg (id_ViewNotFileAlarm,id_VideoReg)
+					select @id_ViewNotFileAlarm,id from CheckVideoReg.s_VideoReg where isActive = 1
+
 				END
 		end
 

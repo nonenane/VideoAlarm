@@ -42,6 +42,8 @@
             this.tbPathLog = new System.Windows.Forms.TextBox();
             this.btFolderSelect = new System.Windows.Forms.Button();
             this.tbRegIP = new IPAddressControlLib.IPAddressControl();
+            this.label5 = new System.Windows.Forms.Label();
+            this.cmbShop = new System.Windows.Forms.ComboBox();
             this.SuspendLayout();
             // 
             // tbRegName
@@ -76,10 +78,10 @@
             // 
             this.btSave.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btSave.Image = global::VideoAlarm.Properties.Resources.Save;
-            this.btSave.Location = new System.Drawing.Point(423, 207);
+            this.btSave.Location = new System.Drawing.Point(423, 241);
             this.btSave.Name = "btSave";
             this.btSave.Size = new System.Drawing.Size(32, 32);
-            this.btSave.TabIndex = 2;
+            this.btSave.TabIndex = 6;
             this.btSave.UseVisualStyleBackColor = true;
             this.btSave.Click += new System.EventHandler(this.btSave_Click);
             // 
@@ -87,17 +89,17 @@
             // 
             this.btClose.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btClose.Image = global::VideoAlarm.Properties.Resources.Exit;
-            this.btClose.Location = new System.Drawing.Point(461, 207);
+            this.btClose.Location = new System.Drawing.Point(461, 241);
             this.btClose.Name = "btClose";
             this.btClose.Size = new System.Drawing.Size(32, 32);
-            this.btClose.TabIndex = 3;
+            this.btClose.TabIndex = 7;
             this.btClose.UseVisualStyleBackColor = true;
             this.btClose.Click += new System.EventHandler(this.btClose_Click);
             // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(12, 63);
+            this.label2.Location = new System.Drawing.Point(12, 93);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(95, 13);
             this.label2.TabIndex = 7;
@@ -105,17 +107,17 @@
             // 
             // tbPlace
             // 
-            this.tbPlace.Location = new System.Drawing.Point(120, 59);
+            this.tbPlace.Location = new System.Drawing.Point(120, 89);
             this.tbPlace.MaxLength = 1024;
             this.tbPlace.Name = "tbPlace";
             this.tbPlace.Size = new System.Drawing.Size(376, 20);
-            this.tbPlace.TabIndex = 8;
+            this.tbPlace.TabIndex = 3;
             this.tbPlace.TextChanged += new System.EventHandler(this.tbName_TextChanged);
             // 
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(12, 85);
+            this.label3.Location = new System.Drawing.Point(12, 115);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(77, 13);
             this.label3.TabIndex = 7;
@@ -123,18 +125,18 @@
             // 
             // tbComment
             // 
-            this.tbComment.Location = new System.Drawing.Point(120, 85);
+            this.tbComment.Location = new System.Drawing.Point(120, 115);
             this.tbComment.MaxLength = 1024;
             this.tbComment.Multiline = true;
             this.tbComment.Name = "tbComment";
             this.tbComment.Size = new System.Drawing.Size(376, 80);
-            this.tbComment.TabIndex = 8;
+            this.tbComment.TabIndex = 4;
             this.tbComment.TextChanged += new System.EventHandler(this.tbName_TextChanged);
             // 
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(12, 179);
+            this.label4.Location = new System.Drawing.Point(12, 209);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(103, 13);
             this.label4.TabIndex = 7;
@@ -142,7 +144,7 @@
             // 
             // tbPathLog
             // 
-            this.tbPathLog.Location = new System.Drawing.Point(120, 175);
+            this.tbPathLog.Location = new System.Drawing.Point(120, 205);
             this.tbPathLog.MaxLength = 1024;
             this.tbPathLog.Name = "tbPathLog";
             this.tbPathLog.ReadOnly = true;
@@ -153,10 +155,10 @@
             // 
             // btFolderSelect
             // 
-            this.btFolderSelect.Location = new System.Drawing.Point(421, 174);
+            this.btFolderSelect.Location = new System.Drawing.Point(421, 204);
             this.btFolderSelect.Name = "btFolderSelect";
             this.btFolderSelect.Size = new System.Drawing.Size(75, 23);
-            this.btFolderSelect.TabIndex = 9;
+            this.btFolderSelect.TabIndex = 5;
             this.btFolderSelect.Text = "...";
             this.btFolderSelect.UseVisualStyleBackColor = true;
             this.btFolderSelect.Click += new System.EventHandler(this.btFolderSelect_Click);
@@ -173,14 +175,34 @@
             this.tbRegIP.Name = "tbRegIP";
             this.tbRegIP.ReadOnly = false;
             this.tbRegIP.Size = new System.Drawing.Size(87, 20);
-            this.tbRegIP.TabIndex = 10;
+            this.tbRegIP.TabIndex = 1;
             this.tbRegIP.Text = "...";
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(12, 65);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(54, 13);
+            this.label5.TabIndex = 11;
+            this.label5.Text = "Магазин:";
+            // 
+            // cmbShop
+            // 
+            this.cmbShop.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbShop.FormattingEnabled = true;
+            this.cmbShop.Location = new System.Drawing.Point(120, 62);
+            this.cmbShop.Name = "cmbShop";
+            this.cmbShop.Size = new System.Drawing.Size(87, 21);
+            this.cmbShop.TabIndex = 2;
             // 
             // frmAdd
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(505, 251);
+            this.ClientSize = new System.Drawing.Size(505, 285);
+            this.Controls.Add(this.cmbShop);
+            this.Controls.Add(this.label5);
             this.Controls.Add(this.tbRegIP);
             this.Controls.Add(this.btFolderSelect);
             this.Controls.Add(this.tbComment);
@@ -224,5 +246,7 @@
         private System.Windows.Forms.TextBox tbPathLog;
         private System.Windows.Forms.Button btFolderSelect;
         private IPAddressControlLib.IPAddressControl tbRegIP;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.ComboBox cmbShop;
     }
 }

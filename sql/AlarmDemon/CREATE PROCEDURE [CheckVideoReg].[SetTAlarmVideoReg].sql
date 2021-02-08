@@ -25,6 +25,14 @@ BEGIN
 		BEGIN
 			INSERT INTO CheckVideoReg.j_tAlarmVideoReg (id_VideoReg,DateCreate,NameFile,id_Responsible,Delta,isNoAlarm,Comment,id_Shedule)
 			VALUES (@id_VideoReg,@DateCreate,@NameFile,@id_Responsible,@Delta,@isNoAlarm ,'',@id_Schedule)
+
+			DECLARE @id_ViewNotFileAlarm int 
+			select @id_ViewNotFileAlarm = id from CheckVideoReg.j_ViewNotFileAlarm where id_Shedule = @id_Schedule and cast(DateInsert as date) = cast(@DateCreate as date)
+			delete from CheckVideoReg.j_ViewNotFileAlarmVsReg where id_ViewNotFileAlarm = @id_ViewNotFileAlarm and id_VideoReg = @id_VideoReg
+
+			IF NOT EXISTS(select * from CheckVideoReg.j_ViewNotFileAlarmVsReg where id_ViewNotFileAlarm = @id_ViewNotFileAlarm)
+				delete from CheckVideoReg.j_ViewNotFileAlarm where id_Shedule = @id_Schedule and cast(DateInsert as date) = cast(@DateCreate as date)
+
 		END
 
 END

@@ -33,7 +33,7 @@ namespace VideoAlarm
                     //{
 
                         //Application.Run(new OnlineStoreViewOrders.statisticOrder.frmStatistic());
-                        Application.Run(new frmMain());
+                        Application.Run(new frmLoadFile());
                         //Application.Run(new dictonaryCategory.frmListCategory());
                         //Application.Run(new dictonatyTovar.frmAddTovar());
                     //}

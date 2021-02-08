@@ -31,7 +31,7 @@ namespace VideoAlarm
             return dtResult;
         }
 
-        public async Task<DataTable> SetVideoReg(int id, string RegName, string RegIP, string Place, string PathLog, string Comment, bool isActive,int result,bool isDel)
+        public async Task<DataTable> SetVideoReg(int id, string RegName, string RegIP, string Place, string PathLog, string Comment,int id_Shop, bool isActive,int result,bool isDel)
         {
             ap.Clear();
 
@@ -41,17 +41,59 @@ namespace VideoAlarm
             ap.Add(Place);
             ap.Add(PathLog);
             ap.Add(Comment);
+            ap.Add(id_Shop);
             ap.Add(isActive);
             ap.Add(UserSettings.User.Id);
             ap.Add(result);
             ap.Add(isDel);
 
             DataTable dtResult = executeProcedure("[CheckVideoReg].[SetVideoReg]",
-                 new string[10] {"@id", "@RegName", "@RegIP", "@Place", "@PathLog", "@Comment", "@isActive", "@id_user", "@result", "@isDel" },
-                 new DbType[10] {DbType.Int32,DbType.String, DbType.String, DbType.String, DbType.String, DbType.String,DbType.Boolean,DbType.Int32,DbType.Int32,DbType.Boolean }, ap);
+                 new string[11] { "@id", "@RegName", "@RegIP", "@Place", "@PathLog", "@Comment", "@id_shop", "@isActive", "@id_user", "@result", "@isDel" },
+                 new DbType[11] { DbType.Int32, DbType.String, DbType.String, DbType.String, DbType.String, DbType.String, DbType.Int32, DbType.Boolean, DbType.Int32, DbType.Int32, DbType.Boolean }, ap);
 
             return dtResult;
         }
+
+        public async Task<DataTable> GetShopName(bool withAllDeps = false)
+        {
+            ap.Clear();
+
+            DataTable dtResult = executeProcedure("[CheckVideoReg].[GetShopName]",
+                 new string[0] { },
+                 new DbType[0] { }, ap);
+
+            if (withAllDeps)
+            {
+                if (dtResult != null)
+                {
+                    if (!dtResult.Columns.Contains("isMain"))
+                    {
+                        DataColumn col = new DataColumn("isMain", typeof(int));
+                        col.DefaultValue = 1;
+                        dtResult.Columns.Add(col);
+                        dtResult.AcceptChanges();
+                    }
+
+                    DataRow row = dtResult.NewRow();
+
+                    row["cName"] = "Все магазины";
+                    row["id"] = 0;
+                    row["isMain"] = 0;
+                    dtResult.Rows.Add(row);
+                    dtResult.AcceptChanges();
+                    dtResult.DefaultView.Sort = "isMain asc, cName asc";
+                    dtResult = dtResult.DefaultView.ToTable().Copy();
+                }
+            }
+            else
+            {
+                dtResult.DefaultView.Sort = "cName asc";
+                dtResult = dtResult.DefaultView.ToTable().Copy();
+            }
+
+            return dtResult;
+        }
+
 
         #endregion
 

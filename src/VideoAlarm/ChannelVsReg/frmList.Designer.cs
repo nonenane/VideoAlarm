@@ -53,6 +53,7 @@
             this.btEdit = new System.Windows.Forms.Button();
             this.btDelete = new System.Windows.Forms.Button();
             this.btClose = new System.Windows.Forms.Button();
+            this.btAlarmUpdatre = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dgvData)).BeginInit();
             this.SuspendLayout();
             // 
@@ -298,11 +299,23 @@
             this.btClose.UseVisualStyleBackColor = true;
             this.btClose.Click += new System.EventHandler(this.btClose_Click);
             // 
+            // btAlarmUpdatre
+            // 
+            this.btAlarmUpdatre.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btAlarmUpdatre.Image = global::VideoAlarm.Properties.Resources.refresh;
+            this.btAlarmUpdatre.Location = new System.Drawing.Point(938, 16);
+            this.btAlarmUpdatre.Name = "btAlarmUpdatre";
+            this.btAlarmUpdatre.Size = new System.Drawing.Size(32, 32);
+            this.btAlarmUpdatre.TabIndex = 33;
+            this.btAlarmUpdatre.UseVisualStyleBackColor = true;
+            this.btAlarmUpdatre.Click += new System.EventHandler(this.btAlarmUpdatre_Click);
+            // 
             // frmList
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(982, 545);
+            this.Controls.Add(this.btAlarmUpdatre);
             this.Controls.Add(this.btViewScreenShot);
             this.Controls.Add(this.cmbVideoReg);
             this.Controls.Add(this.label3);
@@ -361,5 +374,6 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn cNameCam;
         private System.Windows.Forms.DataGridViewTextBoxColumn cComment;
         private System.Windows.Forms.DataGridViewCheckBoxColumn cScan;
+        private System.Windows.Forms.Button btAlarmUpdatre;
     }
 }

@@ -53,7 +53,7 @@
             this.tbCamName.Name = "tbCamName";
             this.tbCamName.ScrollBars = System.Windows.Forms.ScrollBars.Both;
             this.tbCamName.Size = new System.Drawing.Size(352, 20);
-            this.tbCamName.TabIndex = 0;
+            this.tbCamName.TabIndex = 2;
             this.tbCamName.TextChanged += new System.EventHandler(this.tbName_TextChanged);
             // 
             // lName
@@ -90,7 +90,7 @@
             this.tbComment.Multiline = true;
             this.tbComment.Name = "tbComment";
             this.tbComment.Size = new System.Drawing.Size(352, 80);
-            this.tbComment.TabIndex = 8;
+            this.tbComment.TabIndex = 4;
             this.tbComment.TextChanged += new System.EventHandler(this.tbName_TextChanged);
             // 
             // label4
@@ -124,7 +124,7 @@
             this.tbCamIP.Name = "tbCamIP";
             this.tbCamIP.ReadOnly = false;
             this.tbCamIP.Size = new System.Drawing.Size(87, 20);
-            this.tbCamIP.TabIndex = 10;
+            this.tbCamIP.TabIndex = 3;
             this.tbCamIP.Text = "...";
             // 
             // cmbVideoReg
@@ -135,7 +135,7 @@
             this.cmbVideoReg.Location = new System.Drawing.Point(141, 12);
             this.cmbVideoReg.Name = "cmbVideoReg";
             this.cmbVideoReg.Size = new System.Drawing.Size(205, 21);
-            this.cmbVideoReg.TabIndex = 12;
+            this.cmbVideoReg.TabIndex = 0;
             this.cmbVideoReg.SelectionChangeCommitted += new System.EventHandler(this.cmbVideoReg_SelectionChangeCommitted);
             // 
             // label5
@@ -163,7 +163,7 @@
             this.tbRegChannel.Name = "tbRegChannel";
             this.tbRegChannel.ScrollBars = System.Windows.Forms.ScrollBars.Both;
             this.tbRegChannel.Size = new System.Drawing.Size(352, 20);
-            this.tbRegChannel.TabIndex = 13;
+            this.tbRegChannel.TabIndex = 1;
             // 
             // btFolderSelect
             // 
@@ -171,7 +171,7 @@
             this.btFolderSelect.Location = new System.Drawing.Point(421, 207);
             this.btFolderSelect.Name = "btFolderSelect";
             this.btFolderSelect.Size = new System.Drawing.Size(32, 32);
-            this.btFolderSelect.TabIndex = 9;
+            this.btFolderSelect.TabIndex = 5;
             this.btFolderSelect.Text = "...";
             this.btFolderSelect.UseVisualStyleBackColor = true;
             this.btFolderSelect.Click += new System.EventHandler(this.btFolderSelect_Click);
@@ -183,7 +183,7 @@
             this.btSave.Location = new System.Drawing.Point(423, 252);
             this.btSave.Name = "btSave";
             this.btSave.Size = new System.Drawing.Size(32, 32);
-            this.btSave.TabIndex = 2;
+            this.btSave.TabIndex = 6;
             this.btSave.UseVisualStyleBackColor = true;
             this.btSave.Click += new System.EventHandler(this.btSave_Click);
             // 
@@ -194,7 +194,7 @@
             this.btClose.Location = new System.Drawing.Point(461, 252);
             this.btClose.Name = "btClose";
             this.btClose.Size = new System.Drawing.Size(32, 32);
-            this.btClose.TabIndex = 3;
+            this.btClose.TabIndex = 7;
             this.btClose.UseVisualStyleBackColor = true;
             this.btClose.Click += new System.EventHandler(this.btClose_Click);
             // 

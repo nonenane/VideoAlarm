@@ -43,6 +43,8 @@ namespace VideoAlarm
             dtpAlarmStart.Value = DateTime.Now.AddDays(-1);
             dtpReportStart.Value = DateTime.Now.AddDays(-1);
 
+
+            GetShop();
             GetVideoReg();
             GetCameraVsChannelList();
             GetTypeEvent();
@@ -55,6 +57,17 @@ namespace VideoAlarm
         private void frnMain_FormClosing(object sender, FormClosingEventArgs e)
         {
             e.Cancel = MessageBox.Show(Config.centralText("Вы действительно хотите выйти\nиз программы?\n"), "Выход из программы", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2) == DialogResult.No;
+        }
+
+        private void GetShop()
+        {
+            Task<DataTable> task = Config.hCntMain.GetShopName(true);
+            task.Wait();
+            DataTable dtDeps = task.Result;
+
+            cmbShop.DisplayMember = "cName";
+            cmbShop.ValueMember = "id";
+            cmbShop.DataSource = dtDeps;
         }
 
         private void GetVideoReg()
@@ -261,11 +274,11 @@ namespace VideoAlarm
                 task.Wait();
                 dtReport = task.Result;
 
+                /*
                 task = Config.hCntMain.GetViewNotFileAlarm(dtpReportStart.Value, dtpReportEnd.Value);
                 task.Wait();
                 DataTable dtViewNotFileAlarm = task.Result.Copy();
-
-
+                                
                 task = Config.hCntMain.GetSchedule();
                 task.Wait();
                 DataTable dtShedule = task.Result;
@@ -340,7 +353,7 @@ namespace VideoAlarm
                 }
                 else
                     dtReport = dtDataToAlarm.Clone();
-
+                */
                 Config.DoOnUIThread(() =>
                 {
                     DataGridViewColumn oldCol = dgvReport.SortedColumn;
@@ -409,12 +422,14 @@ namespace VideoAlarm
             if (DialogResult.OK == fComment.ShowDialog())
             {
                 int id = (int)dtReport.DefaultView[dgvReport.CurrentRow.Index]["id"];
-                string comment = fComment.getComment();
+                string Comment = (string)dtReport.DefaultView[dgvReport.CurrentRow.Index]["Comment"];
+
+                string comment = Environment.NewLine + fComment.getComment();
 
                 Task task = Config.hCntMain.SetCommentAlarmVideoReg(id, comment, 2);
                 task.Wait();
 
-                dtReport.DefaultView[dgvReport.CurrentRow.Index]["Comment"] = comment;
+                dtReport.DefaultView[dgvReport.CurrentRow.Index]["Comment"] = Comment + comment;
                 dtReport.AcceptChanges();
             }
         }
@@ -543,17 +558,20 @@ namespace VideoAlarm
                 DateTime DateCreate = (DateTime)dtReport.DefaultView[dgvReport.CurrentRow.Index]["Date"];
                 TimeSpan TimeRun = (TimeSpan)dtReport.DefaultView[dgvReport.CurrentRow.Index]["TimeRun"];
                 int id_Schedule = (int)dtReport.DefaultView[dgvReport.CurrentRow.Index]["id_Shedule"];
+                string id_Responsible = (string)dtReport.DefaultView[dgvReport.CurrentRow.Index]["id_Responsible"];
+
                 DateCreate = DateCreate.Add(TimeRun);
 
                 string fileName = $"TMP_{id_VideoReg}_{DateCreate.ToString()}";
 
+                /*
                 Task<DataTable> taskResp = Config.hCntMain.GetResponsibleInWork();
-                taskResp.Wait();
-
-                Task task;
+                taskResp.Wait();                               
                 string id_Responsible = "";
                 if (taskResp.Result != null && taskResp.Result.Rows.Count > 0) id_Responsible = (string)taskResp.Result.Rows[0]["listIdResponsible"];
+                */
 
+                Task task;
                 task = Config.hCntMain.SetTAlarmVideoReg(id_VideoReg, fileName, 0, id_Responsible, DateCreate, id_Schedule);
                 task.Wait();
                 GetReport();
@@ -565,6 +583,8 @@ namespace VideoAlarm
         #region "Тревоги"
         private int delta = 0;
         private DataTable dtAlarm;
+        private string listIdReg = "";
+
         private void chbAlarmTime_Click(object sender, EventArgs e)
         {
             dtpAlarmTimeStart.Enabled = dtpAlarmTimeEnd.Enabled = chbAlarmTime.Checked;
@@ -720,11 +740,18 @@ namespace VideoAlarm
             {
                 string filter = "";
 
-                if ((int)cmbAlarmVideoReg.SelectedValue != 0)
-                    filter += (filter.Length == 0 ? "" : " and ") + $"id_VideoReg  = {cmbAlarmVideoReg.SelectedValue}";
+                if (listIdReg.Length == 0)
+                {
+                    if ((int)cmbAlarmVideoReg.SelectedValue != 0)
+                        filter += (filter.Length == 0 ? "" : " and ") + $"id_VideoReg  = {cmbAlarmVideoReg.SelectedValue}";
 
-                if ((int)cmbAlarmCameraVsChannel.SelectedValue != 0)
-                    filter += (filter.Length == 0 ? "" : " and ") + $"id_Camera_vs_Channel  = {cmbAlarmCameraVsChannel.SelectedValue}";
+                    if ((int)cmbAlarmCameraVsChannel.SelectedValue != 0)
+                        filter += (filter.Length == 0 ? "" : " and ") + $"id_Camera_vs_Channel  = {cmbAlarmCameraVsChannel.SelectedValue}";
+                }
+                else
+                {
+                    filter += (filter.Length == 0 ? "" : " and ") + $"id_VideoReg  in ({listIdReg})";
+                }
 
                 if (!((string)cmbAlarmTypeEvent.SelectedValue).Equals("Все"))
                     filter += (filter.Length == 0 ? "" : " and ") + $"TypeEvent  = '{cmbAlarmTypeEvent.SelectedValue}'";
@@ -741,13 +768,25 @@ namespace VideoAlarm
                 if (tbAlarmResponsible.Text.Trim().Length != 0)
                     filter += (filter.Length == 0 ? "" : " and ") + $"nameResponsible like '%{tbAlarmResponsible.Text.Trim()}%'";
 
-                filter += (filter.Length == 0 ? "" : " and ") + $"(delta is null OR delta > '{tbAlarmDelta.Text}')";
+                int deltaInt = int.Parse(tbAlarmDelta.Text);
+                if (rbMin.Checked) deltaInt = deltaInt * 60;
+
+                filter += (filter.Length == 0 ? "" : " and ") + $"(delta is null OR delta > '{deltaInt}')";
 
 
                 if (chbAlarmTime.Checked)
                 {
                     filter += (filter.Length == 0 ? "" : " and ") + $"'{dtpAlarmStart.Value.Date.Add(dtpAlarmTimeStart.Value.TimeOfDay)}'<=DateStartAlarm AND DateStartAlarm<='{dtpAlarmEnd.Value.Date.Add(dtpAlarmTimeEnd.Value.TimeOfDay)}'";
                 }
+
+                if(chbProblemNotEnd.Checked)
+                    filter += (filter.Length == 0 ? "" : " and ") + $"DateEndAlarm is null";
+
+                if (chbNullValue.Checked)
+                    filter += (filter.Length == 0 ? "" : " and ") + $"(RegChannel is null or CamName is null)";
+
+                if ((int)cmbShop.SelectedValue != 0)
+                    filter += (filter.Length == 0 ? "" : " and ") + $"id_shop = {cmbShop.SelectedValue}";
 
                 dtAlarm.DefaultView.RowFilter = filter;
             }
@@ -766,6 +805,17 @@ namespace VideoAlarm
 
         private void cmbAlarmVideoReg_SelectionChangeCommitted(object sender, EventArgs e)
         {
+            if ((int)cmbAlarmVideoReg.SelectedValue != 0)
+            {
+                (cmbAlarmCameraVsChannel.DataSource as DataTable).DefaultView.RowFilter = $"id_VideoReg = {cmbAlarmVideoReg.SelectedValue} OR id_VideoReg is null";
+                cmbAlarmCameraVsChannel.SelectedValue = 0;
+            }
+            else
+            {
+                (cmbAlarmCameraVsChannel.DataSource as DataTable).DefaultView.RowFilter = "";
+                cmbAlarmCameraVsChannel.SelectedValue = 0;
+            }
+
             setFilterAlarm();
         }
 
@@ -785,12 +835,13 @@ namespace VideoAlarm
             if (DialogResult.OK == fComment.ShowDialog())
             {
                 int id = (int)dtAlarm.DefaultView[dgvAlarm.CurrentRow.Index]["id"];
-                string comment = fComment.getComment();
+                string Comment = (string)dtAlarm.DefaultView[dgvAlarm.CurrentRow.Index]["Comment"];
+                string comment = Environment.NewLine + fComment.getComment();
 
                 Task task = Config.hCntMain.SetCommentAlarmVideoReg(id, comment, 1);
                 task.Wait();
 
-                dtAlarm.DefaultView[dgvAlarm.CurrentRow.Index]["Comment"] = comment;
+                dtAlarm.DefaultView[dgvAlarm.CurrentRow.Index]["Comment"] = Comment + comment;
                 dtAlarm.AcceptChanges();
             }
         }
@@ -821,8 +872,85 @@ namespace VideoAlarm
         {
             setFilterAlarm();
         }
+        private void chbProblemNotEnd_Click(object sender, EventArgs e)
+        {
+            setFilterAlarm();
+        }
 
+        private void chbNullValue_Click(object sender, EventArgs e)
+        {
+            setFilterAlarm();
+        }
 
+        private void cmbAlarmCameraVsChannel_SelectionChangeCommitted(object sender, EventArgs e)
+        {
+            setFilterAlarm();
+
+        }
+
+        private void cmbAlarmTypeEvent_SelectionChangeCommitted(object sender, EventArgs e)
+        {
+            setFilterAlarm();
+        }
+
+        private void cmbShop_SelectionChangeCommitted(object sender, EventArgs e)
+        {
+            cShopName.Visible = (int)cmbShop.SelectedValue == 0;
+            setFilterAlarm();
+        }
+        private void rbMin_Click(object sender, EventArgs e)
+        {
+            setFilterAlarm();
+        }
+
+        private void tbAlarmDelta_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                decimal valueDec;
+                TextBox tb = (sender as TextBox);
+                if (decimal.TryParse(tb.Text, out valueDec))
+                {
+                    tb.Text = valueDec.ToString("0");
+                }
+                else
+                {
+                    tb.Text = delta.ToString();
+                }
+
+                setFilterAlarm();
+            }
+        }
+        
+        private void btSelectVideoReg_Click(object sender, EventArgs e)
+        {
+            VideoReg.frmList fSelect = new VideoReg.frmList() { isSelect = true, Text = "Выбор для фильтрации" };
+
+            if (DialogResult.OK == fSelect.ShowDialog())
+            {
+                listIdReg = fSelect.listIdReg;
+                cmbAlarmVideoReg.Enabled = false;
+                cmbAlarmCameraVsChannel.Enabled = false;
+                btDropVideoRegSelect.Enabled = true;
+                btSelectVideoReg.Enabled = false;
+                setFilterAlarm();
+            }
+        }
+
+        private void btDropVideoRegSelect_Click(object sender, EventArgs e)
+        {
+            listIdReg = "";
+            cmbAlarmVideoReg.Enabled = true;
+            cmbAlarmCameraVsChannel.Enabled = true;
+            btDropVideoRegSelect.Enabled = false;
+            btSelectVideoReg.Enabled = true;
+            setFilterAlarm();
+        }
         #endregion
+
+        private void загрузитьФайлToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            new frmLoadFile().ShowDialog();
+        }
     }
 }

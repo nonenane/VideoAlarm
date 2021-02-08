@@ -17,6 +17,8 @@ namespace VideoAlarm.VideoReg
     public partial class frmList : Form
     {
         public bool isUpdate { private set; get; }
+        public bool isSelect { set; private get; }
+        public string listIdReg { private set;  get; }
         private DataTable dtData;
         public frmList()
         {
@@ -35,12 +37,29 @@ namespace VideoAlarm.VideoReg
             tp.SetToolTip(btEdit, "Редактировать");
             tp.SetToolTip(btDelete, "Удалить");
             tp.SetToolTip(btClose, "Выход");
+            tp.SetToolTip(btAlarmUpdatre, "Обновить");
             //btAdd.Visible = btEdit.Visible = btDelete.Visible = new List<string> { "ИНФ", "СОП" }.Contains(UserSettings.User.StatusCode);
+
+            Task<DataTable> task = Config.hCntMain.GetShopName(true);
+            task.Wait();
+            DataTable dtDeps = task.Result;
+
+            cmbShop.DisplayMember = "cName";
+            cmbShop.ValueMember = "id";
+            cmbShop.DataSource = dtDeps;            
         }
 
         private void frmList_Load(object sender, EventArgs e)
         {
             get_data();
+            cSelect.Visible = isSelect;
+            if (isSelect)
+            {
+                btAdd.Visible = btEdit.Visible = btDelete.Visible = false;
+                panel1.Visible = chbNotActive.Visible = false;
+                btSelect.Visible = true;
+                label1.Visible = label2.Visible = tbFio.Visible = tbDate.Visible = false;
+            }
         }
 
         private void frmList_FormClosing(object sender, FormClosingEventArgs e)
@@ -50,7 +69,9 @@ namespace VideoAlarm.VideoReg
 
         private void btAdd_Click(object sender, EventArgs e)
         {
-            if (DialogResult.OK == new frmAdd() { Text = "Добавить видеорегистратор" }.ShowDialog())
+            frmAdd fAdd = new frmAdd() { Text = "Добавить видеорегистратор" };
+            fAdd.ShowDialog();
+            if (fAdd.isSaveData)
             {
                 get_data();
                 isUpdate = true;
@@ -81,9 +102,10 @@ namespace VideoAlarm.VideoReg
                 string Place = (string)dtData.DefaultView[dgvData.CurrentRow.Index]["Place"];
                 string PathLog = (string)dtData.DefaultView[dgvData.CurrentRow.Index]["PathLog"];
                 string Comment = (string)dtData.DefaultView[dgvData.CurrentRow.Index]["Comment"];
+                int id_shop = dtData.DefaultView[dgvData.CurrentRow.Index]["id_shop"] == DBNull.Value ? 0 : (int)dtData.DefaultView[dgvData.CurrentRow.Index]["id_shop"];
 
 
-                Task<DataTable> task = Config.hCntMain.SetVideoReg(id, RegName, RegIP, Place, PathLog, Comment, isActive, 0, true);
+                Task<DataTable> task = Config.hCntMain.SetVideoReg(id, RegName, RegIP, Place, PathLog, Comment, id_shop, isActive, 0, true);
                 task.Wait();
 
                 if (task.Result == null)
@@ -107,7 +129,7 @@ namespace VideoAlarm.VideoReg
                     if (DialogResult.Yes == MessageBox.Show(Config.centralText("Выбранная для удаления запись\nиспользуется в программе.\nСделать запись недействующей?\n"), "Удаление записи", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2))
                     {
                         //setLog(id, 1542);
-                        task = Config.hCntMain.SetVideoReg(id, RegName, RegIP, Place, PathLog, Comment, !isActive, 0, false);
+                        task = Config.hCntMain.SetVideoReg(id, RegName, RegIP, Place, PathLog, Comment, id_shop, isActive, 0, false);
                         task.Wait();
                         if (task.Result == null)
                         {
@@ -125,7 +147,7 @@ namespace VideoAlarm.VideoReg
                     if (DialogResult.Yes == MessageBox.Show("Удалить выбранную запись?", "Удаление записи", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2))
                     {
                         //setLog(id, 1566);
-                        task = Config.hCntMain.SetVideoReg(id, RegName, RegIP, Place, PathLog, Comment, isActive, 1, true);
+                        task = Config.hCntMain.SetVideoReg(id, RegName, RegIP, Place, PathLog, Comment, id_shop, isActive, 1, true);
                         task.Wait();
                         if (task.Result == null)
                         {
@@ -142,7 +164,7 @@ namespace VideoAlarm.VideoReg
                     if (DialogResult.Yes == MessageBox.Show("Сделать выбранную запись действующей?", "Восстановление записи", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2))
                     {
                         //setLog(id, 1543);
-                        task = Config.hCntMain.SetVideoReg(id, RegName, RegIP, Place, PathLog, Comment, !isActive, 0, false);
+                        task = Config.hCntMain.SetVideoReg(id, RegName, RegIP, Place, PathLog, Comment, id_shop, !isActive, 0, false);
                         task.Wait();
                         if (task.Result == null)
                         {
@@ -195,6 +217,9 @@ namespace VideoAlarm.VideoReg
 
                 if (!chbNotActive.Checked)
                     filter += (filter.Length == 0 ? "" : " and ") + $"isActive = 1";
+
+                if ((int)cmbShop.SelectedValue != 0)
+                    filter += (filter.Length == 0 ? "" : " and ") + $"id_shop = {cmbShop.SelectedValue}";
 
                 dtData.DefaultView.RowFilter = filter;
             }
@@ -351,5 +376,29 @@ namespace VideoAlarm.VideoReg
             }
         }
 
+        private void btAlarmUpdatre_Click(object sender, EventArgs e)
+        {
+            get_data();
+        }
+
+        private void cmbShop_SelectionChangeCommitted(object sender, EventArgs e)
+        {
+            cShopName.Visible = (int)cmbShop.SelectedValue == 0;
+            setFilter();
+        }
+
+        private void btSelect_Click(object sender, EventArgs e)
+        {
+            EnumerableRowCollection<DataRow> rowCOllect = dtData.AsEnumerable().Where(r => r.Field<bool>("isSelect"));
+            if (rowCOllect.Count() < 2) { MessageBox.Show("Необходимо выбрать более одного регистратора!", "Информирование", MessageBoxButtons.OK, MessageBoxIcon.Information); return; }
+
+            listIdReg = "";
+            foreach (DataRow row in rowCOllect)
+            {
+                listIdReg += listIdReg.Length == 0 ? "" : ",";
+                listIdReg += row["id"].ToString();
+            }
+            this.DialogResult = DialogResult.OK;
+        }
     }
 }

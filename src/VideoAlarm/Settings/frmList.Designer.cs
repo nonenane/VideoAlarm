@@ -76,7 +76,7 @@
             this.tbMinut.MaxLength = 5;
             this.tbMinut.Name = "tbMinut";
             this.tbMinut.Size = new System.Drawing.Size(41, 20);
-            this.tbMinut.TabIndex = 1;
+            this.tbMinut.TabIndex = 0;
             this.tbMinut.Text = "0";
             this.tbMinut.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.tbMinut.TextChanged += new System.EventHandler(this.tbMinut_TextChanged);
@@ -90,7 +90,7 @@
             this.btSave.Location = new System.Drawing.Point(429, 70);
             this.btSave.Name = "btSave";
             this.btSave.Size = new System.Drawing.Size(32, 32);
-            this.btSave.TabIndex = 4;
+            this.btSave.TabIndex = 2;
             this.btSave.UseVisualStyleBackColor = true;
             this.btSave.Click += new System.EventHandler(this.btSave_Click);
             // 
@@ -101,7 +101,7 @@
             this.btClose.Location = new System.Drawing.Point(467, 70);
             this.btClose.Name = "btClose";
             this.btClose.Size = new System.Drawing.Size(32, 32);
-            this.btClose.TabIndex = 5;
+            this.btClose.TabIndex = 3;
             this.btClose.UseVisualStyleBackColor = true;
             this.btClose.Click += new System.EventHandler(this.btClose_Click);
             // 

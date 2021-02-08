@@ -7,7 +7,7 @@ GO
 -- Create date: 2020-11-30
 -- Description:	Запись комментария для тревог
 -- =============================================
-CREATE PROCEDURE [CheckVideoReg].[SetCommentAlarmVideoReg]		 
+ALTER PROCEDURE [CheckVideoReg].[SetCommentAlarmVideoReg]		 
 	@id int,
 	@comment varchar(max),
 	@typeComment int
@@ -20,7 +20,7 @@ BEGIN
 			UPDATE
 				[CheckVideoReg].[j_AlarmVideoReg]
 			SET
-				Comment = @comment
+				Comment = Comment+ @comment
 			WHERE 
 				id = @id
 		END
@@ -29,7 +29,7 @@ BEGIN
 			UPDATE
 				[CheckVideoReg].[j_tAlarmVideoReg]
 			SET
-				Comment = @comment
+				Comment =Comment + @comment
 			WHERE 
 				id = @id
 		END

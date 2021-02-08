@@ -49,7 +49,7 @@
             this.btSave.Location = new System.Drawing.Point(358, 368);
             this.btSave.Name = "btSave";
             this.btSave.Size = new System.Drawing.Size(32, 32);
-            this.btSave.TabIndex = 4;
+            this.btSave.TabIndex = 1;
             this.btSave.UseVisualStyleBackColor = true;
             this.btSave.Click += new System.EventHandler(this.btSave_Click);
             // 
@@ -60,7 +60,7 @@
             this.btClose.Location = new System.Drawing.Point(396, 368);
             this.btClose.Name = "btClose";
             this.btClose.Size = new System.Drawing.Size(32, 32);
-            this.btClose.TabIndex = 5;
+            this.btClose.TabIndex = 2;
             this.btClose.UseVisualStyleBackColor = true;
             this.btClose.Click += new System.EventHandler(this.btClose_Click);
             // 
@@ -93,7 +93,7 @@
             this.dgvData.RowHeadersVisible = false;
             this.dgvData.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgvData.Size = new System.Drawing.Size(416, 345);
-            this.dgvData.TabIndex = 6;
+            this.dgvData.TabIndex = 0;
             // 
             // cScan
             // 

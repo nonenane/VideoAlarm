@@ -32,6 +32,8 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmList));
             this.tbNumber = new System.Windows.Forms.TextBox();
             this.dgvData = new System.Windows.Forms.DataGridView();
+            this.cFIO = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.cDeps = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.chbNotActive = new System.Windows.Forms.CheckBox();
             this.panel1 = new System.Windows.Forms.Panel();
             this.btAdd = new System.Windows.Forms.Button();
@@ -43,8 +45,7 @@
             this.tbDate = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
             this.cmbDeps = new System.Windows.Forms.ComboBox();
-            this.cFIO = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.cDeps = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.btAlarmUpdatre = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dgvData)).BeginInit();
             this.SuspendLayout();
             // 
@@ -90,6 +91,23 @@
             this.dgvData.RowPostPaint += new System.Windows.Forms.DataGridViewRowPostPaintEventHandler(this.dgvData_RowPostPaint);
             this.dgvData.RowPrePaint += new System.Windows.Forms.DataGridViewRowPrePaintEventHandler(this.dgvData_RowPrePaint);
             this.dgvData.SelectionChanged += new System.EventHandler(this.dgvData_SelectionChanged);
+            // 
+            // cFIO
+            // 
+            this.cFIO.DataPropertyName = "nameKadr";
+            this.cFIO.HeaderText = "ФИО";
+            this.cFIO.Name = "cFIO";
+            this.cFIO.ReadOnly = true;
+            // 
+            // cDeps
+            // 
+            this.cDeps.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.cDeps.DataPropertyName = "nameDeps";
+            this.cDeps.HeaderText = "Отдел";
+            this.cDeps.MinimumWidth = 120;
+            this.cDeps.Name = "cDeps";
+            this.cDeps.ReadOnly = true;
+            this.cDeps.Width = 260;
             // 
             // chbNotActive
             // 
@@ -204,28 +222,23 @@
             this.cmbDeps.TabIndex = 8;
             this.cmbDeps.SelectionChangeCommitted += new System.EventHandler(this.cmbDeps_SelectionChangeCommitted);
             // 
-            // cFIO
+            // btAlarmUpdatre
             // 
-            this.cFIO.DataPropertyName = "nameKadr";
-            this.cFIO.HeaderText = "ФИО";
-            this.cFIO.Name = "cFIO";
-            this.cFIO.ReadOnly = true;
-            // 
-            // cDeps
-            // 
-            this.cDeps.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.cDeps.DataPropertyName = "nameDeps";
-            this.cDeps.HeaderText = "Отдел";
-            this.cDeps.MinimumWidth = 120;
-            this.cDeps.Name = "cDeps";
-            this.cDeps.ReadOnly = true;
-            this.cDeps.Width = 260;
+            this.btAlarmUpdatre.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btAlarmUpdatre.Image = global::VideoAlarm.Properties.Resources.refresh;
+            this.btAlarmUpdatre.Location = new System.Drawing.Point(507, 12);
+            this.btAlarmUpdatre.Name = "btAlarmUpdatre";
+            this.btAlarmUpdatre.Size = new System.Drawing.Size(32, 32);
+            this.btAlarmUpdatre.TabIndex = 34;
+            this.btAlarmUpdatre.UseVisualStyleBackColor = true;
+            this.btAlarmUpdatre.Click += new System.EventHandler(this.btAlarmUpdatre_Click);
             // 
             // frmList
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(551, 545);
+            this.Controls.Add(this.btAlarmUpdatre);
             this.Controls.Add(this.cmbDeps);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.tbDate);
@@ -272,5 +285,6 @@
         private System.Windows.Forms.ComboBox cmbDeps;
         private System.Windows.Forms.DataGridViewTextBoxColumn cFIO;
         private System.Windows.Forms.DataGridViewTextBoxColumn cDeps;
+        private System.Windows.Forms.Button btAlarmUpdatre;
     }
 }

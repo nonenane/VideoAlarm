@@ -143,3 +143,15 @@ CREATE TABLE [CheckVideoReg].[j_ViewNotFileAlarm](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = ON, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
+
+CREATE TABLE [CheckVideoReg].[j_ViewNotFileAlarmVsReg](
+	[id]					int				IDENTITY(1,1) NOT NULL,		
+	[id_ViewNotFileAlarm]	int				not null,
+	[id_VideoReg]			int				not null,	
+	
+ CONSTRAINT [PK_j_ViewNotFileAlarmVsReg] PRIMARY KEY CLUSTERED 
+(
+	[id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = ON, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO

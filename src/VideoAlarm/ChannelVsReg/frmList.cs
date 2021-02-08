@@ -37,6 +37,7 @@ namespace VideoAlarm.ChannelVsReg
             tp.SetToolTip(btEdit, "Редактировать");
             tp.SetToolTip(btDelete, "Удалить");
             tp.SetToolTip(btClose, "Выход");
+            tp.SetToolTip(btAlarmUpdatre, "Обновить");
             //btAdd.Visible = btEdit.Visible = btDelete.Visible = new List<string> { "ИНФ", "СОП" }.Contains(UserSettings.User.StatusCode);
         }
 
@@ -61,8 +62,15 @@ namespace VideoAlarm.ChannelVsReg
 
         private void btAdd_Click(object sender, EventArgs e)
         {
-            if (DialogResult.OK == new frmAdd() { Text = "Добавить канал" }.ShowDialog())
-            { get_data(); isUpdate = true; }
+            frmAdd fAdd = new frmAdd() { Text = "Добавить канал" };
+            fAdd.ShowDialog();
+            if (fAdd.isSaveData)
+            {
+                get_data();
+                isUpdate = true;
+            }
+            //if (DialogResult.OK == new frmAdd() { Text = "Добавить канал" }.ShowDialog())
+            //{ get_data(); isUpdate = true; }
         }
 
         private void btEdit_Click(object sender, EventArgs e)
@@ -402,6 +410,11 @@ namespace VideoAlarm.ChannelVsReg
         private void cmbVideoReg_SelectionChangeCommitted(object sender, EventArgs e)
         {
             setFilter();
+        }
+
+        private void btAlarmUpdatre_Click(object sender, EventArgs e)
+        {
+            get_data();
         }
     }
 }

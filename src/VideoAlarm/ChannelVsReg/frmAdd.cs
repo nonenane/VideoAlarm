@@ -1,4 +1,5 @@
-﻿using Nwuram.Framework.Logging;
+﻿using Microsoft.WindowsAPICodePack.Dialogs;
+using Nwuram.Framework.Logging;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -23,6 +24,8 @@ namespace VideoAlarm.ChannelVsReg
         private bool isEditData = false;
         private string oldName, oldCode;
         private int id = 0;
+        public bool isSaveData = false;
+
 
         public frmAdd()
         {
@@ -154,6 +157,7 @@ namespace VideoAlarm.ChannelVsReg
                 return;
             }
 
+            bool isClose = false;
             if (id == 0)
             {
                 id = (int)dtResult.Rows[0]["id"];
@@ -162,6 +166,8 @@ namespace VideoAlarm.ChannelVsReg
                 Logging.Comment($"ID: {id}");
                 Logging.Comment($"Наименование: {tbCamName.Text.Trim()}");
                 Logging.StopFirstLevel();
+                isSaveData = true;
+
             }
             else
             {
@@ -170,11 +176,12 @@ namespace VideoAlarm.ChannelVsReg
                 Logging.Comment($"ID: {id}");
                 Logging.VariableChange("Наименование", tbCamName.Text.Trim(), oldName);
                 Logging.StopFirstLevel();
+                isClose = true;                    
             }
 
             isEditData = false;
             MessageBox.Show("Данные сохранены.", "Сохранение данных", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            this.DialogResult = DialogResult.OK;
+            if (isClose) this.DialogResult = DialogResult.OK; else ClearForm();
         }
 
         private void tbName_TextChanged(object sender, EventArgs e)
@@ -189,13 +196,43 @@ namespace VideoAlarm.ChannelVsReg
 
         private void btFolderSelect_Click(object sender, EventArgs e)
         {
-            DialogResult result = fileBrowserDialog.ShowDialog();
-            if (result == DialogResult.OK)
+            //DialogResult result = fileBrowserDialog.ShowDialog();
+            //if (result == DialogResult.OK)
+            //{
+            //    string folderName = fileBrowserDialog.FileName;
+            //    tbPathScan.Text = folderName;
+            //    img = File.ReadAllBytes(folderName);
+            //}
+
+            CommonOpenFileDialog dialog = new CommonOpenFileDialog();
+
+            //dialog.InitialDirectory = "C:\\Users";
+            dialog.IsFolderPicker = false;
+            dialog.Multiselect = false;
+            dialog.Filters.Add(new CommonFileDialogFilter("Image files", "*.bmp;*.gif;*.jpg;*.jpeg;*.png"));            
+            if (dialog.ShowDialog() == CommonFileDialogResult.Ok)
             {
-                string folderName = fileBrowserDialog.FileName;
+                //if (!validateFileAndFolder(dialog.FileName)) return;
+
+                //btSave.Enabled = true;
+                //tbPath.Text = dialog.FileName;
+                string folderName = dialog.FileName;
                 tbPathScan.Text = folderName;
                 img = File.ReadAllBytes(folderName);
             }
-        }     
+        }
+
+        private void ClearForm()
+        {
+            tbCamName.Text = "";
+            tbRegChannel.Text = "";
+            tbComment.Text = "";
+            cmbVideoReg.SelectedIndex = -1;
+            tbCamIP.Text = "";
+            tbPathScan.Text = "";
+            img = null;
+            id = 0;
+            isEditData = false;
+        }
     }
 }

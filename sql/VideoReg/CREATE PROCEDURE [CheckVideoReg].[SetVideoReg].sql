@@ -17,6 +17,7 @@ ALTER PROCEDURE [CheckVideoReg].[SetVideoReg]
 	@Place varchar(max),
 	@PathLog varchar(max),
 	@Comment varchar(max),
+	@id_shop int,
 	@isActive bit,
 	@id_user int,
 	@result int = 0,
@@ -48,6 +49,7 @@ BEGIN TRY
 						   ,[Place]
 						   ,[PathLog]
 						   ,[Comment]
+						   ,[id_shop]
 						   ,[isActive]
 						   ,[id_Editor]
 						   ,[DateEdit])
@@ -57,6 +59,7 @@ BEGIN TRY
 						   @Place,
 						   @PathLog,
 						   @Comment,
+						   @id_shop,
 						   1,
 						   @id_user,
 						   GETDATE())
@@ -72,6 +75,7 @@ BEGIN TRY
 						   ,[Place] = @Place
 						   ,[PathLog] = @PathLog
 						   ,[Comment] = @Comment
+						   ,[id_shop] = @id_shop
 						   ,[isActive] = @isActive
 						   ,[id_Editor] = @id_user
 						   ,[DateEdit]=GETDATE()

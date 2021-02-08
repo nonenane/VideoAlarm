@@ -33,6 +33,7 @@ namespace VideoAlarm.Responsible
             tp.SetToolTip(btAdd, "Добавить");            
             tp.SetToolTip(btDelete, "Удалить");
             tp.SetToolTip(btClose, "Выход");
+            tp.SetToolTip(btAlarmUpdatre, "Обновить");
             //btAdd.Visible = btEdit.Visible = btDelete.Visible = new List<string> { "ИНФ", "СОП" }.Contains(UserSettings.User.StatusCode);
         }
 
@@ -322,6 +323,11 @@ namespace VideoAlarm.Responsible
         private void cmbDeps_SelectionChangeCommitted(object sender, EventArgs e)
         {
             setFilter();
+        }
+
+        private void btAlarmUpdatre_Click(object sender, EventArgs e)
+        {
+            get_data();
         }
     }
 }

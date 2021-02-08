@@ -1,4 +1,5 @@
-﻿using Nwuram.Framework.Logging;
+﻿using Microsoft.WindowsAPICodePack.Dialogs;
+using Nwuram.Framework.Logging;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -21,6 +22,7 @@ namespace VideoAlarm.VideoReg
         private bool isEditData = false;
         private string oldName, oldCode;
         private int id = 0;
+        public bool isSaveData = false;
 
         public frmAdd()
         {
@@ -38,6 +40,14 @@ namespace VideoAlarm.VideoReg
             // Default to the My Documents folder.
             this.folderBrowserDialog1.RootFolder = Environment.SpecialFolder.MyComputer;
 
+            Task<DataTable> task = Config.hCntMain.GetShopName(false);
+            task.Wait();
+            DataTable dtDeps = task.Result;
+
+            cmbShop.DisplayMember = "cName";
+            cmbShop.ValueMember = "id";
+            cmbShop.DataSource = dtDeps;
+            cmbShop.SelectedIndex = -1;
         }
 
         private void frmAdd_Load(object sender, EventArgs e)
@@ -56,6 +66,8 @@ namespace VideoAlarm.VideoReg
                 tbPathLog.Text = (string)row["PathLog"];
 
                 tbComment.Text = (string)row["Comment"];
+
+                cmbShop.SelectedValue = row["id_shop"] == DBNull.Value ? 0 : (int)row["id_shop"];
             }
 
             isEditData = false;
@@ -89,12 +101,19 @@ namespace VideoAlarm.VideoReg
                 tbRegIP.Focus();
                 return;
             }
-            
+
             IPAddress address;
             if (!IPAddress.TryParse(tbRegIP.Text, out address))
             {
                 MessageBox.Show(Config.centralText($"Необходимо заполнить\n \"{label1.Text}\"\n"), "Ошибка сохранения", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 tbRegIP.Focus();
+                return;
+            }
+
+            if (cmbShop.SelectedIndex == -1)
+            {
+                MessageBox.Show(Config.centralText($"Необходимо выбрать\n \"{label5.Text}\"\n"), "Ошибка сохранения", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                cmbShop.Focus();
                 return;
             }
 
@@ -106,20 +125,20 @@ namespace VideoAlarm.VideoReg
                 return;
             }
 
-            if (tbPathLog.Text.Trim().Length == 0)
-            {
-                MessageBox.Show(Config.centralText($"Необходимо заполнить\n \"{label4.Text}\"\n"), "Ошибка сохранения", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                btFolderSelect.Focus();
-                return;
-            }
+            //if (tbPathLog.Text.Trim().Length == 0)
+            //{
+            //    MessageBox.Show(Config.centralText($"Необходимо заполнить\n \"{label4.Text}\"\n"), "Ошибка сохранения", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            //    btFolderSelect.Focus();
+            //    return;
+            //}
 
-            if (!System.IO.Directory.Exists(tbPathLog.Text))
-            {
-                MessageBox.Show(Config.centralText($"Текущий путь:\n{tbPathLog.Text}\n не существует!\n"), "Ошибка сохранения", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
-            }
+            //if (!System.IO.Directory.Exists(tbPathLog.Text))
+            //{
+            //    MessageBox.Show(Config.centralText($"Текущий путь:\n{tbPathLog.Text}\n не существует!\n"), "Ошибка сохранения", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            //    return;
+            //}
 
-            Task<DataTable> task = Config.hCntMain.SetVideoReg(id, tbRegName.Text, tbRegIP.Text, tbPlace.Text, tbPathLog.Text, tbComment.Text, true, 0, false);
+            Task<DataTable> task = Config.hCntMain.SetVideoReg(id, tbRegName.Text, tbRegIP.Text, tbPlace.Text, tbPathLog.Text, tbComment.Text, (int)cmbShop.SelectedValue, true, 0, false);
             task.Wait();
 
             DataTable dtResult = task.Result;
@@ -144,6 +163,7 @@ namespace VideoAlarm.VideoReg
                 return;
             }
 
+            bool isClose = false;
             if (id == 0)
             {
                 id = (int)dtResult.Rows[0]["id"];
@@ -152,6 +172,7 @@ namespace VideoAlarm.VideoReg
                 Logging.Comment($"ID: {id}");
                 Logging.Comment($"Наименование: {tbRegName.Text.Trim()}");
                 Logging.StopFirstLevel();
+                isSaveData = true;
             }
             else
             {
@@ -160,11 +181,12 @@ namespace VideoAlarm.VideoReg
                 Logging.Comment($"ID: {id}");
                 Logging.VariableChange("Наименование", tbRegName.Text.Trim(), oldName);
                 Logging.StopFirstLevel();
+                isClose = true;
             }
 
             isEditData = false;
             MessageBox.Show("Данные сохранены.", "Сохранение данных", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            this.DialogResult = DialogResult.OK;
+            if (isClose) this.DialogResult = DialogResult.OK; else ClearForm() ;
         }
 
         private void tbName_TextChanged(object sender, EventArgs e)
@@ -180,12 +202,39 @@ namespace VideoAlarm.VideoReg
 
         private void btFolderSelect_Click(object sender, EventArgs e)
         {
-            DialogResult result = folderBrowserDialog1.ShowDialog();
-            if (result == DialogResult.OK)
+            //DialogResult result = folderBrowserDialog1.ShowDialog();          
+            //if (result == DialogResult.OK)
+            //{
+            //    string folderName = folderBrowserDialog1.SelectedPath;
+            //    tbPathLog.Text = folderName;
+            //}
+
+            CommonOpenFileDialog dialog = new CommonOpenFileDialog();
+
+            //dialog.InitialDirectory = "C:\\Users";
+            dialog.IsFolderPicker = true;
+            dialog.Multiselect = false;
+            if (dialog.ShowDialog() == CommonFileDialogResult.Ok)
             {
-                string folderName = folderBrowserDialog1.SelectedPath;
+                //if (!validateFileAndFolder(dialog.FileName)) return;
+
+                //btSave.Enabled = true;
+                //tbPath.Text = dialog.FileName;
+                string folderName = dialog.FileName;
                 tbPathLog.Text = folderName;
             }
-        }     
+        }
+
+        private void ClearForm()
+        {
+            tbRegName.Text = "";
+            tbPathLog.Text = "";
+            tbComment.Text = "";
+            cmbShop.SelectedIndex = -1;
+            tbRegIP.Text = "";
+            tbPlace.Text = "";
+            id = 0;
+            isEditData = false;
+        }
     }
 }

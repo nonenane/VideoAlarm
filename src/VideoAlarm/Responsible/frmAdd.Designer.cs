@@ -113,7 +113,7 @@
             this.dgvData.RowHeadersVisible = false;
             this.dgvData.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgvData.Size = new System.Drawing.Size(503, 424);
-            this.dgvData.TabIndex = 10;
+            this.dgvData.TabIndex = 1;
             this.dgvData.CellMouseDoubleClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dgvData_CellMouseDoubleClick);
             this.dgvData.ColumnWidthChanged += new System.Windows.Forms.DataGridViewColumnEventHandler(this.dgvData_ColumnWidthChanged);
             // 
@@ -140,7 +140,7 @@
             this.tbNumber.MaxLength = 150;
             this.tbNumber.Name = "tbNumber";
             this.tbNumber.Size = new System.Drawing.Size(121, 20);
-            this.tbNumber.TabIndex = 9;
+            this.tbNumber.TabIndex = 0;
             this.tbNumber.TextChanged += new System.EventHandler(this.tbNumber_TextChanged);
             // 
             // frmAdd
