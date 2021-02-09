@@ -44,7 +44,7 @@ namespace VideoAlarmDemon
             return dtResult;
         }
 
-        public async Task SetAlarmVideoReg(int id_VideoReg,int? id_Camera_vs_Channel,string TypeEvent,string id_Responsible,DateTime? DateStartAlarm,DateTime? DateEndAlarm,int Channel, int id_Schedule)
+        public async Task SetAlarmVideoReg(int id_VideoReg,int? id_Camera_vs_Channel,string TypeEvent,string id_Responsible,DateTime? DateStartAlarm,DateTime? DateEndAlarm,int? Channel, int id_Schedule)
         {
             ap.Clear();
 

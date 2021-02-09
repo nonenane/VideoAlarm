@@ -424,7 +424,9 @@ namespace VideoAlarm
                 int id = (int)dtReport.DefaultView[dgvReport.CurrentRow.Index]["id"];
                 string Comment = (string)dtReport.DefaultView[dgvReport.CurrentRow.Index]["Comment"];
 
-                string comment = Environment.NewLine + fComment.getComment();
+                //string comment = Environment.NewLine + fComment.getComment();
+                string comment = (Comment.Length == 0 ? "" : Environment.NewLine) + fComment.getComment();
+
 
                 Task task = Config.hCntMain.SetCommentAlarmVideoReg(id, comment, 2);
                 task.Wait();
@@ -836,7 +838,7 @@ namespace VideoAlarm
             {
                 int id = (int)dtAlarm.DefaultView[dgvAlarm.CurrentRow.Index]["id"];
                 string Comment = (string)dtAlarm.DefaultView[dgvAlarm.CurrentRow.Index]["Comment"];
-                string comment = Environment.NewLine + fComment.getComment();
+                string comment = (Comment.Length == 0 ? "" : Environment.NewLine) + fComment.getComment();
 
                 Task task = Config.hCntMain.SetCommentAlarmVideoReg(id, comment, 1);
                 task.Wait();

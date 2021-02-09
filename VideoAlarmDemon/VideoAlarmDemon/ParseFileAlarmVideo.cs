@@ -39,7 +39,7 @@ namespace VideoAlarmDemon
             {
                 Task<DataTable> task = Config.hCntMain.GetCameraVsChannel();
                 task.Wait();
-                dtRegChannel = task.Result;
+                this.dtRegChannel = task.Result;
             }
         }
 
@@ -91,9 +91,11 @@ namespace VideoAlarmDemon
                         bool isStartTime = true;
                         bool FindData = false;
 
+                        DateTime? tmpTime = null, tmpTimeOff = null;
+                        string tmpTypeName = "";
+
                         while ((line = sr.ReadLine()) != null)
                         {
-
                             Int64 tmpInt64;
                             if (Int64.TryParse(line, out tmpInt64)) { FindData = true; }
                             if (FindData && line.StartsWith("Тип события")) { TypeEvent = line.Replace("Тип события:", "").Trim(); }
@@ -102,6 +104,11 @@ namespace VideoAlarmDemon
 
                             if (FindData && line.StartsWith("Завершение")) { DateEvent = DateTime.Parse(line.Replace("Завершение:", "").Trim()); isStartTime = false; }
                             if (FindData && line.StartsWith("Окончание")) { DateEvent = DateTime.Parse(line.Replace("Окончание:", "").Trim()); isStartTime = false; }
+
+
+                            if (FindData && line.StartsWith("Время:")) { tmpTime = DateTime.Parse(line.Replace("Время:", "").Trim()); }
+                            if (FindData && line.StartsWith("Время выключения:")) { tmpTimeOff = DateTime.Parse(line.Replace("Время выключения:", "").Trim()); }
+                            if (FindData && line.StartsWith("Типы:")) { tmpTypeName = line.Replace("Типы:", "").Trim(); }
 
 
                             if (line.Trim().Length == 0)
@@ -120,6 +127,28 @@ namespace VideoAlarmDemon
                                     //AppendTextToLog($"Тип события:{TypeEvent}  Канал:{Channel}  Время:{DateEvent}  Начало:{(isStartTime ? "Да" : "Нет")}");
                                     dtAlarm.Rows.Add(lFile.idReg, TypeEvent, idChannel, Channel, DateEvent, isStartTime);
                                 }
+
+                                if (FindData && new List<string>() { "Выключение", "Перезагрузка" }.Contains(tmpTypeName))
+                                {
+                                    if (tmpTypeName.Equals("Перезагрузка"))
+                                    {
+                                        isStartTime = false;
+                                        DateEvent = tmpTime;
+                                    }
+                                    else
+                                    if (tmpTypeName.Equals("Выключение"))
+                                    {
+                                        isStartTime = true;
+                                        DateEvent = tmpTimeOff;
+                                    }
+
+                                    TypeEvent = "Перезагрузка";
+                                    Channel = null;
+                                    int? idChannel = null;
+
+                                    dtAlarm.Rows.Add(lFile.idReg, TypeEvent, idChannel, Channel, DateEvent, isStartTime);
+                                }
+
                                 TypeEvent = null;
                                 Channel = null;
                                 DateEvent = null;
@@ -147,8 +176,7 @@ namespace VideoAlarmDemon
                         string TypeEvent = (string)row["TypeEvent"];
                         DateTime? DateStartAlarm = null;
                         DateTime? DateEndAlarm = null;
-                        int Channel = (int)row["Channel"];
-
+                        int? Channel = null; if (row["Channel"] != DBNull.Value) Channel = (int?)row["Channel"];
 
                         if ((bool)row["isStartTime"]) DateStartAlarm = (DateTime?)row["DateEvent"]; else DateEndAlarm = (DateTime?)row["DateEvent"];
 
@@ -181,8 +209,11 @@ namespace VideoAlarmDemon
 
 
                 if (!Directory.Exists(path + @"\End")) Directory.CreateDirectory(path + @"\End");
-                if (File.Exists(path + @"\End\" + fInfo.Name)) File.Delete(path + @"\End\" + fInfo.Name);
-                File.Move(file, path + @"\End\" + fInfo.Name);
+                
+                string pathTo = path + @"\End\" + Path.GetFileNameWithoutExtension(fInfo.Name) + $" {DateTime.Now.ToShortDateString().Replace(".","-")} {DateTime.Now.ToLongTimeString().Replace(":", "-")}.txt";
+                if (File.Exists(pathTo)) File.Delete(pathTo);
+                //File.Move(file, path + @"\End\" + Path.GetFileNameWithoutExtension(fInfo.Name) + $" {DateTime.Now.ToShortDateString()} {DateTime.Now.ToShortTimeString()}.txt");
+                File.Move(file, pathTo);
 
             }
             catch (Exception ex)
