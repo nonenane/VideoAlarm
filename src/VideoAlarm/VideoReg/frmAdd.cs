@@ -20,8 +20,8 @@ namespace VideoAlarm.VideoReg
         public DataRowView row { set; private get; }
 
         private bool isEditData = false;
-        private string oldName, oldCode;
-        private int id = 0;
+        private string oldName, oldIP,oldPlace,oldPath,oldComment,oldShop;
+        private int id = 0,oldIdShop;
         public bool isSaveData = false;
 
         public frmAdd()
@@ -55,19 +55,25 @@ namespace VideoAlarm.VideoReg
             if (row != null)
             {
                 id = (int)row["id"];
+
                 tbRegName.Text = (string)row["RegName"];
                 oldName = tbRegName.Text.Trim();
 
                 tbRegIP.Text = (string)row["RegIP"];
-                oldCode = tbRegName.Text.Trim();
+                oldIP = tbRegIP.Text.Trim();
 
                 tbPlace.Text = (string)row["Place"];
+                oldPlace = tbPlace.Text.Trim();
 
                 tbPathLog.Text = (string)row["PathLog"];
+                oldPath = tbPathLog.Text.Trim();
 
                 tbComment.Text = (string)row["Comment"];
+                oldComment = tbComment.Text.Trim();
 
                 cmbShop.SelectedValue = row["id_shop"] == DBNull.Value ? 0 : (int)row["id_shop"];
+                oldIdShop = (int)cmbShop.SelectedValue;
+                oldShop = cmbShop.Text.Trim();
             }
 
             isEditData = false;
@@ -167,19 +173,32 @@ namespace VideoAlarm.VideoReg
             if (id == 0)
             {
                 id = (int)dtResult.Rows[0]["id"];
-                Logging.StartFirstLevel(1564);
+                Logging.StartFirstLevel((int)LogEvent.Добавление_видеорегистратора);
                 //Logging.Comment("Добавить Тип документа");
                 Logging.Comment($"ID: {id}");
                 Logging.Comment($"Наименование: {tbRegName.Text.Trim()}");
+                Logging.Comment($"IP: {tbRegIP.Text.Trim()}");
+                Logging.Comment($"Местоположение: {tbPlace.Text.Trim()}");
+                Logging.Comment($"Комментарий: {tbComment.Text.Trim()}");
+                Logging.Comment($"Путь к лог файлам: {tbPathLog.Text.Trim()}");
+                Logging.Comment($"Магазин ID: {cmbShop.SelectedValue}: Наименование:{cmbShop.Text.Trim()}");
                 Logging.StopFirstLevel();
                 isSaveData = true;
             }
             else
             {
-                Logging.StartFirstLevel(1565);
+                Logging.StartFirstLevel((int)LogEvent.Редактирование_видеорегистратора);
                 //Logging.Comment("Редактировать Тип документа");
                 Logging.Comment($"ID: {id}");
                 Logging.VariableChange("Наименование", tbRegName.Text.Trim(), oldName);
+                Logging.VariableChange("IP", tbRegIP.Text.Trim(), oldIP);
+                Logging.VariableChange("Местоположение", tbPlace.Text.Trim(), oldPlace);
+                Logging.VariableChange("Комментарий", tbComment.Text.Trim(), oldComment);
+                Logging.VariableChange("Путь к лог файлам", tbPathLog.Text.Trim(), oldPath);
+
+                Logging.VariableChange("Магазин ID", cmbShop.SelectedValue, oldIdShop,typeLog._int);
+                Logging.VariableChange("Магазин Наименование", cmbShop.Text.Trim(), oldShop);
+
                 Logging.StopFirstLevel();
                 isClose = true;
             }

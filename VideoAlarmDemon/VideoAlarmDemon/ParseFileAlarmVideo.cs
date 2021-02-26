@@ -25,7 +25,10 @@ namespace VideoAlarmDemon
             {
                 Config.ProgSettngs = new Settings();
                 Config.ProgSettngs.IdProg = Nwuram.Framework.Settings.Connection.ConnectionSettings.GetIdProgram().ToString();
+                Config.idUser = Nwuram.Framework.Settings.User.UserSettings.User.Id;
             }
+
+
 
             Task<DataTable> task = Config.hCntMain.GetCameraVsChannel();
             task.Wait();
@@ -100,15 +103,19 @@ namespace VideoAlarmDemon
                             if (Int64.TryParse(line, out tmpInt64)) { FindData = true; }
                             if (FindData && line.StartsWith("Тип события")) { TypeEvent = line.Replace("Тип события:", "").Trim(); }
                             if (FindData && line.StartsWith("Канал")) { Channel = int.Parse(line.Replace("Канал:", "").Trim()); }
-                            if (FindData && line.StartsWith("Начало")) { DateEvent = DateTime.Parse(line.Replace("Начало:", "").Trim()); isStartTime = true; }
+                            if (FindData && line.StartsWith("Начало")) { DateEvent = myParserTime.parseTime(line.Replace("Начало:", "").Trim()); isStartTime = true; }
 
-                            if (FindData && line.StartsWith("Завершение")) { DateEvent = DateTime.Parse(line.Replace("Завершение:", "").Trim()); isStartTime = false; }
-                            if (FindData && line.StartsWith("Окончание")) { DateEvent = DateTime.Parse(line.Replace("Окончание:", "").Trim()); isStartTime = false; }
+                            if (FindData && line.StartsWith("Завершение")) { DateEvent = myParserTime.parseTime(line.Replace("Завершение:", "").Trim()); isStartTime = false; }
+                            if (FindData && line.StartsWith("Окончание")) { DateEvent = myParserTime.parseTime(line.Replace("Окончание:", "").Trim()); isStartTime = false; }
 
 
-                            if (FindData && line.StartsWith("Время:")) { tmpTime = DateTime.Parse(line.Replace("Время:", "").Trim()); }
-                            if (FindData && line.StartsWith("Время выключения:")) { tmpTimeOff = DateTime.Parse(line.Replace("Время выключения:", "").Trim()); }
+                            if (FindData && line.StartsWith("Время:")) { 
+                                tmpTime = DateTime.Parse(line.Replace("Время:", "").Trim()); }
+                            if (FindData && line.StartsWith("Время выключения:")) { tmpTimeOff = myParserTime.parseTime(line.Replace("Время выключения:", "").Trim()); }
                             if (FindData && line.StartsWith("Типы:")) { tmpTypeName = line.Replace("Типы:", "").Trim(); }
+
+
+                            if (FindData && line.StartsWith("Тип:")) { tmpTypeName = line.Replace("Тип:", "").Trim(); }
 
 
                             if (line.Trim().Length == 0)
@@ -130,24 +137,39 @@ namespace VideoAlarmDemon
 
                                 if (FindData && new List<string>() { "Выключение", "Перезагрузка" }.Contains(tmpTypeName))
                                 {
+                                    Channel = null;
+                                    int? idChannel = null;
+
                                     if (tmpTypeName.Equals("Перезагрузка"))
                                     {
-                                        isStartTime = false;
+                                        isStartTime = true;
                                         DateEvent = tmpTime;
+                                        TypeEvent = "Перезагрузка";
+                                        dtAlarm.Rows.Add(lFile.idReg, TypeEvent, idChannel, Channel, DateEvent, isStartTime);
+                                        dtAlarm.Rows.Add(lFile.idReg, TypeEvent, idChannel, Channel, DateEvent, !isStartTime);
                                     }
                                     else
                                     if (tmpTypeName.Equals("Выключение"))
                                     {
-                                        isStartTime = true;
+                                        isStartTime = false;
+                                        DateEvent = tmpTime;
+                                        TypeEvent = "Выключение";
+                                        dtAlarm.Rows.Add(lFile.idReg, TypeEvent, idChannel, Channel, DateEvent, isStartTime);
                                         DateEvent = tmpTimeOff;
-                                    }
+                                        dtAlarm.Rows.Add(lFile.idReg, TypeEvent, idChannel, Channel, DateEvent, !isStartTime);
+                                    }                                                                    
+                                }
 
-                                    TypeEvent = "Перезагрузка";
+                                if (FindData && new List<string>() { "Загрузка" }.Contains(tmpTypeName))
+                                {
                                     Channel = null;
                                     int? idChannel = null;
-
-                                    dtAlarm.Rows.Add(lFile.idReg, TypeEvent, idChannel, Channel, DateEvent, isStartTime);
+                                    DateEvent = tmpTime;
+                                    TypeEvent = "Загрузка";
+                                    dtAlarm.Rows.Add(lFile.idReg, TypeEvent, idChannel, Channel, DateEvent, true);
+                                    dtAlarm.Rows.Add(lFile.idReg, TypeEvent, idChannel, Channel, DateEvent, false);
                                 }
+
 
                                 TypeEvent = null;
                                 Channel = null;
@@ -157,7 +179,7 @@ namespace VideoAlarmDemon
                         }
                     }
 
-                    dtAlarm.DefaultView.Sort = "Channel asc,DateEvent asc";
+                    dtAlarm.DefaultView.Sort = "Channel asc, TypeEvent asc, DateEvent asc";
                     dtAlarm = dtAlarm.DefaultView.ToTable().Copy();
 
                     Task<DataTable> taskResp = Config.hCntMain.GetResponsibleInWork();

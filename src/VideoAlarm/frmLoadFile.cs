@@ -1,4 +1,5 @@
 ﻿using Microsoft.WindowsAPICodePack.Dialogs;
+using Nwuram.Framework.Logging;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -18,7 +19,10 @@ namespace VideoAlarm
         public frmLoadFile()
         {
             InitializeComponent();
-            panel1.AllowDrop = true;                       
+            panel1.AllowDrop = true;
+            ToolTip tt = new ToolTip();
+            tt.SetToolTip(btClose, "Выход");
+            tt.SetToolTip(btParse, "Обработать файл");
         }           
         
         private void panel1_Click(object sender, EventArgs e)
@@ -31,6 +35,7 @@ namespace VideoAlarm
             if (dialog.ShowDialog() == CommonFileDialogResult.Ok)
             {
                 string folderName = dialog.FileName;
+                files = new string[] { dialog.FileName };
                 listBox1.Items.Add(folderName);
             }
         }
@@ -94,20 +99,38 @@ namespace VideoAlarm
 
         private async void btParse_Click(object sender, EventArgs e)
         {
+            if (cmbVideoReg.SelectedValue == null)
+            {
+                MessageBox.Show("Выберите регистратор!", "Выбор за тобой", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+
+            if (files == null)
+            {
+                MessageBox.Show("Выберите файл(ы) для обработки!", "Выбор за тобой", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
             int id_videoreg = (int)cmbVideoReg.SelectedValue;
+            string nameVideoreg = cmbVideoReg.Text;
             await Task.Run(() =>
              {
                  Config.DoOnUIThread(() => { this.Enabled = false; }, this);
                  VideoAlarmDemon.ParseFileAlarmVideo pa = new VideoAlarmDemon.ParseFileAlarmVideo();
+                 Logging.StartFirstLevel(823);
                  foreach (string file in files)
                  {
-                     VideoAlarmDemon.ListFile lFile = new VideoAlarmDemon.ListFile();
-                     lFile.file = file;
-                     lFile.idReg = id_videoreg;
-                     lFile.Path = new FileInfo(file).Directory.FullName;
-                     pa.InsertDataToDataTable(lFile, true);
+                     if (File.Exists(file))
+                     {
+                         Logging.Comment($"Видеорегистратор [ID:{id_videoreg}; Наименование:{nameVideoreg}] Файл:[Наименование:{file}]");
+                         VideoAlarmDemon.ListFile lFile = new VideoAlarmDemon.ListFile();
+                         lFile.file = file;
+                         lFile.idReg = id_videoreg;
+                         lFile.Path = new FileInfo(file).Directory.FullName;
+                         pa.InsertDataToDataTable(lFile, true);
+                     }
                  }
-                 Config.DoOnUIThread(() => { this.Enabled = true; }, this);
+                 Logging.StopFirstLevel();
+                 Config.DoOnUIThread(() => { this.Enabled = true; MessageBox.Show("Ну всё, мы закончили!", "Это было приятно!", MessageBoxButtons.OK, MessageBoxIcon.Information);}, this);
 
              });
         }

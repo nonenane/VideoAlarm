@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Nwuram.Framework.Logging;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -45,11 +46,17 @@ namespace VideoAlarm.Shedule
             var differences = dtData.AsEnumerable()
                 .Except(dtDataCopy.AsEnumerable(), DataRowComparer.Default);
 
+            Logging.StartFirstLevel((int)LogEvent.Формирование_расписания_лог_файлов_тревог_с_видеорегистраторов);
+
             foreach (DataRow row in differences)
             {
                 Task<DataTable> task = Config.hCntMain.SetSchedule((int)row["id"], (bool)row["isOn"]);
                 task.Wait();
+                string titleLog = (bool)row["isOn"] ? "Произведено включение чек-боксов у следующих позиции" : "Произведено выключение чек-боксов у следующих позиции";
+                Logging.Comment($"{titleLog} [ID:{row["id"]}; Время:{row["TimeRun"]}; ФИО:{row["FIO"]}; Дата:{row["DateEdit"]}]");
             }
+
+            Logging.StopFirstLevel();
 
             dtDataCopy = dtData.Copy();
             isEditData = false;

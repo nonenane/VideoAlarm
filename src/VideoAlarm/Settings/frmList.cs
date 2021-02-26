@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Nwuram.Framework.Logging;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -13,6 +14,7 @@ namespace VideoAlarm.Settings
     public partial class frmList : Form
     {
         private bool isEditData = false;
+        private string oldMinute, oldSecond;
         public frmList()
         {
             InitializeComponent();
@@ -24,7 +26,9 @@ namespace VideoAlarm.Settings
         private void frmList_Load(object sender, EventArgs e)
         {
             getSetting("dlmn", tbMinut);
+            oldMinute = tbMinut.Text;
             getSetting("dlsc", tbSecond);
+            oldSecond = tbSecond.Text;
             isEditData = false;
         }
 
@@ -77,6 +81,14 @@ namespace VideoAlarm.Settings
         {
             setSetting("dlmn", tbMinut);
             setSetting("dlsc", tbSecond);
+
+
+            Logging.StartFirstLevel(93);
+
+            Logging.VariableChange(label1.Text, tbMinut.Text, oldMinute,typeLog._int);
+            Logging.VariableChange(label2.Text, tbSecond.Text, oldSecond, typeLog._int);
+
+            Logging.StopFirstLevel();
 
             isEditData = false;
             MessageBox.Show("Данные сохранены.", "Сохранение данных", MessageBoxButtons.OK, MessageBoxIcon.Information);

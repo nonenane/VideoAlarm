@@ -37,6 +37,6 @@ from
 		left join dbo.s_Shop s on s.id = v.id_shop
 		left join CheckVideoReg.s_Camera_vs_Channel c on c.id = a.id_Camera_vs_Channel
 WHERE
-	@dateStart<=cast(a.DateCreate as date) and cast(a.DateCreate as date)<=@dateEnd
+	@dateStart<=cast(a.DateStartAlarm as date) and cast(a.DateStartAlarm as date)<=@dateEnd
 
 END

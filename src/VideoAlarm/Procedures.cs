@@ -486,11 +486,11 @@ namespace VideoAlarm
 
             ap.Add(true);
             ap.Add(DateCreate);
-
+            ap.Add(UserSettings.User.Id);
 
             executeProcedure("[CheckVideoReg].[SetTAlarmVideoReg]",
-                  new string[7] { "@id_VideoReg", "@NameFile", "@Delta", "@id_Responsible", "@id_Schedule","@isNoAlarm", "@DateCreate" },
-                  new DbType[7] { DbType.Int32, DbType.String, DbType.Int32, DbType.String, DbType.Int32, DbType.Boolean,DbType.DateTime }, ap);
+                  new string[8] { "@id_VideoReg", "@NameFile", "@Delta", "@id_Responsible", "@id_Schedule","@isNoAlarm", "@DateCreate", "@idUser" },
+                  new DbType[8] { DbType.Int32, DbType.String, DbType.Int32, DbType.String, DbType.Int32, DbType.Boolean,DbType.DateTime, DbType.Int32 }, ap);
         }
 
         public async Task<DataTable> GetViewNotFileAlarm(DateTime dateStart, DateTime dateEnd)

@@ -30,25 +30,25 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmMain));
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle20 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle21 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle22 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle23 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle24 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle25 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle26 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle27 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle28 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle29 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle30 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle31 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle32 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle33 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle34 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle35 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle36 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle37 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle38 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle9 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle10 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle11 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle12 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle13 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle14 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle15 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle16 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle17 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle18 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle19 = new System.Windows.Forms.DataGridViewCellStyle();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.tsLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
@@ -58,6 +58,7 @@
             this.справочникКаналовВидеорегистраторовToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.расписаниеToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.настройкиToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.загрузитьФайлToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.выходToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.помощьToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tabControl1 = new System.Windows.Forms.TabControl();
@@ -130,7 +131,10 @@
             this.label1 = new System.Windows.Forms.Label();
             this.cmsReport = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.обработкаToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.загрузитьФайлToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.label13 = new System.Windows.Forms.Label();
+            this.tbFio = new System.Windows.Forms.TextBox();
+            this.label14 = new System.Windows.Forms.Label();
+            this.tbDate = new System.Windows.Forms.TextBox();
             this.statusStrip1.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             this.tabControl1.SuspendLayout();
@@ -155,7 +159,7 @@
             // tsLabel
             // 
             this.tsLabel.Name = "tsLabel";
-            this.tsLabel.Size = new System.Drawing.Size(118, 17);
+            this.tsLabel.Size = new System.Drawing.Size(109, 17);
             this.tsLabel.Text = "toolStripStatusLabel1";
             // 
             // menuStrip1
@@ -181,48 +185,55 @@
             this.справочникКаналовВидеорегистраторовToolStripMenuItem,
             this.расписаниеToolStripMenuItem});
             this.справочникиToolStripMenuItem.Name = "справочникиToolStripMenuItem";
-            this.справочникиToolStripMenuItem.Size = new System.Drawing.Size(94, 20);
+            this.справочникиToolStripMenuItem.Size = new System.Drawing.Size(86, 20);
             this.справочникиToolStripMenuItem.Text = "Справочники";
             // 
             // справочникВидеорегистраторовToolStripMenuItem
             // 
             this.справочникВидеорегистраторовToolStripMenuItem.Name = "справочникВидеорегистраторовToolStripMenuItem";
-            this.справочникВидеорегистраторовToolStripMenuItem.Size = new System.Drawing.Size(306, 22);
+            this.справочникВидеорегистраторовToolStripMenuItem.Size = new System.Drawing.Size(290, 22);
             this.справочникВидеорегистраторовToolStripMenuItem.Text = "Справочник видеорегистраторов";
             this.справочникВидеорегистраторовToolStripMenuItem.Click += new System.EventHandler(this.справочникВидеорегистраторовToolStripMenuItem_Click);
             // 
             // справочникОтветственныхСотрудниковToolStripMenuItem
             // 
             this.справочникОтветственныхСотрудниковToolStripMenuItem.Name = "справочникОтветственныхСотрудниковToolStripMenuItem";
-            this.справочникОтветственныхСотрудниковToolStripMenuItem.Size = new System.Drawing.Size(306, 22);
+            this.справочникОтветственныхСотрудниковToolStripMenuItem.Size = new System.Drawing.Size(290, 22);
             this.справочникОтветственныхСотрудниковToolStripMenuItem.Text = "Справочник ответственных сотрудников";
             this.справочникОтветственныхСотрудниковToolStripMenuItem.Click += new System.EventHandler(this.справочникОтветственныхСотрудниковToolStripMenuItem_Click);
             // 
             // справочникКаналовВидеорегистраторовToolStripMenuItem
             // 
             this.справочникКаналовВидеорегистраторовToolStripMenuItem.Name = "справочникКаналовВидеорегистраторовToolStripMenuItem";
-            this.справочникКаналовВидеорегистраторовToolStripMenuItem.Size = new System.Drawing.Size(306, 22);
+            this.справочникКаналовВидеорегистраторовToolStripMenuItem.Size = new System.Drawing.Size(290, 22);
             this.справочникКаналовВидеорегистраторовToolStripMenuItem.Text = "Справочник каналов видеорегистраторов";
             this.справочникКаналовВидеорегистраторовToolStripMenuItem.Click += new System.EventHandler(this.справочникКаналовВидеорегистраторовToolStripMenuItem_Click);
             // 
             // расписаниеToolStripMenuItem
             // 
             this.расписаниеToolStripMenuItem.Name = "расписаниеToolStripMenuItem";
-            this.расписаниеToolStripMenuItem.Size = new System.Drawing.Size(306, 22);
+            this.расписаниеToolStripMenuItem.Size = new System.Drawing.Size(290, 22);
             this.расписаниеToolStripMenuItem.Text = "Расписание";
             this.расписаниеToolStripMenuItem.Click += new System.EventHandler(this.расписаниеToolStripMenuItem_Click);
             // 
             // настройкиToolStripMenuItem
             // 
             this.настройкиToolStripMenuItem.Name = "настройкиToolStripMenuItem";
-            this.настройкиToolStripMenuItem.Size = new System.Drawing.Size(79, 20);
+            this.настройкиToolStripMenuItem.Size = new System.Drawing.Size(73, 20);
             this.настройкиToolStripMenuItem.Text = "Настройки";
             this.настройкиToolStripMenuItem.Click += new System.EventHandler(this.настройкиToolStripMenuItem_Click);
+            // 
+            // загрузитьФайлToolStripMenuItem
+            // 
+            this.загрузитьФайлToolStripMenuItem.Name = "загрузитьФайлToolStripMenuItem";
+            this.загрузитьФайлToolStripMenuItem.Size = new System.Drawing.Size(100, 20);
+            this.загрузитьФайлToolStripMenuItem.Text = "Загрузить файл";
+            this.загрузитьФайлToolStripMenuItem.Click += new System.EventHandler(this.загрузитьФайлToolStripMenuItem_Click);
             // 
             // выходToolStripMenuItem
             // 
             this.выходToolStripMenuItem.Name = "выходToolStripMenuItem";
-            this.выходToolStripMenuItem.Size = new System.Drawing.Size(54, 20);
+            this.выходToolStripMenuItem.Size = new System.Drawing.Size(52, 20);
             this.выходToolStripMenuItem.Text = "Выход";
             this.выходToolStripMenuItem.Click += new System.EventHandler(this.выходToolStripMenuItem_Click);
             // 
@@ -230,7 +241,7 @@
             // 
             this.помощьToolStripMenuItem.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
             this.помощьToolStripMenuItem.Name = "помощьToolStripMenuItem";
-            this.помощьToolStripMenuItem.Size = new System.Drawing.Size(68, 20);
+            this.помощьToolStripMenuItem.Size = new System.Drawing.Size(59, 20);
             this.помощьToolStripMenuItem.Text = "Помощь";
             // 
             // tabControl1
@@ -564,14 +575,14 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.dgvAlarm.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-            dataGridViewCellStyle20.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle20.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle20.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            dataGridViewCellStyle20.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle20.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle20.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle20.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgvAlarm.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle20;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvAlarm.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             this.dgvAlarm.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvAlarm.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.cShopName,
@@ -600,8 +611,8 @@
             // 
             this.cShopName.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
             this.cShopName.DataPropertyName = "nameShop";
-            dataGridViewCellStyle21.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.cShopName.DefaultCellStyle = dataGridViewCellStyle21;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.cShopName.DefaultCellStyle = dataGridViewCellStyle2;
             this.cShopName.HeaderText = "Магазин";
             this.cShopName.MinimumWidth = 90;
             this.cShopName.Name = "cShopName";
@@ -612,8 +623,8 @@
             // 
             this.cAlarmVideoReg.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
             this.cAlarmVideoReg.DataPropertyName = "RegName";
-            dataGridViewCellStyle22.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.cAlarmVideoReg.DefaultCellStyle = dataGridViewCellStyle22;
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.cAlarmVideoReg.DefaultCellStyle = dataGridViewCellStyle3;
             this.cAlarmVideoReg.HeaderText = "Видеорегистратор";
             this.cAlarmVideoReg.Name = "cAlarmVideoReg";
             this.cAlarmVideoReg.ReadOnly = true;
@@ -623,8 +634,8 @@
             // 
             this.cAlarmChannel.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
             this.cAlarmChannel.DataPropertyName = "RegChannel";
-            dataGridViewCellStyle23.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.cAlarmChannel.DefaultCellStyle = dataGridViewCellStyle23;
+            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.cAlarmChannel.DefaultCellStyle = dataGridViewCellStyle4;
             this.cAlarmChannel.HeaderText = "Канал";
             this.cAlarmChannel.MinimumWidth = 90;
             this.cAlarmChannel.Name = "cAlarmChannel";
@@ -634,8 +645,8 @@
             // cAlarmNameCam
             // 
             this.cAlarmNameCam.DataPropertyName = "CamName";
-            dataGridViewCellStyle24.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.cAlarmNameCam.DefaultCellStyle = dataGridViewCellStyle24;
+            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.cAlarmNameCam.DefaultCellStyle = dataGridViewCellStyle5;
             this.cAlarmNameCam.HeaderText = "Наименование камеры на канале";
             this.cAlarmNameCam.MinimumWidth = 150;
             this.cAlarmNameCam.Name = "cAlarmNameCam";
@@ -645,8 +656,8 @@
             // 
             this.cAlarmTypeEvent.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
             this.cAlarmTypeEvent.DataPropertyName = "TypeEvent";
-            dataGridViewCellStyle25.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.cAlarmTypeEvent.DefaultCellStyle = dataGridViewCellStyle25;
+            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.cAlarmTypeEvent.DefaultCellStyle = dataGridViewCellStyle6;
             this.cAlarmTypeEvent.HeaderText = "Тип события";
             this.cAlarmTypeEvent.Name = "cAlarmTypeEvent";
             this.cAlarmTypeEvent.ReadOnly = true;
@@ -656,10 +667,10 @@
             // 
             this.cAlarmDateStart.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
             this.cAlarmDateStart.DataPropertyName = "DateStartAlarm";
-            dataGridViewCellStyle26.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle26.Format = "G";
-            dataGridViewCellStyle26.NullValue = null;
-            this.cAlarmDateStart.DefaultCellStyle = dataGridViewCellStyle26;
+            dataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle7.Format = "G";
+            dataGridViewCellStyle7.NullValue = null;
+            this.cAlarmDateStart.DefaultCellStyle = dataGridViewCellStyle7;
             this.cAlarmDateStart.HeaderText = "Время начала";
             this.cAlarmDateStart.MinimumWidth = 110;
             this.cAlarmDateStart.Name = "cAlarmDateStart";
@@ -670,10 +681,10 @@
             // 
             this.cAlarmDateEnd.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
             this.cAlarmDateEnd.DataPropertyName = "DateEndAlarm";
-            dataGridViewCellStyle27.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle27.Format = "G";
-            dataGridViewCellStyle27.NullValue = null;
-            this.cAlarmDateEnd.DefaultCellStyle = dataGridViewCellStyle27;
+            dataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle8.Format = "G";
+            dataGridViewCellStyle8.NullValue = null;
+            this.cAlarmDateEnd.DefaultCellStyle = dataGridViewCellStyle8;
             this.cAlarmDateEnd.HeaderText = "Время окончания";
             this.cAlarmDateEnd.MinimumWidth = 110;
             this.cAlarmDateEnd.Name = "cAlarmDateEnd";
@@ -684,8 +695,8 @@
             // 
             this.cAlarmLimit.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
             this.cAlarmLimit.DataPropertyName = "DeltaString";
-            dataGridViewCellStyle28.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.cAlarmLimit.DefaultCellStyle = dataGridViewCellStyle28;
+            dataGridViewCellStyle9.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.cAlarmLimit.DefaultCellStyle = dataGridViewCellStyle9;
             this.cAlarmLimit.HeaderText = "Продолжительность";
             this.cAlarmLimit.MinimumWidth = 150;
             this.cAlarmLimit.Name = "cAlarmLimit";
@@ -695,9 +706,9 @@
             // cAlarmResponcible
             // 
             this.cAlarmResponcible.DataPropertyName = "nameResponsible";
-            dataGridViewCellStyle29.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle29.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.cAlarmResponcible.DefaultCellStyle = dataGridViewCellStyle29;
+            dataGridViewCellStyle10.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle10.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.cAlarmResponcible.DefaultCellStyle = dataGridViewCellStyle10;
             this.cAlarmResponcible.HeaderText = "Ответственный";
             this.cAlarmResponcible.Name = "cAlarmResponcible";
             this.cAlarmResponcible.ReadOnly = true;
@@ -705,9 +716,9 @@
             // cAlarmComment
             // 
             this.cAlarmComment.DataPropertyName = "Comment";
-            dataGridViewCellStyle30.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle30.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.cAlarmComment.DefaultCellStyle = dataGridViewCellStyle30;
+            dataGridViewCellStyle11.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle11.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.cAlarmComment.DefaultCellStyle = dataGridViewCellStyle11;
             this.cAlarmComment.HeaderText = "Комментарий";
             this.cAlarmComment.Name = "cAlarmComment";
             this.cAlarmComment.ReadOnly = true;
@@ -786,6 +797,10 @@
             // 
             // tpReport
             // 
+            this.tpReport.Controls.Add(this.tbDate);
+            this.tpReport.Controls.Add(this.label14);
+            this.tpReport.Controls.Add(this.tbFio);
+            this.tpReport.Controls.Add(this.label13);
             this.tpReport.Controls.Add(this.btReportComment);
             this.tpReport.Controls.Add(this.btReportUpdate);
             this.tpReport.Controls.Add(this.cmbReportVideoReg);
@@ -868,14 +883,14 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.dgvReport.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-            dataGridViewCellStyle31.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle31.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle31.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            dataGridViewCellStyle31.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle31.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle31.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle31.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgvReport.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle31;
+            dataGridViewCellStyle12.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle12.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle12.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            dataGridViewCellStyle12.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle12.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle12.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle12.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvReport.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle12;
             this.dgvReport.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvReport.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.cReportDate,
@@ -900,13 +915,14 @@
             this.dgvReport.ColumnWidthChanged += new System.Windows.Forms.DataGridViewColumnEventHandler(this.dgvReport_ColumnWidthChanged);
             this.dgvReport.RowPostPaint += new System.Windows.Forms.DataGridViewRowPostPaintEventHandler(this.dgvReport_RowPostPaint);
             this.dgvReport.RowPrePaint += new System.Windows.Forms.DataGridViewRowPrePaintEventHandler(this.dgvReport_RowPrePaint);
+            this.dgvReport.SelectionChanged += new System.EventHandler(this.dgvReport_SelectionChanged);
             // 
             // cReportDate
             // 
             this.cReportDate.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
             this.cReportDate.DataPropertyName = "Date";
-            dataGridViewCellStyle32.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.cReportDate.DefaultCellStyle = dataGridViewCellStyle32;
+            dataGridViewCellStyle13.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.cReportDate.DefaultCellStyle = dataGridViewCellStyle13;
             this.cReportDate.HeaderText = "Дата";
             this.cReportDate.MinimumWidth = 90;
             this.cReportDate.Name = "cReportDate";
@@ -917,8 +933,8 @@
             // cReportVideoReg
             // 
             this.cReportVideoReg.DataPropertyName = "RegName";
-            dataGridViewCellStyle33.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.cReportVideoReg.DefaultCellStyle = dataGridViewCellStyle33;
+            dataGridViewCellStyle14.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.cReportVideoReg.DefaultCellStyle = dataGridViewCellStyle14;
             this.cReportVideoReg.HeaderText = "Видеорегистратор";
             this.cReportVideoReg.Name = "cReportVideoReg";
             this.cReportVideoReg.ReadOnly = true;
@@ -928,8 +944,8 @@
             // 
             this.cReportTime.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
             this.cReportTime.DataPropertyName = "TimeRun";
-            dataGridViewCellStyle34.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.cReportTime.DefaultCellStyle = dataGridViewCellStyle34;
+            dataGridViewCellStyle15.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.cReportTime.DefaultCellStyle = dataGridViewCellStyle15;
             this.cReportTime.HeaderText = "Время";
             this.cReportTime.MinimumWidth = 70;
             this.cReportTime.Name = "cReportTime";
@@ -941,8 +957,8 @@
             // 
             this.cReportDelta.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
             this.cReportDelta.DataPropertyName = "Delta";
-            dataGridViewCellStyle35.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.cReportDelta.DefaultCellStyle = dataGridViewCellStyle35;
+            dataGridViewCellStyle16.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.cReportDelta.DefaultCellStyle = dataGridViewCellStyle16;
             this.cReportDelta.HeaderText = "+/-";
             this.cReportDelta.MinimumWidth = 45;
             this.cReportDelta.Name = "cReportDelta";
@@ -954,8 +970,8 @@
             // 
             this.cReportRealTime.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
             this.cReportRealTime.DataPropertyName = "DateCreate";
-            dataGridViewCellStyle36.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.cReportRealTime.DefaultCellStyle = dataGridViewCellStyle36;
+            dataGridViewCellStyle17.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.cReportRealTime.DefaultCellStyle = dataGridViewCellStyle17;
             this.cReportRealTime.HeaderText = "Фактическое время";
             this.cReportRealTime.MinimumWidth = 110;
             this.cReportRealTime.Name = "cReportRealTime";
@@ -966,9 +982,9 @@
             // cReportComment
             // 
             this.cReportComment.DataPropertyName = "Comment";
-            dataGridViewCellStyle37.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle37.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.cReportComment.DefaultCellStyle = dataGridViewCellStyle37;
+            dataGridViewCellStyle18.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle18.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.cReportComment.DefaultCellStyle = dataGridViewCellStyle18;
             this.cReportComment.HeaderText = "Комментарий";
             this.cReportComment.Name = "cReportComment";
             this.cReportComment.ReadOnly = true;
@@ -977,9 +993,9 @@
             // cReportResponsible
             // 
             this.cReportResponsible.DataPropertyName = "nameResponsible";
-            dataGridViewCellStyle38.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle38.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.cReportResponsible.DefaultCellStyle = dataGridViewCellStyle38;
+            dataGridViewCellStyle19.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle19.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.cReportResponsible.DefaultCellStyle = dataGridViewCellStyle19;
             this.cReportResponsible.HeaderText = "Ответственный";
             this.cReportResponsible.Name = "cReportResponsible";
             this.cReportResponsible.ReadOnly = true;
@@ -1067,22 +1083,53 @@
             this.cmsReport.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.обработкаToolStripMenuItem});
             this.cmsReport.Name = "cmsReport";
-            this.cmsReport.Size = new System.Drawing.Size(213, 26);
+            this.cmsReport.Size = new System.Drawing.Size(203, 26);
             this.cmsReport.Opening += new System.ComponentModel.CancelEventHandler(this.cmsReport_Opening);
             // 
             // обработкаToolStripMenuItem
             // 
             this.обработкаToolStripMenuItem.Name = "обработкаToolStripMenuItem";
-            this.обработкаToolStripMenuItem.Size = new System.Drawing.Size(212, 22);
+            this.обработкаToolStripMenuItem.Size = new System.Drawing.Size(202, 22);
             this.обработкаToolStripMenuItem.Text = "Обработка \"Без Тревоги\"";
             this.обработкаToolStripMenuItem.Click += new System.EventHandler(this.обработкаToolStripMenuItem_Click);
             // 
-            // загрузитьФайлToolStripMenuItem
+            // label13
             // 
-            this.загрузитьФайлToolStripMenuItem.Name = "загрузитьФайлToolStripMenuItem";
-            this.загрузитьФайлToolStripMenuItem.Size = new System.Drawing.Size(105, 20);
-            this.загрузитьФайлToolStripMenuItem.Text = "Загрузить файл";
-            this.загрузитьФайлToolStripMenuItem.Click += new System.EventHandler(this.загрузитьФайлToolStripMenuItem_Click);
+            this.label13.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.label13.AutoSize = true;
+            this.label13.Location = new System.Drawing.Point(308, 456);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(170, 13);
+            this.label13.TabIndex = 21;
+            this.label13.Text = "Поставил признак «Без файла»";
+            // 
+            // tbFio
+            // 
+            this.tbFio.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.tbFio.Location = new System.Drawing.Point(490, 453);
+            this.tbFio.Name = "tbFio";
+            this.tbFio.ReadOnly = true;
+            this.tbFio.Size = new System.Drawing.Size(139, 20);
+            this.tbFio.TabIndex = 22;
+            // 
+            // label14
+            // 
+            this.label14.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.label14.AutoSize = true;
+            this.label14.Location = new System.Drawing.Point(641, 456);
+            this.label14.Name = "label14";
+            this.label14.Size = new System.Drawing.Size(33, 13);
+            this.label14.TabIndex = 21;
+            this.label14.Text = "Дата";
+            // 
+            // tbDate
+            // 
+            this.tbDate.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.tbDate.Location = new System.Drawing.Point(686, 452);
+            this.tbDate.Name = "tbDate";
+            this.tbDate.ReadOnly = true;
+            this.tbDate.Size = new System.Drawing.Size(139, 20);
+            this.tbDate.TabIndex = 22;
             // 
             // frmMain
             // 
@@ -1203,6 +1250,10 @@
         private System.Windows.Forms.Button btSelectVideoReg;
         private System.Windows.Forms.Button btDropVideoRegSelect;
         private System.Windows.Forms.ToolStripMenuItem загрузитьФайлToolStripMenuItem;
+        private System.Windows.Forms.TextBox tbDate;
+        private System.Windows.Forms.Label label14;
+        private System.Windows.Forms.TextBox tbFio;
+        private System.Windows.Forms.Label label13;
     }
 }
 

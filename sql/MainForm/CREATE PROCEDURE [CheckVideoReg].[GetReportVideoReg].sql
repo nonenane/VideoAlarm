@@ -27,7 +27,8 @@ select
 	a.nameResponsible,
 	a.isNoAlarm,
 	a.idShedule as id_Shedule,
-	a.id_Responsible
+	a.id_Responsible,
+	a.FIO
 from(
 select 
 	a.id,
@@ -41,11 +42,13 @@ select
 	v.RegName,
 	[CheckVideoReg].[GetStrResponsibleName](a.id_Responsible) as nameResponsible,
 	s.TimeRun,
-	s.id as idShedule
+	s.id as idShedule,
+	isnull(l.FIO,'') as FIO
 from 
 	CheckVideoReg.j_tAlarmVideoReg a
 		left join CheckVideoReg.s_VideoReg v on v.id = a.id_VideoReg
 		left join CheckVideoReg.s_Schedule  s on s.id = a.id_Shedule 
+		left join dbo.ListUsers l on l.id = idCreater
 WHERE
 	@dateStart<=cast(a.DateCreate as date) and cast(a.DateCreate as date)<=@dateEnd and a.id_Shedule is not null
 
@@ -63,7 +66,8 @@ select
 	v.RegName,
 	[CheckVideoReg].[GetStrResponsibleName](a.IdResponsible) as nameResponsible,	
 	s.TimeRun,
-	s.id as idShedule
+	s.id as idShedule,
+	'' as FIO
 from 
 	CheckVideoReg.j_ViewNotFileAlarm a
 		 inner join CheckVideoReg.j_ViewNotFileAlarmVsReg vr on vr.id_ViewNotFileAlarm = a.id

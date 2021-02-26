@@ -433,6 +433,19 @@ namespace VideoAlarm
 
                 dtReport.DefaultView[dgvReport.CurrentRow.Index]["Comment"] = Comment + comment;
                 dtReport.AcceptChanges();
+
+                Logging.StartFirstLevel(1321);
+                Logging.Comment("Произведено добавление комментария к отчету, имеющего следующие параметры");
+                Logging.Comment($"ID:{id}");
+                foreach (DataGridViewColumn col in dgvReport.Columns)
+                {
+                    if (col.Visible)
+                    {
+                        Logging.Comment($"{col.HeaderText}:{dtReport.DefaultView[dgvReport.CurrentRow.Index][col.DataPropertyName]}");
+                    }
+                }
+                Logging.StopFirstLevel();
+
             }
         }
 
@@ -555,6 +568,7 @@ namespace VideoAlarm
         {
             if (DialogResult.Yes == MessageBox.Show("Установить признак:\"Без Тревог\"?", "Обработка", MessageBoxButtons.YesNo, MessageBoxIcon.Question))
             {
+                int id = (int)dtReport.DefaultView[dgvReport.CurrentRow.Index]["id"];
                 int id_VideoReg = (int)dtReport.DefaultView[dgvReport.CurrentRow.Index]["id_VideoReg"];
 
                 DateTime DateCreate = (DateTime)dtReport.DefaultView[dgvReport.CurrentRow.Index]["Date"];
@@ -576,6 +590,20 @@ namespace VideoAlarm
                 Task task;
                 task = Config.hCntMain.SetTAlarmVideoReg(id_VideoReg, fileName, 0, id_Responsible, DateCreate, id_Schedule);
                 task.Wait();
+
+                Logging.StartFirstLevel((int)LogEvent.Установлен_признак_Без_тревог_у_записи_события_видеорегистратора);
+                Logging.Comment("Произведена установка признака 'Без тревоги', для записи отчета, имеющего следующие параметры:");
+                Logging.Comment($"ID:{id}");
+                foreach (DataGridViewColumn col in dgvReport.Columns)
+                {
+                    if (col.Visible)
+                    {
+                        Logging.Comment($"{col.HeaderText}:{dtReport.DefaultView[dgvReport.CurrentRow.Index][col.DataPropertyName]}");
+                    }
+                }
+                Logging.StopFirstLevel();
+
+
                 GetReport();
             }
         }
@@ -773,7 +801,7 @@ namespace VideoAlarm
                 int deltaInt = int.Parse(tbAlarmDelta.Text);
                 if (rbMin.Checked) deltaInt = deltaInt * 60;
 
-                filter += (filter.Length == 0 ? "" : " and ") + $"(delta is null OR delta > '{deltaInt}')";
+                filter += (filter.Length == 0 ? "" : " and ") + $"(delta is null OR delta >= '{deltaInt}')";
 
 
                 if (chbAlarmTime.Checked)
@@ -842,9 +870,21 @@ namespace VideoAlarm
 
                 Task task = Config.hCntMain.SetCommentAlarmVideoReg(id, comment, 1);
                 task.Wait();
-
                 dtAlarm.DefaultView[dgvAlarm.CurrentRow.Index]["Comment"] = Comment + comment;
                 dtAlarm.AcceptChanges();
+
+                Logging.StartFirstLevel(1321);
+                Logging.Comment("Произведено добавление комментарий к тревоге, имеющие следующие параметры");
+                Logging.Comment($"ID:{id}");
+                foreach (DataGridViewColumn col in dgvAlarm.Columns)
+                {
+                    if (col.Visible)
+                    {
+                        Logging.Comment($"{col.HeaderText}:{dtAlarm.DefaultView[dgvAlarm.CurrentRow.Index][col.DataPropertyName]}");
+                    }
+                }
+                Logging.StopFirstLevel();
+                
             }
         }
 
@@ -953,6 +993,35 @@ namespace VideoAlarm
         private void загрузитьФайлToolStripMenuItem_Click(object sender, EventArgs e)
         {
             new frmLoadFile().ShowDialog();
+        }
+
+        private void dgvReport_SelectionChanged(object sender, EventArgs e)
+        {
+            if (dgvReport.CurrentRow == null || dgvReport.CurrentRow.Index == -1 || dtReport==null  || dtReport.DefaultView.Count==0)
+            {
+                tbDate.Text = tbFio.Text = "";
+                return;
+            }
+
+            try {
+
+                if ((bool)dtReport.DefaultView[dgvReport.CurrentRow.Index]["isNoAlarm"])
+                {
+                    tbDate.Text = ((DateTime)dtReport.DefaultView[dgvReport.CurrentRow.Index]["DateCreate"]).ToString("dd.MM.yyyy HH:mm");
+                    tbFio.Text = (string)dtReport.DefaultView[dgvReport.CurrentRow.Index]["FIO"];
+                    return;
+                }
+                else
+                {
+                    tbDate.Text = tbFio.Text = "";
+                    return;
+                }
+            }
+            catch
+            {
+                tbDate.Text = tbFio.Text = "";
+                return;
+            }
         }
     }
 }

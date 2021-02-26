@@ -54,6 +54,9 @@ namespace VideoAlarm.Responsible
         private void btSave_Click(object sender, EventArgs e)
         {
             int id_kadr = (int)dtData.DefaultView[dgvData.CurrentRow.Index]["id"];
+            string nameKadr = (string)dtData.DefaultView[dgvData.CurrentRow.Index]["nameKadr"];
+            string nameDeps = (string)dtData.DefaultView[dgvData.CurrentRow.Index]["nameDeps"];
+            int id_departments = (int)dtData.DefaultView[dgvData.CurrentRow.Index]["id_departments"];
 
             Task<DataTable> task = Config.hCntMain.SetResponsible(id, id_kadr, true, 0, false);
             task.Wait();
@@ -81,10 +84,10 @@ namespace VideoAlarm.Responsible
             if (id == 0)
             {
                 id = (int)dtResult.Rows[0]["id"];
-                Logging.StartFirstLevel(1564);
-                //Logging.Comment("Добавить Тип документа");
+                Logging.StartFirstLevel((int)LogEvent.Добавление_ответственного_сотрудника);
                 Logging.Comment($"ID: {id}");
-                //Logging.Comment($"Наименование: {tbRegName.Text.Trim()}");
+                Logging.Comment($"ID: {id_kadr}; ФИО:{nameKadr}");
+                Logging.Comment($"Отдел ID: {id_departments}; Наименование:{nameDeps}");
                 Logging.StopFirstLevel();
             }
 

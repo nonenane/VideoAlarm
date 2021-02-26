@@ -80,10 +80,11 @@ namespace VideoAlarmDemon
             ap.Add(Delta);
             ap.Add(id_Responsible);
             ap.Add(id_Schedule);
+            ap.Add(Config.idUser);
 
             executeProcedure("[CheckVideoReg].[SetTAlarmVideoReg]",
-                  new string[5] { "@id_VideoReg", "@NameFile","@Delta", "@id_Responsible","@id_Schedule"},
-                  new DbType[5] { DbType.Int32, DbType.String,DbType.Int32, DbType.String,DbType.Int32}, ap);
+                  new string[6] { "@id_VideoReg", "@NameFile", "@Delta", "@id_Responsible", "@id_Schedule", "@idUser" },
+                  new DbType[6] { DbType.Int32, DbType.String, DbType.Int32, DbType.String, DbType.Int32, DbType.Int32 }, ap);
         }
 
         public async Task<DataTable> getSettings(string id_value)

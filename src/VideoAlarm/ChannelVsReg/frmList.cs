@@ -130,7 +130,7 @@ namespace VideoAlarm.ChannelVsReg
                 {
                     if (DialogResult.Yes == MessageBox.Show(Config.centralText("Выбранная для удаления запись\nиспользуется в программе.\nСделать запись недействующей?\n"), "Удаление записи", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2))
                     {
-                        //setLog(id, 1542);
+                        setLog(id, 1542);
                         task = Config.hCntMain.SetCameraVsChannel(id, CamName, CamIP, RegChannel, id_VideoReg, PathScan, img, Comment, !isActive, 0, false);
                         task.Wait();
                         if (task.Result == null)
@@ -148,7 +148,7 @@ namespace VideoAlarm.ChannelVsReg
                 {
                     if (DialogResult.Yes == MessageBox.Show("Удалить выбранную запись?", "Удаление записи", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2))
                     {
-                        //setLog(id, 1566);
+                        setLog(id, 13);
                         task = Config.hCntMain.SetCameraVsChannel(id, CamName, CamIP, RegChannel, id_VideoReg, PathScan, img, Comment, isActive, 1, true);
                         task.Wait();
                         if (task.Result == null)
@@ -165,7 +165,7 @@ namespace VideoAlarm.ChannelVsReg
                 {
                     if (DialogResult.Yes == MessageBox.Show("Сделать выбранную запись действующей?", "Восстановление записи", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2))
                     {
-                        //setLog(id, 1543);
+                        setLog(id, 1543);
                         task = Config.hCntMain.SetCameraVsChannel(id, CamName, CamIP, RegChannel, id_VideoReg, PathScan, img, Comment, !isActive, 0, false);
                         task.Wait();
                         if (task.Result == null)
@@ -336,16 +336,28 @@ namespace VideoAlarm.ChannelVsReg
             Logging.StartFirstLevel(id_log);
             switch (id_log)
             {
-                case 2: Logging.Comment("Удаление Типа документа"); break;
-                case 3: Logging.Comment("Тип документа переведён в недействующие "); break;
-                case 4: Logging.Comment("Тип документа переведён  в действующие"); break;
+                case 13: Logging.Comment("Произведено удаление неиспользуемого в программе канала видеорегистратора"); break;
+                case 1542: Logging.Comment("Произведена смена статуса канала видеорегистратора на недействующий"); break;
+                case 1543: Logging.Comment("Произведена смена статуса канала видеорегистратора на действующий"); break;
+                case (int)LogEvent.Просмотр_изображения: Logging.Comment("Произведено открытие во внешней программе на просмотр скриншота приложенного к каналу видеорегистратора"); break;
                 default: break;
             }
 
-            string cName = (string)dtData.DefaultView[dgvData.CurrentRow.Index]["cName"];
+            string CamName = (string)dtData.DefaultView[dgvData.CurrentRow.Index]["CamName"];
+            string CamIP = (string)dtData.DefaultView[dgvData.CurrentRow.Index]["CamIP"];
+            string PathScan = (string)dtData.DefaultView[dgvData.CurrentRow.Index]["PathScan"];
+            string Comment = (string)dtData.DefaultView[dgvData.CurrentRow.Index]["Comment"];
+            string RegChannel = (string)dtData.DefaultView[dgvData.CurrentRow.Index]["RegChannel"];
+            int id_VideoReg = (int)dtData.DefaultView[dgvData.CurrentRow.Index]["id_VideoReg"];
+            string RegName = (string)dtData.DefaultView[dgvData.CurrentRow.Index]["RegName"];
 
-            Logging.Comment($"ID:{id}");
-            Logging.Comment($"Наименование: {cName}");
+            Logging.Comment($"ID: {id}");
+            Logging.Comment($"Видеорегистратор ID: {id_VideoReg}; Наименование:{RegName}");
+            Logging.Comment($"Канал: {RegChannel}");
+            Logging.Comment($"Наименование камеры: {CamName}");
+            Logging.Comment($"IP камеры: {CamIP}");
+            Logging.Comment($"Комментарий: {Comment}");
+            Logging.Comment($"Путь к скриншоту и имя файла: {PathScan}");
 
             Logging.StopFirstLevel();
         }
@@ -396,6 +408,10 @@ namespace VideoAlarm.ChannelVsReg
                         {
                             if (!Directory.Exists(Application.StartupPath + "//buffer//"))
                                 Directory.CreateDirectory(Application.StartupPath + "//buffer//");
+
+                            //Logging
+                            setLog(id, (int)LogEvent.Просмотр_изображения);
+                            //End Logging
 
                             img = (byte[])task.Result.Rows[0]["Scan"];
                             FileInfo infoFile = new FileInfo(row["PathScan"].ToString());

@@ -18,7 +18,7 @@ select
 	s.TimeRun,
 	s.isOn,
 	s.DateEdit,
-	isnull(l.FIO,'') as FIO,
+	isnull(l.FIO,'') as FIO,	
 	GETDATE() as timeNow
 from 
 	CheckVideoReg.s_Schedule s

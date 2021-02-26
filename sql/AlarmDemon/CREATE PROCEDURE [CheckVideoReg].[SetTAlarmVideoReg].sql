@@ -14,7 +14,8 @@ ALTER PROCEDURE [CheckVideoReg].[SetTAlarmVideoReg]
 	@id_Responsible varchar(max) = '',
 	@id_Schedule int = null,
 	@isNoAlarm bit  = 0,
-	@DateCreate datetime = null
+	@DateCreate datetime = null,
+	@idUser int = null
 AS
 BEGIN
 	SET NOCOUNT ON;
@@ -23,8 +24,8 @@ BEGIN
 
 	IF NOT EXISTS(select top(1) id from CheckVideoReg.j_tAlarmVideoReg where id_VideoReg = @id_VideoReg and NameFile = @NameFile)
 		BEGIN
-			INSERT INTO CheckVideoReg.j_tAlarmVideoReg (id_VideoReg,DateCreate,NameFile,id_Responsible,Delta,isNoAlarm,Comment,id_Shedule)
-			VALUES (@id_VideoReg,@DateCreate,@NameFile,@id_Responsible,@Delta,@isNoAlarm ,'',@id_Schedule)
+			INSERT INTO CheckVideoReg.j_tAlarmVideoReg (id_VideoReg,DateCreate,NameFile,id_Responsible,Delta,isNoAlarm,Comment,id_Shedule,idCreater)
+			VALUES (@id_VideoReg,@DateCreate,@NameFile,@id_Responsible,@Delta,@isNoAlarm ,'',@id_Schedule,@idUser)
 
 			DECLARE @id_ViewNotFileAlarm int 
 			select @id_ViewNotFileAlarm = id from CheckVideoReg.j_ViewNotFileAlarm where id_Shedule = @id_Schedule and cast(DateInsert as date) = cast(@DateCreate as date)

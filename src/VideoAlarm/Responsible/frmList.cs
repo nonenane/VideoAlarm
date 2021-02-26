@@ -92,7 +92,7 @@ namespace VideoAlarm.Responsible
                 {
                     if (DialogResult.Yes == MessageBox.Show(Config.centralText("Выбранная для удаления запись\nиспользуется в программе.\nСделать запись недействующей?\n"), "Удаление записи", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2))
                     {
-                        //setLog(id, 1542);
+                        setLog(id, 1542);
                         task = Config.hCntMain.SetResponsible(id, id_kadr, !isActive, 0, false);
                         task.Wait();
                         if (task.Result == null)
@@ -109,7 +109,7 @@ namespace VideoAlarm.Responsible
                 {
                     if (DialogResult.Yes == MessageBox.Show("Удалить выбранную запись?", "Удаление записи", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2))
                     {
-                        //setLog(id, 1566);
+                        setLog(id, 13);
                         task = Config.hCntMain.SetResponsible(id, id_kadr, isActive, 1, true);
                         task.Wait();
                         if (task.Result == null)
@@ -126,7 +126,7 @@ namespace VideoAlarm.Responsible
                 {
                     if (DialogResult.Yes == MessageBox.Show("Сделать выбранную запись действующей?", "Восстановление записи", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2))
                     {
-                        //setLog(id, 1543);
+                        setLog(id, 1543);
                         task = Config.hCntMain.SetResponsible(id, id_kadr, !isActive, 0, false);
                         task.Wait();
                         if (task.Result == null)
@@ -288,17 +288,20 @@ namespace VideoAlarm.Responsible
             Logging.StartFirstLevel(id_log);
             switch (id_log)
             {
-                case 2: Logging.Comment("Удаление Типа документа"); break;
-                case 3: Logging.Comment("Тип документа переведён в недействующие "); break;
-                case 4: Logging.Comment("Тип документа переведён  в действующие"); break;
+                case 13: Logging.Comment("Произведено удаление неиспользуемого в программе ответственного сотрудника"); break;
+                case 1542: Logging.Comment("Произведена смена статуса ответственного сотрудника на недействующий"); break;
+                case 1543: Logging.Comment("Произведена смена статуса ответственного сотрудника на действующий"); break;
                 default: break;
             }
 
-            string cName = (string)dtData.DefaultView[dgvData.CurrentRow.Index]["cName"];
+            int id_kadr = (int)dtData.DefaultView[dgvData.CurrentRow.Index]["id"];
+            string nameKadr = (string)dtData.DefaultView[dgvData.CurrentRow.Index]["nameKadr"];
+            string nameDeps = (string)dtData.DefaultView[dgvData.CurrentRow.Index]["nameDeps"];
+            int id_departments = (int)dtData.DefaultView[dgvData.CurrentRow.Index]["id_departments"];
 
-            Logging.Comment($"ID:{id}");
-            Logging.Comment($"Наименование: {cName}");
-
+            Logging.Comment($"ID: {id}");
+            Logging.Comment($"ID: {id_kadr}; ФИО:{nameKadr}");
+            Logging.Comment($"Отдел ID: {id_departments}; Наименование:{nameDeps}");
             Logging.StopFirstLevel();
         }
 

@@ -41,6 +41,7 @@ IF @DateStartAlarm is not null
 		SET @id_Responsible = @result
 		
 		select 
+			TOP(1)
 			@id = id 
 		from  
 			CheckVideoReg.j_AlarmVideoReg 
@@ -48,7 +49,7 @@ IF @DateStartAlarm is not null
 			id_VideoReg = @id_VideoReg 
 			and ((@id_Camera_vs_Channel is not null and id_Camera_vs_Channel =  @id_Camera_vs_Channel ) OR (Channel = @Channel))
 			and DateStartAlarm is null 
-			and DateEndAlarm>@DateStartAlarm 
+			and DateEndAlarm>=@DateStartAlarm 
 			and TypeEvent = @TypeEvent
 		order  by 
 			DateEndAlarm asc
@@ -79,6 +80,7 @@ ELSE IF @DateEndAlarm is not null
 	BEGIN
 	
 		select 
+			TOP(1)
 			@id = id 
 		from  
 			CheckVideoReg.j_AlarmVideoReg 
@@ -86,7 +88,7 @@ ELSE IF @DateEndAlarm is not null
 			id_VideoReg = @id_VideoReg 
 			and ((@id_Camera_vs_Channel is not null and id_Camera_vs_Channel =  @id_Camera_vs_Channel ) OR (Channel = @Channel))
 			and DateEndAlarm is null 
-			and DateStartAlarm<@DateEndAlarm
+			and DateStartAlarm<=@DateEndAlarm
 			and TypeEvent = @TypeEvent
 		order  by 
 			DateStartAlarm desc

@@ -128,7 +128,7 @@ namespace VideoAlarm.VideoReg
                 {
                     if (DialogResult.Yes == MessageBox.Show(Config.centralText("Выбранная для удаления запись\nиспользуется в программе.\nСделать запись недействующей?\n"), "Удаление записи", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2))
                     {
-                        //setLog(id, 1542);
+                        setLog(id, 1542);
                         task = Config.hCntMain.SetVideoReg(id, RegName, RegIP, Place, PathLog, Comment, id_shop, isActive, 0, false);
                         task.Wait();
                         if (task.Result == null)
@@ -146,7 +146,7 @@ namespace VideoAlarm.VideoReg
                 {
                     if (DialogResult.Yes == MessageBox.Show("Удалить выбранную запись?", "Удаление записи", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2))
                     {
-                        //setLog(id, 1566);
+                        setLog(id, 13);
                         task = Config.hCntMain.SetVideoReg(id, RegName, RegIP, Place, PathLog, Comment, id_shop, isActive, 1, true);
                         task.Wait();
                         if (task.Result == null)
@@ -163,7 +163,7 @@ namespace VideoAlarm.VideoReg
                 {
                     if (DialogResult.Yes == MessageBox.Show("Сделать выбранную запись действующей?", "Восстановление записи", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2))
                     {
-                        //setLog(id, 1543);
+                        setLog(id, 1543);
                         task = Config.hCntMain.SetVideoReg(id, RegName, RegIP, Place, PathLog, Comment, id_shop, !isActive, 0, false);
                         task.Wait();
                         if (task.Result == null)
@@ -332,16 +332,27 @@ namespace VideoAlarm.VideoReg
             Logging.StartFirstLevel(id_log);
             switch (id_log)
             {
-                case 2: Logging.Comment("Удаление Типа документа"); break;
-                case 3: Logging.Comment("Тип документа переведён в недействующие "); break;
-                case 4: Logging.Comment("Тип документа переведён  в действующие"); break;
+                case 13: Logging.Comment("Произведено удаление неиспользуемого в программе видеорегистратора"); break;
+                case 1543: Logging.Comment("Произведена смена статуса видеорегистратора на действующий"); break;
+                case 1542: Logging.Comment("Произведена смена статуса видеорегистратора на недействующий"); break;
                 default: break;
             }
 
-            string cName = (string)dtData.DefaultView[dgvData.CurrentRow.Index]["cName"];
+            string RegName = (string)dtData.DefaultView[dgvData.CurrentRow.Index]["RegName"];
+            string RegIP = (string)dtData.DefaultView[dgvData.CurrentRow.Index]["RegIP"];
+            string Place = (string)dtData.DefaultView[dgvData.CurrentRow.Index]["Place"];
+            string PathLog = (string)dtData.DefaultView[dgvData.CurrentRow.Index]["PathLog"];
+            string Comment = (string)dtData.DefaultView[dgvData.CurrentRow.Index]["Comment"];
+            string nameShop = (string)dtData.DefaultView[dgvData.CurrentRow.Index]["nameShop"];
+            int id_shop = dtData.DefaultView[dgvData.CurrentRow.Index]["id_shop"] == DBNull.Value ? 0 : (int)dtData.DefaultView[dgvData.CurrentRow.Index]["id_shop"];
 
             Logging.Comment($"ID:{id}");
-            Logging.Comment($"Наименование: {cName}");
+            Logging.Comment($"Наименование: {RegName}");
+            Logging.Comment($"IP: {RegIP}");
+            Logging.Comment($"Местоположение: {Place}");
+            Logging.Comment($"Комментарий: {Comment}");
+            Logging.Comment($"Путь к лог файлам: {PathLog}");
+            Logging.Comment($"Магазин ID: {id_shop}: Наименование:{nameShop}");
 
             Logging.StopFirstLevel();
         }

@@ -15,7 +15,7 @@ namespace VideoAlarmDemon
 
         public static Procedures hCntMain { get; set; } //осн. коннект
         public static Settings ProgSettngs;
-
+        public static int? idUser = null;
     }
 
     public class Settings
@@ -28,5 +28,21 @@ namespace VideoAlarmDemon
         public string ServerK21 { set; get; }
 
         public string DataBaseK21 { set; get; }
+    }
+
+    public class myParserTime
+    {
+        public static DateTime parseTime(string str)
+        {
+            string strTime = str;
+            if (strTime.IndexOf(" ") == 8 && strTime.Contains("-"))
+            {
+                strTime = $"{DateTime.Now.Year.ToString().Substring(0, 2)}{strTime}";
+            }
+
+            //return DateTime.ParseExact(str, "yyyy-MM-dd mm:HH:ss", System.Globalization.CultureInfo.InvariantCulture);
+
+            return DateTime.Parse(strTime);
+        }
     }
 }

@@ -22,8 +22,8 @@ namespace VideoAlarm.ChannelVsReg
         public DataRowView row { set; private get; }
 
         private bool isEditData = false;
-        private string oldName, oldCode;
-        private int id = 0;
+        private string oldCamName, oldCamIP, oldPathScan, oldComment, oldRegChannel, oldVideoReg;
+        private int id = 0, oldIdVideoReg;
         public bool isSaveData = false;
 
 
@@ -60,16 +60,25 @@ namespace VideoAlarm.ChannelVsReg
             if (row != null)
             {
                 id = (int)row["id"];
+
                 tbCamName.Text = (string)row["CamName"];
-                oldName = tbCamName.Text.Trim();
+                oldCamName = tbCamName.Text.Trim();
 
                 tbCamIP.Text = (string)row["CamIP"];
-                oldCode = tbCamName.Text.Trim();
+                oldCamIP = tbCamName.Text.Trim();
 
                 tbPathScan.Text = (string)row["PathScan"];
+                oldPathScan = tbPathScan.Text.Trim();
+
                 tbComment.Text = (string)row["Comment"];
+                oldComment = tbComment.Text.Trim();
+
                 tbRegChannel.Text = (string)row["RegChannel"];
+                oldRegChannel = tbRegChannel.Text.Trim();
+
                 cmbVideoReg.SelectedValue = (int)row["id_VideoReg"];
+                oldIdVideoReg = (int)row["id_VideoReg"];
+                oldVideoReg = cmbVideoReg.Text.Trim();
 
                 if ((bool)row["isScan"])
                 {
@@ -161,20 +170,29 @@ namespace VideoAlarm.ChannelVsReg
             if (id == 0)
             {
                 id = (int)dtResult.Rows[0]["id"];
-                Logging.StartFirstLevel(1564);
-                //Logging.Comment("Добавить Тип документа");
+                Logging.StartFirstLevel((int)LogEvent.Добавление_канала_видеорегистратора);
                 Logging.Comment($"ID: {id}");
-                Logging.Comment($"Наименование: {tbCamName.Text.Trim()}");
+                Logging.Comment($"Видеорегистратор ID: {cmbVideoReg.SelectedValue}; Наименование:{cmbVideoReg.Text}");
+                Logging.Comment($"Канал: {tbRegChannel.Text.Trim()}");
+                Logging.Comment($"Наименование камеры: {tbCamName.Text.Trim()}");
+                Logging.Comment($"IP камеры: {tbCamIP.Text.Trim()}");
+                Logging.Comment($"Комментарий: {tbComment.Text.Trim()}");
+                Logging.Comment($"Путь к скриншоту и имя файла: {tbPathScan.Text.Trim()}");
                 Logging.StopFirstLevel();
                 isSaveData = true;
 
             }
             else
             {
-                Logging.StartFirstLevel(1565);
-                //Logging.Comment("Редактировать Тип документа");
+                Logging.StartFirstLevel((int)LogEvent.Редактирование_канала_видеорегистратора);
                 Logging.Comment($"ID: {id}");
-                Logging.VariableChange("Наименование", tbCamName.Text.Trim(), oldName);
+                Logging.VariableChange("Видеорегистратор ID", cmbVideoReg.SelectedValue, oldIdVideoReg);
+                Logging.VariableChange("Видеорегистратор Наименование", cmbVideoReg.Text.Trim(), oldVideoReg);
+                Logging.VariableChange("Канал", tbRegChannel.Text.Trim(), oldRegChannel);
+                Logging.VariableChange("Наименование камеры", tbCamName.Text.Trim(), oldCamName);
+                Logging.VariableChange("IP камеры", tbCamIP.Text.Trim(), oldCamIP);
+                Logging.VariableChange("Комментарий", tbComment.Text.Trim(), oldComment);
+                Logging.VariableChange("Путь к скриншоту и имя файла", tbPathScan.Text.Trim(), oldPathScan);
                 Logging.StopFirstLevel();
                 isClose = true;                    
             }
