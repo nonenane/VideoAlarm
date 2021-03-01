@@ -16,6 +16,7 @@ namespace VideoAlarm
     public partial class frmLoadFile : Form
     {
         private string[] files;
+     
         public frmLoadFile()
         {
             InitializeComponent();
@@ -23,8 +24,20 @@ namespace VideoAlarm
             ToolTip tt = new ToolTip();
             tt.SetToolTip(btClose, "Выход");
             tt.SetToolTip(btParse, "Обработать файл");
-        }           
-        
+        }
+
+        private void frmLoadFile_Load(object sender, EventArgs e)
+        {
+            Task<DataTable> task = Config.hCntMain.GetVideoRegList(false);
+            task.Wait();
+            DataTable dtVideoReg = task.Result;
+
+            cmbVideoReg.DisplayMember = "RegName";
+            cmbVideoReg.ValueMember = "id";
+            cmbVideoReg.DataSource = dtVideoReg;
+            cmbVideoReg.SelectedIndex = -1;
+        }
+
         private void panel1_Click(object sender, EventArgs e)
         {
             CommonOpenFileDialog dialog = new CommonOpenFileDialog();
@@ -79,19 +92,7 @@ namespace VideoAlarm
             pen.DashPattern = new float[] { 5, 1 };
             e.Graphics.DrawRectangle(pen, 1, 1, panel1.Width-3, panel1.Height-3 );
         }
-
-        private void frmLoadFile_Load(object sender, EventArgs e)
-        {
-            Task<DataTable> task = Config.hCntMain.GetVideoRegList(false);
-            task.Wait();
-            DataTable dtVideoReg = task.Result;
-
-            cmbVideoReg.DisplayMember = "RegName";
-            cmbVideoReg.ValueMember = "id";
-            cmbVideoReg.DataSource = dtVideoReg;
-            cmbVideoReg.SelectedIndex = -1;
-        }
-
+      
         private void btClose_Click(object sender, EventArgs e)
         {
             Close();

@@ -170,6 +170,11 @@ namespace VideoAlarm
         {
             new Shedule.frmList().ShowDialog();
         }
+
+        private void загрузитьФайлToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            new frmLoadFile().ShowDialog();
+        }
         #endregion
 
         #region "Отчёт"
@@ -234,6 +239,7 @@ namespace VideoAlarm
             if (dtReport == null || dtReport.Rows.Count == 0)
             {
                 btReportComment.Enabled = false;
+                dgvReport_SelectionChanged(null, null);
                 return;
             }
 
@@ -260,6 +266,7 @@ namespace VideoAlarm
             {
                 btReportComment.Enabled =
                 dtReport.DefaultView.Count != 0;
+                dgvReport_SelectionChanged(null, null);
                 //dgvData_SelectionChanged(null, null);
             }
         }
@@ -608,6 +615,35 @@ namespace VideoAlarm
             }
         }
 
+        private void dgvReport_SelectionChanged(object sender, EventArgs e)
+        {
+            if (dgvReport.CurrentRow == null || dgvReport.CurrentRow.Index == -1 || dtReport == null || dtReport.DefaultView.Count == 0)
+            {
+                tbDate.Text = tbFio.Text = "";
+                return;
+            }
+
+            try
+            {
+
+                if ((bool)dtReport.DefaultView[dgvReport.CurrentRow.Index]["isNoAlarm"])
+                {
+                    tbDate.Text = ((DateTime)dtReport.DefaultView[dgvReport.CurrentRow.Index]["DateCreate"]).ToString("dd.MM.yyyy HH:mm");
+                    tbFio.Text = (string)dtReport.DefaultView[dgvReport.CurrentRow.Index]["FIO"];
+                    return;
+                }
+                else
+                {
+                    tbDate.Text = tbFio.Text = "";
+                    return;
+                }
+            }
+            catch
+            {
+                tbDate.Text = tbFio.Text = "";
+                return;
+            }
+        }
         #endregion
 
         #region "Тревоги"
@@ -914,6 +950,7 @@ namespace VideoAlarm
         {
             setFilterAlarm();
         }
+      
         private void chbProblemNotEnd_Click(object sender, EventArgs e)
         {
             setFilterAlarm();
@@ -940,6 +977,7 @@ namespace VideoAlarm
             cShopName.Visible = (int)cmbShop.SelectedValue == 0;
             setFilterAlarm();
         }
+     
         private void rbMin_Click(object sender, EventArgs e)
         {
             setFilterAlarm();
@@ -990,38 +1028,7 @@ namespace VideoAlarm
         }
         #endregion
 
-        private void загрузитьФайлToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            new frmLoadFile().ShowDialog();
-        }
-
-        private void dgvReport_SelectionChanged(object sender, EventArgs e)
-        {
-            if (dgvReport.CurrentRow == null || dgvReport.CurrentRow.Index == -1 || dtReport==null  || dtReport.DefaultView.Count==0)
-            {
-                tbDate.Text = tbFio.Text = "";
-                return;
-            }
-
-            try {
-
-                if ((bool)dtReport.DefaultView[dgvReport.CurrentRow.Index]["isNoAlarm"])
-                {
-                    tbDate.Text = ((DateTime)dtReport.DefaultView[dgvReport.CurrentRow.Index]["DateCreate"]).ToString("dd.MM.yyyy HH:mm");
-                    tbFio.Text = (string)dtReport.DefaultView[dgvReport.CurrentRow.Index]["FIO"];
-                    return;
-                }
-                else
-                {
-                    tbDate.Text = tbFio.Text = "";
-                    return;
-                }
-            }
-            catch
-            {
-                tbDate.Text = tbFio.Text = "";
-                return;
-            }
-        }
+      
+    
     }
 }

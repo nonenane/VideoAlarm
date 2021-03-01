@@ -84,8 +84,6 @@ namespace VideoAlarm.VideoReg
             e.Cancel = isEditData && DialogResult.No == MessageBox.Show("На форме есть не сохранённые данные.\nЗакрыть форму без сохранения данных?\n", "Закрытие формы", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2);
         }
 
-
-
         private void btClose_Click(object sender, EventArgs e)
         {
             this.DialogResult = DialogResult.Cancel;
